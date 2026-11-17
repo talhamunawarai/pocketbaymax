@@ -1,0 +1,1609 @@
+<title>PocketBaymax</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<script src="/local-claude.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+<style>
+/* Layout: sidebar plus content on wide screens, content plus bottom tab bar on phones.
+   Mood: mist-blue ground, navy ink, sky accent. The breathing orb is the one loud shape. */
+:root{
+  --font-display:'Fraunces',Georgia,'Times New Roman',serif;
+  --font-body:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --bg:#f4f8fc;--bg-2:#e9f1f8;--surface:#ffffff;--surface-2:#f6f9fc;
+  --ink:#0f1b2d;--ink-2:#46576f;--ink-3:#6f8097;--line:#dfe9f2;
+  --accent:#0a7fbf;--accent-ink:#ffffff;--accent-soft:#e0f1fb;--accent-deep:#075f91;
+  --good:#1b8a70;--good-soft:#e0f5ee;--warn:#a96110;--warn-soft:#fcefd9;--bad:#bf384b;--bad-soft:#fde7ea;
+  --orb-low:#86a4d8;--orb-mid:#f0b35c;--orb-high:#5ec6a5;
+  --shadow-color:15 27 45;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#09111f;--bg-2:#0d1a2d;--surface:#111e36;--surface-2:#15253f;
+    --ink:#e8f0f9;--ink-2:#a8b8ce;--ink-3:#8294ad;--line:#223454;
+    --accent:#4db8f0;--accent-ink:#06223a;--accent-soft:#12324d;--accent-deep:#8fd3f7;
+    --good:#4fcfae;--good-soft:#0f3a30;--warn:#f0a850;--warn-soft:#3a2a11;--bad:#f2758a;--bad-soft:#3f1f29;
+    --orb-low:#6f8fcb;--orb-mid:#dd9d46;--orb-high:#45b998;
+    --shadow-color:0 0 0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#09111f;--bg-2:#0d1a2d;--surface:#111e36;--surface-2:#15253f;
+  --ink:#e8f0f9;--ink-2:#a8b8ce;--ink-3:#8294ad;--line:#223454;
+  --accent:#4db8f0;--accent-ink:#06223a;--accent-soft:#12324d;--accent-deep:#8fd3f7;
+  --good:#4fcfae;--good-soft:#0f3a30;--warn:#f0a850;--warn-soft:#3a2a11;--bad:#f2758a;--bad-soft:#3f1f29;
+  --orb-low:#6f8fcb;--orb-mid:#dd9d46;--orb-high:#45b998;
+  --shadow-color:0 0 0;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.55;
+  padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3{text-wrap:balance}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.muted{color:var(--ink-2)}
+.small{font-size:13px}
+.ic{flex:none;vertical-align:middle}
+.ic.fill{fill:currentColor}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+
+/* shell */
+.app{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);column-gap:32px}
+.side{display:none}
+.main-col{min-width:0;padding-bottom:104px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0 4px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.01em}
+.brand-mark{width:34px;height:34px;border-radius:11px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center}
+.lang{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2)}
+.lang select{width:auto;padding:7px 28px 7px 12px;border-radius:999px;font-size:13px}
+.views{padding-top:8px}
+.view[hidden]{display:none}
+.notice[hidden]{display:none}
+.view{animation:enter .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes enter{from{opacity:.45;transform:translateY(10px)}to{opacity:1;transform:none}}
+.rise>*{animation:enter .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*60ms)}
+.rise>*:nth-child(1){--i:0}.rise>*:nth-child(2){--i:1}.rise>*:nth-child(3){--i:2}.rise>*:nth-child(4){--i:3}
+.rise>*:nth-child(5){--i:4}.rise>*:nth-child(6){--i:5}.rise>*:nth-child(7){--i:6}.rise>*:nth-child(8){--i:7}
+
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;
+  padding:8px max(16px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);
+}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0 4px;border:0;background:none;color:var(--ink-3);font-size:10px;white-space:nowrap;letter-spacing:-.01em;font-weight:600;border-radius:14px;transition:color .2s}
+.tab .pill{display:grid;place-items:center;width:44px;height:28px;border-radius:999px;transition:background-color .25s,transform .25s}
+.tab[aria-current="page"]{color:var(--accent-deep)}
+.tab[aria-current="page"] .pill{background:var(--accent-soft);transform:scale(1.04)}
+.tab:active .pill{transform:scale(.94)}
+
+@media (min-width:900px){
+  .app{grid-template-columns:236px minmax(0,1fr)}
+  .side{display:flex;flex-direction:column;gap:22px;position:sticky;top:0;align-self:start;padding:22px 0;min-height:100vh}
+  .tabbar{display:none}
+  .main-col{padding-bottom:56px}
+  .top .brand{display:none}
+  .top{justify-content:flex-end}
+}
+.side .brand{padding:0 8px}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav button{display:flex;align-items:center;gap:12px;padding:11px 14px;border:0;background:none;border-radius:14px;font-weight:600;color:var(--ink-2);text-align:left;transition:background-color .2s,color .2s,transform .15s}
+.nav button:hover{background:var(--bg-2);color:var(--ink)}
+.nav button[aria-current="page"]{background:var(--accent-soft);color:var(--accent-deep)}
+.side-note{margin-top:auto;font-size:12.5px;color:var(--ink-3);padding:0 8px;line-height:1.5}
+
+/* type */
+.display{font-family:var(--font-display);font-weight:500;letter-spacing:-.015em;line-height:1.12;font-size:clamp(30px,5.4vw,46px)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-deep)}
+.lede{color:var(--ink-2);font-size:16px;max-width:60ch}
+.vhead{display:flex;flex-direction:column;gap:8px;padding:14px 0 18px}
+.vhead h1{font-family:var(--font-display);font-weight:500;letter-spacing:-.012em;font-size:clamp(27px,4.6vw,38px);line-height:1.15}
+.sec-title{font-size:19px;font-weight:700;letter-spacing:-.01em;margin:30px 0 14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 1px 2px rgb(var(--shadow-color) / .04),0 12px 28px -16px rgb(var(--shadow-color) / .14)}
+.card h2{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.stack{display:flex;flex-direction:column;gap:16px;min-width:0}
+.two-col{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+@media (min-width:1000px){.two-col{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}}
+
+/* controls */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:14px;border:1px solid transparent;font-weight:700;font-size:15px;background:var(--surface);transition:transform .15s,background-color .2s,box-shadow .2s,opacity .2s}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 8px 18px -10px var(--accent)}
+.btn.primary:hover{background:var(--accent-deep);color:var(--accent-ink)}
+:root[data-theme="dark"] .btn.primary:hover{background:color-mix(in srgb,var(--accent) 85%,white);color:var(--accent-ink)}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn.ghost:hover{background:var(--bg-2)}
+.btn.small{padding:8px 14px;font-size:13.5px;border-radius:12px}
+.btn.wide{width:100%}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+.icon-btn{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+input[type=text],input[type=search],select,textarea{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;line-height:1.4;transition:border-color .2s,box-shadow .2s}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink-3) 50%),linear-gradient(135deg,var(--ink-3) 50%,transparent 50%);background-position:calc(100% - 17px) 55%,calc(100% - 12px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:32px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+textarea{resize:vertical;min-height:46px}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--ink-2)}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+legend{padding:0;font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips.scroll{flex-wrap:nowrap;overflow-x:auto;padding:2px 2px 8px;margin:0 -2px;scrollbar-width:thin}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:600;white-space:nowrap;transition:background-color .2s,border-color .2s,color .2s,transform .15s}
+.chip:hover{border-color:var(--accent)}
+.chip:active{transform:scale(.96)}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-deep)}
+.chip.rec::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--good);margin-left:8px}
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:16px;background:var(--bg-2);max-width:100%}
+.seg button{border:0;background:none;padding:9px 16px;border-radius:12px;font-weight:700;font-size:14px;color:var(--ink-2);transition:background-color .2s,color .2s}
+.seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px -3px rgb(var(--shadow-color) / .25)}
+.seg button[disabled]{opacity:.45;cursor:not-allowed}
+.count{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--accent-soft);color:var(--accent-deep);font-size:12px}
+.notice{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:var(--warn-soft);color:var(--warn);font-size:13.5px;font-weight:600;margin-bottom:14px}
+.safety{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:16px;background:var(--bad-soft);color:var(--ink);font-size:14px;margin-bottom:16px}
+.safety .ic{color:var(--bad);margin-top:2px}
+.fine{font-size:12.5px;color:var(--ink-3);margin-top:14px;max-width:70ch}
+.form-err{color:var(--bad);font-weight:600;font-size:13.5px}
+
+/* orb */
+.orb{--o:var(--orb-mid);position:relative;display:grid;place-items:center;border-radius:50%;background:var(--o);transition:background-color .8s ease;animation:breathe 6s ease-in-out infinite;color:#0f1b2d}
+.orb::before{content:"";position:absolute;inset:-14%;border-radius:50%;border:2px solid var(--o);opacity:.35;animation:ring 6s ease-in-out infinite;transition:border-color .8s}
+.orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 24%,rgb(255 255 255 / .62),rgb(255 255 255 / 0) 58%)}
+.orb[data-band="low"]{--o:var(--orb-low)}
+.orb[data-band="high"]{--o:var(--orb-high)}
+.orb>*{position:relative;z-index:1}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@keyframes ring{0%,100%{transform:scale(1);opacity:.35}50%{transform:scale(1.15);opacity:.08}}
+
+/* home */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:center;padding:18px 0 6px}
+.hero .orb{width:clamp(84px,15vw,160px);aspect-ratio:1;order:-1}
+.hero-copy{display:flex;flex-direction:column;gap:12px;min-width:0}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+@media (min-width:700px){.hero{grid-template-columns:minmax(0,1fr) auto;gap:40px}.hero .orb{order:0;margin-right:12px}}
+.home-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:22px}
+@media (min-width:760px){.home-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}}
+.nudge{display:flex;flex-direction:column;gap:14px}
+.nudge .row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.big-score{font-family:var(--font-display);font-size:40px;line-height:1;font-weight:500}
+.big-score small{font-family:var(--font-body);font-size:15px;color:var(--ink-3);font-weight:600}
+.journey{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:640px){.journey{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1040px){.journey{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.step{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;padding:16px;border-radius:18px;border:1px solid var(--line);background:var(--surface);transition:transform .2s,box-shadow .2s,border-color .2s}
+.step:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 14px 26px -16px rgb(var(--shadow-color) / .3)}
+.step .num{flex:none;display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:var(--accent-soft);color:var(--accent-deep)}
+.step b{display:block;font-size:15.5px;margin-bottom:2px}
+.step span.d{color:var(--ink-2);font-size:13.5px;line-height:1.45}
+.step .n{font-size:11.5px;font-weight:700;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase}
+
+/* week chart */
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end}
+.wk{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
+.wk .track{width:100%;height:92px;display:flex;align-items:flex-end;justify-content:center;border-radius:10px;background:var(--bg-2)}
+.wk .bar{width:100%;height:0;border-radius:10px;background:var(--orb-mid);transition:height .85s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i,0)*60ms)}
+.week.on .bar{height:var(--hh)}
+.wk .bar.low{background:var(--orb-low)}.wk .bar.high{background:var(--orb-high)}
+.wk .bar.none{background:transparent;border:1.5px dashed var(--line)}
+.week.example .bar{opacity:.55}
+.wk .d{font-size:11.5px;font-weight:700;color:var(--ink-3)}
+.wk .n{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.chart-note{font-size:12.5px;color:var(--ink-3);margin-top:10px}
+
+/* check-in */
+.ci-card{display:flex;flex-direction:column;gap:20px}
+.orb-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:12px 0 4px}
+.orb.big{width:150px;aspect-ratio:1;font-weight:800}
+.orb-num{font-family:var(--font-display);font-size:50px;line-height:1;font-weight:600}
+.orb-den{font-size:14px;font-weight:700;margin-top:-6px;opacity:.75}
+.orb-label{font-family:var(--font-display);font-size:21px;font-weight:500;text-align:center;min-height:30px}
+input[type=range]{--p:50%;-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:999px;background:linear-gradient(to right,var(--accent) var(--p),var(--line) var(--p));padding:0;border:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:0 4px 10px rgb(var(--shadow-color) / .25);transition:transform .15s}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--surface);border:3px solid var(--accent)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
+.range-scale{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-3);margin-top:-8px}
+.plan{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65}
+.plan-card{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));background:linear-gradient(180deg,var(--accent-soft),var(--surface) 70%)}
+.watch{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:18px;background:var(--warn-soft);color:var(--ink)}
+.watch .ic{color:var(--warn);margin-top:2px}
+.watch .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+
+/* chat */
+.chat-card{padding:16px}
+.chat{display:flex;flex-direction:column;gap:12px}
+.chat-log{display:flex;flex-direction:column;gap:12px;max-height:min(54vh,540px);min-height:180px;overflow-y:auto;padding:2px}
+.msg{display:flex}.msg.user{justify-content:flex-end}
+.bubble{max-width:min(88%,580px);padding:11px 15px;border-radius:18px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}
+.msg.bot .bubble{background:var(--surface-2);border:1px solid var(--line);border-bottom-left-radius:6px;animation:pop .35s ease both}
+.msg.user .bubble{background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:6px;animation:pop .3s ease both}
+.bubble.err{background:var(--bad-soft)!important;border-color:transparent!important;color:var(--ink)}
+@keyframes pop{from{opacity:.4;transform:translateY(6px) scale(.98)}to{opacity:1;transform:none}}
+.dots{display:inline-flex;gap:5px;padding:5px 2px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--ink-3);animation:bounce 1.1s infinite ease-in-out}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.5}40%{transform:translateY(-5px);opacity:1}}
+.composer{display:flex;gap:8px;align-items:flex-end}
+.composer textarea{max-height:140px}
+.send{flex:none;width:46px;height:46px;border-radius:14px;border:0;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;transition:transform .15s,opacity .2s}
+.send:active{transform:scale(.92)}
+.send[disabled]{opacity:.5}
+.triage-actions{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+
+/* triage result */
+.result{display:flex;flex-direction:column;gap:16px;animation:enter .5s ease both}
+.urg{display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:16px;font-weight:700}
+.urg.selfcare{background:var(--good-soft);color:var(--good)}
+.urg.soon{background:var(--accent-soft);color:var(--accent-deep)}
+.urg.today{background:var(--warn-soft);color:var(--warn)}
+.urg.emergency{background:var(--bad-soft);color:var(--bad)}
+.spec-big{font-family:var(--font-display);font-size:28px;font-weight:500;line-height:1.15}
+.list{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:5px}
+.skel{height:14px;border-radius:8px;background:linear-gradient(90deg,var(--bg-2),var(--line),var(--bg-2));background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* doctors */
+.filters{display:flex;flex-direction:column;gap:14px;margin:14px 0}
+.search{position:relative}
+.search .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-3)}
+.search input{padding-left:44px}
+.filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.filter-row label.f{flex:1 1 150px}
+.doc-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:1080px){.doc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.doc{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:8px 14px;padding:16px;border-radius:18px;border:1px solid var(--line);background:var(--surface);transition:transform .2s,box-shadow .2s,border-color .2s;animation:enter .45s ease both}
+.doc:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 50%,var(--line));box-shadow:0 14px 26px -18px rgb(var(--shadow-color) / .35)}
+.avatar{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-weight:800;font-size:16px;background:color-mix(in srgb,hsl(var(--h) 70% 50%) 20%,var(--surface));color:color-mix(in srgb,hsl(var(--h) 70% 38%) 62%,var(--ink));flex:none}
+.doc-main{min-width:0;display:flex;flex-direction:column;gap:2px}
+.doc-main h3{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.spec{color:var(--accent-deep);font-weight:600;font-size:13.5px}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:0 4px;font-size:13px;color:var(--ink-2)}
+.meta.muted{color:var(--ink-3)}
+.rate{display:inline-flex;align-items:center;gap:3px;font-weight:700;color:var(--warn)}
+.dot-sep{display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--ink-3);margin:0 6px;vertical-align:middle}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;background:var(--bg-2);font-size:12px;font-weight:600;color:var(--ink-2)}
+.tag.vid{background:var(--accent-soft);color:var(--accent-deep)}
+.doc-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right}
+.fee{font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
+.next{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--ink-2);font-weight:600}
+.next.today{color:var(--good)}
+@media (max-width:520px){
+  .doc{grid-template-columns:52px minmax(0,1fr)}
+  .doc-side{grid-column:1 / -1;flex-direction:row;align-items:center;justify-content:space-between;text-align:left;flex-wrap:wrap}
+}
+.doc.compact{grid-template-columns:44px minmax(0,1fr) auto;padding:12px}
+.doc.compact .avatar{width:44px;height:44px;font-size:14px;border-radius:14px}
+.more{display:flex;justify-content:center;margin-top:16px}
+.empty{padding:30px 16px;text-align:center;color:var(--ink-2);display:flex;flex-direction:column;align-items:center;gap:12px}
+.visit{display:flex;flex-direction:column;gap:10px}
+.visit-top{display:flex;gap:14px;align-items:flex-start}
+.visit-when{font-weight:800;font-size:16px}
+.visit-actions{display:flex;flex-wrap:wrap;gap:8px}
+.visit-list{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:1080px){.visit-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* booking sheet */
+.overlay{position:fixed;inset:0;z-index:50;background:rgb(6 14 26 / .5);display:flex;align-items:flex-end;justify-content:center;animation:fade .25s ease both}
+.overlay[hidden]{display:none}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.sheet{width:min(560px,100%);max-height:94vh;max-height:94dvh;overflow-y:auto;background:var(--surface);border-radius:26px 26px 0 0;padding:20px max(20px,env(safe-area-inset-left,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px;animation:slide .35s cubic-bezier(.2,.8,.2,1) both}
+@keyframes slide{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+@media (min-width:640px){.overlay{align-items:center}.sheet{border-radius:26px}}
+.sheet-head{display:flex;gap:14px;align-items:flex-start}
+.sheet-head>div:nth-child(2){flex:1;min-width:0}
+.sheet-head h2{font-size:18px;font-weight:800;letter-spacing:-.01em}
+.dates{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px}
+.date{flex:none;min-width:64px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:10px 8px;border-radius:16px;border:1px solid var(--line);background:var(--surface);font-weight:700;transition:background-color .2s,border-color .2s,transform .15s}
+.date small{font-size:11.5px;color:var(--ink-3);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.date span{font-size:20px;font-variant-numeric:tabular-nums}
+.date[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.date[aria-pressed="true"] small{color:inherit;opacity:.85}
+.date[disabled]{opacity:.4;cursor:not-allowed}
+.times{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.time{padding:10px 6px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:13.5px;font-variant-numeric:tabular-nums;transition:background-color .2s,border-color .2s,transform .15s}
+.time:hover{border-color:var(--accent)}
+.time[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-deep)}
+.done{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;padding:10px 0}
+.done-ring{color:var(--good)}
+.done-ring .ring{stroke-dasharray:145;stroke-dashoffset:145;animation:draw .7s ease forwards}
+.done-ring .tick{stroke-dasharray:40;stroke-dashoffset:40;animation:draw .5s .5s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.done h2{font-family:var(--font-display);font-weight:500;font-size:30px}
+.done .btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px}
+.ref{padding:4px 12px;border-radius:999px;background:var(--bg-2);font-weight:700;letter-spacing:.06em;font-size:13px}
+
+/* labs */
+.drop{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;padding:30px 18px;border:2px dashed color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:20px;background:var(--surface);transition:background-color .2s,border-color .2s,transform .2s}
+.drop.over{background:var(--accent-soft);border-color:var(--accent);transform:scale(1.01)}
+.drop .up{display:grid;place-items:center;width:56px;height:56px;border-radius:18px;background:var(--accent-soft);color:var(--accent-deep)}
+.drop .btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+details.paste{margin-top:14px}
+details.paste summary{cursor:pointer;font-weight:700;color:var(--accent-deep);font-size:14px}
+details.paste .in{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.scanbox{display:flex;align-items:center;gap:16px}
+.doc-ico{position:relative;overflow:hidden;width:64px;height:80px;border-radius:12px;border:2px solid var(--accent);background:var(--surface-2);display:grid;place-items:center;color:var(--accent-deep);flex:none}
+.doc-ico::after{content:"";position:absolute;left:0;right:0;height:36%;background:linear-gradient(transparent,color-mix(in srgb,var(--accent) 35%,transparent),transparent);animation:scan 1.8s ease-in-out infinite}
+@keyframes scan{0%{top:-40%}100%{top:105%}}
+.counts{display:flex;flex-wrap:wrap;gap:8px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700}
+.badge.normal{background:var(--good-soft);color:var(--good)}
+.badge.low,.badge.high,.badge.borderline{background:var(--warn-soft);color:var(--warn)}
+.badge.unknown{background:var(--bg-2);color:var(--ink-2)}
+.items{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:1000px){.items{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.item{padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:8px;animation:enter .45s ease both}
+.item.flag{border-color:color-mix(in srgb,var(--warn) 45%,var(--line))}
+.item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.item-top b{font-size:15.5px}
+.val{font-weight:800;font-variant-numeric:tabular-nums;font-size:17px;text-align:right}
+.val small{font-weight:600;color:var(--ink-3);font-size:12.5px}
+.rng{font-size:12.5px;color:var(--ink-3);text-align:right}
+.gauge{position:relative;height:8px;border-radius:999px;background:var(--bg-2);margin:4px 0 2px}
+.gauge .band{position:absolute;top:0;bottom:0;border-radius:999px;background:var(--good-soft);border:1px solid color-mix(in srgb,var(--good) 40%,transparent)}
+.gauge .dot{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--good);border:3px solid var(--surface);transform:translate(-50%,-50%);box-shadow:0 2px 6px rgb(var(--shadow-color) / .3);transition:left .9s cubic-bezier(.2,.8,.2,1)}
+.gauge .dot.low,.gauge .dot.high,.gauge .dot.borderline{background:var(--warn)}
+.sample-doc{overflow-x:auto}
+.sample-doc table{border-collapse:collapse;min-width:420px;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+.sample-doc th,.sample-doc td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)}
+.sample-doc th{color:var(--ink-3);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+
+/* stress scan */
+.st-top{display:flex;gap:16px;align-items:center}
+.st-photo{width:96px;height:96px;border-radius:22px;object-fit:cover;flex:none;border:1px solid var(--line);background:var(--bg-2)}
+.st-level{font-family:var(--font-display);font-weight:500;font-size:44px;line-height:1;font-variant-numeric:tabular-nums}
+.st-level small{font-family:var(--font-body);font-size:15px;font-weight:600;color:var(--ink-3)}
+.badge.mod{background:var(--warn-soft);color:var(--warn)}
+.badge.hi{background:var(--bad-soft);color:var(--bad)}
+.meter{position:relative;height:12px;border-radius:999px;margin:8px 0 4px;background:linear-gradient(90deg,var(--good) 0 30%,#e0a23b 30% 63%,var(--bad) 63% 100%);opacity:.9}
+.meter .pin{position:absolute;top:50%;width:22px;height:22px;border-radius:50%;background:var(--surface);border:4px solid var(--ink);transform:translate(-50%,-50%);box-shadow:0 2px 8px rgb(var(--shadow-color) / .35);transition:left 1s cubic-bezier(.2,.8,.2,1)}
+.meter-scale{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);font-weight:600}
+.cues{display:flex;flex-wrap:wrap;gap:8px}
+.cue{padding:7px 13px;border-radius:999px;background:var(--bg-2);font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.st-ask{padding:14px 16px;border-radius:16px;background:var(--accent-soft);color:var(--accent-deep);font-weight:600}
+.st-care{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:16px;background:var(--bad-soft)}
+.st-actions{display:flex;flex-wrap:wrap;gap:10px}
+.wk .bar.sl{background:var(--good)}.wk .bar.sm{background:#e0a23b}.wk .bar.sh{background:var(--bad)}
+.st-trend{font-weight:700;font-size:14px}
+.st-trend.up{color:var(--bad)}.st-trend.down{color:var(--good)}
+
+/* followup */
+.ctx{display:flex;flex-direction:column;gap:14px}
+.ctx-row{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@media (min-width:760px){.ctx-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px;z-index:60;animation:pop .3s ease both;max-width:calc(100% - 32px)}
+@media (min-width:900px){.toast{bottom:32px}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Main">
+    <div class="brand"><span class="brand-mark" id="brand-mark-side"></span>PocketBaymax</div>
+    <nav class="nav" id="nav-side" aria-label="Sections"></nav>
+    <p class="side-note">Guidance, not a diagnosis. In an emergency, contact your local emergency services.</p>
+  </aside>
+  <div class="main-col">
+    <header class="top">
+      <div class="brand"><span class="brand-mark" id="brand-mark-top"></span>PocketBaymax</div>
+      <label class="lang"><span>Claude replies in</span><select id="lang" aria-label="Reply language"></select></label>
+    </header>
+    <main class="views" id="views">
+
+      <!-- HOME -->
+      <section class="view" id="v-home" aria-labelledby="home-h" hidden>
+        <div class="hero">
+          <div class="orb" data-band="mid" aria-hidden="true"></div>
+          <div class="hero-copy">
+            <p class="eyebrow" id="home-date"></p>
+            <h1 class="display" id="home-h"></h1>
+            <p class="lede">PocketBaymax walks with you from the first symptom to the questions that come after treatment. No wearables, just your phone and a calm voice.</p>
+            <div class="hero-actions">
+              <button class="btn primary" type="button" data-go="checkin">Start today’s check-in</button>
+              <button class="btn ghost" type="button" data-go="triage">I’m feeling unwell</button>
+            </div>
+          </div>
+        </div>
+        <div class="home-grid">
+          <div class="card nudge" id="home-nudge"></div>
+          <div class="card" id="home-next"></div>
+        </div>
+        <h2 class="sec-title">Your care journey</h2>
+        <div class="journey rise" id="journey"></div>
+        <p class="fine">All doctors, clinics, ratings and slots in this prototype are fictional demo data. Bookings and check-ins are saved only in this browser.</p>
+      </section>
+
+      <!-- CHECK-IN -->
+      <section class="view" id="v-checkin" aria-labelledby="ci-h" hidden>
+        <header class="vhead">
+          <p class="eyebrow">Step 1 · Check-in</p>
+          <h1 id="ci-h">Take a moment for yourself</h1>
+          <p class="lede">Rate your mental energy today. It takes under a minute, and small check-ins help you notice tiredness before it turns into burnout.</p>
+        </header>
+        <div class="notice" data-ai-notice hidden>Claude isn’t available in this view, so the plan below uses a simple built-in guide.</div>
+        <div class="two-col">
+          <div class="card ci-card">
+            <div class="orb-wrap">
+              <div class="orb big" id="ci-orb" data-band="mid"><span class="orb-num" id="ci-num">5</span><span class="orb-den">out of 10</span></div>
+              <p class="orb-label" id="ci-label"></p>
+            </div>
+            <div>
+              <label class="sr-only" for="ci-range">Mental energy from 1 to 10</label>
+              <input type="range" id="ci-range" min="1" max="10" step="1" value="5">
+              <div class="range-scale" style="margin-top:10px"><span>Drained</span><span>Full of energy</span></div>
+            </div>
+            <fieldset><legend>What’s weighing on you? (optional)</legend><div class="chips" id="ci-tags"></div></fieldset>
+            <fieldset><legend>How did you sleep last night?</legend><div class="chips" id="ci-sleep"></div></fieldset>
+            <label class="f" for="ci-note">Anything you’d like to add? Write in any language.
+              <textarea id="ci-note" rows="3" dir="auto" placeholder="For example: back-to-back deadlines, can’t switch off at night…"></textarea>
+            </label>
+            <button class="btn primary wide" type="button" id="ci-submit">Save and get my gentle plan</button>
+            <button class="btn ghost wide" type="button" data-go="stress">Prefer a photo? Try the stress scan</button>
+          </div>
+          <div class="stack">
+            <div class="card plan-card" id="ci-plan" hidden>
+              <h2>Your gentle plan</h2>
+              <div class="plan" id="ci-plan-text" dir="auto" style="margin-top:10px"></div>
+            </div>
+            <div id="ci-watch"></div>
+            <div class="card">
+              <h2>This week</h2>
+              <div id="ci-week" style="margin-top:14px"></div>
+              <p class="chart-note" id="ci-week-note"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STRESS SCAN -->
+      <section class="view" id="v-stress" aria-labelledby="st-h" hidden>
+        <header class="vhead">
+          <p class="eyebrow">Photo stress scan</p>
+          <h1 id="st-h">Let Baymax take a look at how you’re holding up</h1>
+          <p class="lede">Upload a clear photo of your face. Baymax looks for visible signs of tension and tiredness and gives you a gentle estimate of your stress level, plus a few small things to try.</p>
+        </header>
+        <div class="notice" data-ai-notice hidden>Claude isn’t available in this view, so the photo can’t be analysed here.</div>
+        <div class="card">
+          <div class="drop" id="st-drop">
+            <div class="up"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c.9 1.1 2 1.7 3.5 1.7s2.6-.6 3.5-1.7"/><path d="M9 9.8h.01M15 9.8h.01"/></svg></div>
+            <div><b>Add a photo of yourself</b><p class="muted small">Face the camera in good light. JPG, PNG or WebP, up to 20 MB</p></div>
+            <div class="btns">
+              <button class="btn primary" type="button" id="st-pick">Choose a photo</button>
+              <button class="btn ghost" type="button" id="st-cam">Take a selfie</button>
+            </div>
+            <input type="file" id="st-file" accept="image/jpeg,image/png,image/webp" hidden>
+            <input type="file" id="st-file-cam" accept="image/*" capture="user" hidden>
+          </div>
+          <label class="f" for="st-note" style="margin-top:16px">How do you feel right now? (optional, any language)
+            <textarea id="st-note" rows="2" dir="auto" placeholder="For example: slept badly, exam tomorrow…"></textarea>
+          </label>
+          <p class="fine">Your photo is sent to Claude to be analysed once. This page does not store it, and only the stress score is kept in this browser.</p>
+        </div>
+        <div id="st-out" style="margin-top:18px" aria-live="polite"></div>
+        <div id="st-watch" style="margin-top:18px"></div>
+        <div class="card" style="margin-top:18px">
+          <h2>Your stress this week</h2>
+          <div id="st-week" style="margin-top:14px"></div>
+          <p class="chart-note" id="st-week-note"></p>
+          <button class="btn small ghost" type="button" id="st-clear" style="margin-top:12px">Clear my scan history</button>
+        </div>
+        <p class="fine">A photo can only show a single moment, so this is a rough estimate and not a diagnosis or a medical test. How you actually feel matters more than what a picture shows.</p>
+      </section>
+
+      <!-- TRIAGE -->
+      <section class="view" id="v-triage" aria-labelledby="tr-h" hidden>
+        <header class="vhead">
+          <p class="eyebrow">Step 2 · Calm triage</p>
+          <h1 id="tr-h">Tell us what’s going on</h1>
+          <p class="lede">Describe how you feel in your own words, in any language. There are no wrong answers, and nothing here will rush you.</p>
+        </header>
+        <div class="safety" role="note">
+          <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 3 19.5h18L12 4Z"/><path d="M12 10v4.5M12 17.2h.01"/></svg>
+          <p>Chest pain, trouble breathing, signs of a stroke, heavy bleeding, a very sick baby or thoughts of harming yourself need help right now. Call your local emergency number or go to the nearest emergency room.</p>
+        </div>
+        <div class="notice" data-ai-notice hidden>Claude isn’t available in this view, so matching uses a simple keyword guide.</div>
+        <div class="card chat-card" id="triage-chat"></div>
+        <div class="triage-actions">
+          <button class="btn primary" type="button" id="triage-run" disabled>Find my specialist</button>
+          <button class="btn ghost" type="button" id="triage-reset">Start over</button>
+        </div>
+        <div id="triage-result" aria-live="polite"></div>
+        <p class="fine">PocketBaymax gives guidance, not a diagnosis.</p>
+      </section>
+
+      <!-- DOCTORS -->
+      <section class="view" id="v-doctors" aria-labelledby="dr-h" hidden>
+        <header class="vhead">
+          <p class="eyebrow">Steps 3 and 4 · Specialist matching and booking</p>
+          <h1 id="dr-h">Find a doctor and book in minutes</h1>
+          <p class="lede">100 demo doctors across 17 specialties. Pick a day, pick a time, and it’s booked inside the app.</p>
+        </header>
+        <div class="seg" role="tablist" aria-label="Doctors">
+          <button type="button" role="tab" id="tab-find" aria-selected="true">Find doctors</button>
+          <button type="button" role="tab" id="tab-visits" aria-selected="false">My visits<span class="count" id="visit-count">0</span></button>
+        </div>
+        <div id="pane-find">
+          <div class="card filters">
+            <div id="d-rec"></div>
+            <div class="search"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+              <label class="sr-only" for="d-q">Search doctors</label>
+              <input type="search" id="d-q" placeholder="Search by name, specialty, city or language" autocomplete="off"></div>
+            <div class="chips scroll" id="d-spec" role="group" aria-label="Specialty"></div>
+            <div class="filter-row">
+              <label class="f" for="d-city">City<select id="d-city"></select></label>
+              <label class="f" for="d-sort">Sort by<select id="d-sort"></select></label>
+              <button class="chip" type="button" id="d-today" aria-pressed="false">Available today</button>
+              <button class="chip" type="button" id="d-video" aria-pressed="false">Video visits</button>
+            </div>
+          </div>
+          <p class="muted small" id="d-count" style="margin:0 2px 10px"></p>
+          <div class="doc-grid" id="d-list"></div>
+          <div class="more"><button class="btn ghost" type="button" id="d-more">Show more doctors</button></div>
+        </div>
+        <div id="pane-visits" hidden></div>
+      </section>
+
+      <!-- LABS -->
+      <section class="view" id="v-labs" aria-labelledby="lb-h" hidden>
+        <header class="vhead">
+          <p class="eyebrow">Step 5 · Lab translation</p>
+          <h1 id="lb-h">Read your report in plain language</h1>
+          <p class="lede">Upload a lab report as a PDF or a photo. We’ll explain each result in everyday words and suggest questions for your doctor.</p>
+        </header>
+        <div class="notice" data-ai-notice hidden>Claude isn’t available in this view. You can still try the sample report with a built-in explanation.</div>
+        <div class="card">
+          <div class="drop" id="drop">
+            <div class="up"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 20 19v-3"/></svg></div>
+            <div><b>Drop your report here</b><p class="muted small">PDF, JPG, PNG or WebP, up to 20 MB</p></div>
+            <div class="btns">
+              <button class="btn primary" type="button" id="lab-pick">Choose a file</button>
+              <button class="btn ghost" type="button" id="lab-sample">Try a sample report</button>
+            </div>
+            <input type="file" id="lab-file" accept="application/pdf,image/jpeg,image/png,image/webp" hidden>
+          </div>
+          <details class="paste">
+            <summary>Or paste the report text</summary>
+            <div class="in">
+              <label class="sr-only" for="lab-text">Report text</label>
+              <textarea id="lab-text" rows="5" dir="auto" placeholder="Paste the lines from your report here"></textarea>
+              <button class="btn small ghost" type="button" id="lab-paste-go" style="align-self:flex-start">Explain this text</button>
+            </div>
+          </details>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-top:16px">
+            <label class="f" for="lab-lang" style="flex:1 1 200px">Explain in<select id="lab-lang"></select></label>
+          </div>
+          <p class="fine">Your file is sent to Claude to be read and is not stored by this page.</p>
+        </div>
+        <div id="lab-out" style="margin-top:18px" aria-live="polite"></div>
+      </section>
+
+      <!-- FOLLOW-UP -->
+      <section class="view" id="v-followup" aria-labelledby="fu-h" hidden>
+        <header class="vhead">
+          <p class="eyebrow">Step 6 · Post-visit Q&amp;A</p>
+          <h1 id="fu-h">Ask what you forgot to ask</h1>
+          <p class="lede">Questions often come up after you leave the clinic. Ask here, and the answers will use your visit and results as context.</p>
+        </header>
+        <div class="notice" data-ai-notice hidden>Claude isn’t available in this view, so answers can’t be generated here.</div>
+        <div class="card ctx" style="margin-bottom:16px">
+          <div class="ctx-row">
+            <label class="f" for="fu-visit">Which visit is this about?<select id="fu-visit"></select></label>
+            <div class="f"><span>Your lab results</span><button class="chip" type="button" id="fu-lab" aria-pressed="false" style="align-self:flex-start">Include my lab summary</button></div>
+          </div>
+          <label class="f" for="fu-notes">What did the doctor tell you? (optional)
+            <textarea id="fu-notes" rows="3" dir="auto" placeholder="Paste or type notes, a diagnosis or a prescription as written. Any language works."></textarea>
+          </label>
+        </div>
+        <div class="card chat-card" id="fu-chat"></div>
+        <p class="fine">Answers explain what you were told. They never replace your doctor’s instructions, and they never change a prescription.</p>
+      </section>
+
+    </main>
+  </div>
+</div>
+<nav class="tabbar" id="nav-tab" aria-label="Sections"></nav>
+<div class="overlay" id="overlay" hidden></div>
+<div id="toast-host" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+const DOCTORS = [{"id":"D001","name":"Dr. Ahmed Durrani","gender":"M","specialty":"Dentist","qualifications":"BDS, RDS","focus":["Smile correction","Tooth pain"],"experience":10,"rating":4.9,"reviews":305,"fee":2600,"city":"Islamabad","clinic":"Noor Family Hospital","languages":["Urdu"],"video":true,"offDay":0,"shift":"morning","hue":125,"bio":"Focuses on smile correction and tooth pain. 10 years of practice in Islamabad."},{"id":"D002","name":"Dr. Haroon Kakar","gender":"M","specialty":"General Physician","qualifications":"MBBS, MRCGP","focus":["Preventive check-ups","Blood pressure and diabetes care"],"experience":4,"rating":4.8,"reviews":418,"fee":1800,"city":"Hyderabad","clinic":"Sehat Specialty Clinic","languages":["Urdu","English","Punjabi","Sindhi"],"video":true,"offDay":3,"shift":"evening","hue":200,"bio":"Focuses on preventive check-ups and blood pressure and diabetes care. 4 years of practice in Hyderabad."},{"id":"D003","name":"Dr. Dua Malik","gender":"F","specialty":"Gynecologist","qualifications":"MBBS, MD (Gynecology)","focus":["Menstrual health","Pregnancy care"],"experience":30,"rating":4.2,"reviews":834,"fee":3900,"city":"Karachi","clinic":"Hayat Wellness Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":4,"shift":"morning","hue":28,"bio":"Focuses on menstrual health and pregnancy care. 30 years of practice in Karachi."},{"id":"D004","name":"Dr. Waqar Ahmed","gender":"M","specialty":"Dermatologist","qualifications":"MBBS, FCPS (Dermatology)","focus":["Eczema","Hair loss"],"experience":17,"rating":4.3,"reviews":553,"fee":3700,"city":"Islamabad","clinic":"Rahat Health Hub","languages":["Urdu"],"video":true,"offDay":2,"shift":"morning","hue":125,"bio":"Focuses on eczema and hair loss. 17 years of practice in Islamabad."},{"id":"D005","name":"Dr. Mubashir Mirza","gender":"M","specialty":"Dermatologist","qualifications":"MBBS, FCPS (Dermatology)","focus":["Hair loss","Acne and skin allergy"],"experience":11,"rating":4.3,"reviews":490,"fee":3100,"city":"Faisalabad","clinic":"Dua Specialty Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":4,"shift":"morning","hue":45,"bio":"Focuses on hair loss and acne and skin allergy. 11 years of practice in Faisalabad."},{"id":"D006","name":"Dr. Hassan Niazi","gender":"M","specialty":"General Physician","qualifications":"MBBS, MRCGP","focus":["Preventive check-ups","Blood pressure and diabetes care"],"experience":7,"rating":4.2,"reviews":567,"fee":1900,"city":"Peshawar","clinic":"Dua Specialty Clinic","languages":["Urdu","English"],"video":true,"offDay":3,"shift":"evening","hue":125,"bio":"Focuses on preventive check-ups and blood pressure and diabetes care. 7 years of practice in Peshawar."},{"id":"D007","name":"Dr. Fatima Yousafzai","gender":"F","specialty":"Gynecologist","qualifications":"MBBS, FCPS (Gynecology)","focus":["Pregnancy care","PCOS"],"experience":28,"rating":4.5,"reviews":688,"fee":4200,"city":"Peshawar","clinic":"Sehat Family Hospital","languages":["Urdu","English","Punjabi","Pashto"],"video":true,"offDay":6,"shift":"evening","hue":190,"bio":"Focuses on pregnancy care and pcos. 28 years of practice in Peshawar."},{"id":"D008","name":"Dr. Kiran Hashmi","gender":"F","specialty":"General Physician","qualifications":"MBBS, MRCGP","focus":["Blood pressure and diabetes care","Fever and infections"],"experience":28,"rating":4.7,"reviews":438,"fee":2900,"city":"Karachi","clinic":"Barkat Medical Centre","languages":["Urdu","English","Punjabi","Sindhi"],"video":true,"offDay":1,"shift":"evening","hue":200,"bio":"Focuses on blood pressure and diabetes care and fever and infections. 28 years of practice in Karachi."},{"id":"D009","name":"Dr. Nadia Butt","gender":"F","specialty":"Dermatologist","qualifications":"MBBS, MD (Dermatology)","focus":["Eczema","Hair loss"],"experience":26,"rating":4.8,"reviews":45,"fee":3900,"city":"Karachi","clinic":"Shafa Health Hub","languages":["Urdu","English"],"video":true,"offDay":3,"shift":"evening","hue":255,"bio":"Focuses on eczema and hair loss. 26 years of practice in Karachi."},{"id":"D010","name":"Dr. Mariam Rana","gender":"F","specialty":"General Physician","qualifications":"MBBS, FCPS (Family Medicine)","focus":["Family medicine","Preventive check-ups"],"experience":9,"rating":4.8,"reviews":251,"fee":2600,"city":"Lahore","clinic":"Barkat Specialty Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":0,"shift":"evening","hue":190,"bio":"Focuses on family medicine and preventive check-ups. 9 years of practice in Lahore."},{"id":"D011","name":"Dr. Asad Abbasi","gender":"M","specialty":"General Physician","qualifications":"MBBS, FCPS (Family Medicine)","focus":["Family medicine","Preventive check-ups"],"experience":14,"rating":4.8,"reviews":38,"fee":2400,"city":"Sialkot","clinic":"Meher Care Clinic","languages":["Urdu","English"],"video":false,"offDay":5,"shift":"morning","hue":165,"bio":"Focuses on family medicine and preventive check-ups. 14 years of practice in Sialkot."},{"id":"D012","name":"Dr. Saima Zaidi","gender":"F","specialty":"Neurologist","qualifications":"MBBS, MD (Neurology)","focus":["Stroke recovery","Epilepsy"],"experience":32,"rating":4.3,"reviews":404,"fee":4800,"city":"Lahore","clinic":"Dua Family Hospital","languages":["Urdu","English","Punjabi"],"video":true,"offDay":5,"shift":"morning","hue":190,"bio":"Focuses on stroke recovery and epilepsy. 32 years of practice in Lahore."},{"id":"D013","name":"Dr. Sana Sheikh","gender":"F","specialty":"General Physician","qualifications":"MBBS","focus":["Family medicine","Fever and infections"],"experience":21,"rating":4.1,"reviews":516,"fee":2600,"city":"Rawalpindi","clinic":"Rahat Specialty Clinic","languages":["Urdu","English"],"video":false,"offDay":6,"shift":"morning","hue":165,"bio":"Focuses on family medicine and fever and infections. 21 years of practice in Rawalpindi."},{"id":"D014","name":"Dr. Nimra Naqvi","gender":"F","specialty":"Gynecologist","qualifications":"MBBS, FCPS (Gynecology)","focus":["PCOS","Pregnancy care"],"experience":6,"rating":4.1,"reviews":789,"fee":2900,"city":"Peshawar","clinic":"Meher Medical Centre","languages":["Urdu","English","Pashto"],"video":true,"offDay":2,"shift":"evening","hue":200,"bio":"Focuses on pcos and pregnancy care. 6 years of practice in Peshawar."},{"id":"D015","name":"Dr. Sana Khan","gender":"F","specialty":"Cardiologist","qualifications":"MBBS, FCPS (Cardiology)","focus":["Chest pain evaluation","Preventive cardiology"],"experience":4,"rating":4.5,"reviews":689,"fee":3300,"city":"Faisalabad","clinic":"Zindagi Health Hub","languages":["Urdu","English","Punjabi"],"video":true,"offDay":2,"shift":"evening","hue":200,"bio":"Focuses on chest pain evaluation and preventive cardiology. 4 years of practice in Faisalabad."},{"id":"D016","name":"Dr. Tariq Kakar","gender":"M","specialty":"Psychiatrist","qualifications":"MBBS, FCPS (Psychiatry)","focus":["Sleep problems","Burnout and stress"],"experience":30,"rating":4.3,"reviews":154,"fee":4400,"city":"Lahore","clinic":"Zindagi Health Hub","languages":["Urdu","Punjabi"],"video":true,"offDay":6,"shift":"morning","hue":165,"bio":"Focuses on sleep problems and burnout and stress. 30 years of practice in Lahore."},{"id":"D017","name":"Dr. Faisal Gill","gender":"M","specialty":"Orthopedic Surgeon","qualifications":"MBBS, FCPS (Orthopedic Surgery)","focus":["Spine and back pain","Sports injuries"],"experience":9,"rating":4.9,"reviews":861,"fee":3400,"city":"Karachi","clinic":"Aafiyat Wellness Centre","languages":["Urdu","English","Sindhi"],"video":true,"offDay":3,"shift":"evening","hue":45,"bio":"Focuses on spine and back pain and sports injuries. 9 years of practice in Karachi."},{"id":"D018","name":"Dr. Hamza Yousafzai","gender":"M","specialty":"Clinical Psychologist","qualifications":"MS Clinical Psychology","focus":["Stress management","Cognitive behavioral therapy"],"experience":18,"rating":4.2,"reviews":475,"fee":3200,"city":"Islamabad","clinic":"Zindagi Medical Centre","languages":["Urdu","English"],"video":false,"offDay":2,"shift":"evening","hue":340,"bio":"Focuses on stress management and cognitive behavioral therapy. 18 years of practice in Islamabad."},{"id":"D019","name":"Dr. Naveed Ansari","gender":"M","specialty":"Endocrinologist","qualifications":"MBBS, FCPS (Endocrinology)","focus":["Diabetes","Thyroid disorders"],"experience":29,"rating":4.3,"reviews":68,"fee":4900,"city":"Islamabad","clinic":"Barkat Medical Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":5,"shift":"evening","hue":340,"bio":"Focuses on diabetes and thyroid disorders. 29 years of practice in Islamabad."},{"id":"D020","name":"Dr. Saad Lashari","gender":"M","specialty":"Orthopedic Surgeon","qualifications":"MBBS, FCPS (Orthopedic Surgery)","focus":["Spine and back pain","Joint pain"],"experience":16,"rating":4.8,"reviews":345,"fee":3700,"city":"Lahore","clinic":"Rahat Family Hospital","languages":["Urdu","English","Punjabi"],"video":false,"offDay":3,"shift":"evening","hue":255,"bio":"Focuses on spine and back pain and joint pain. 16 years of practice in Lahore."},{"id":"D021","name":"Dr. Sana Siddiqui","gender":"F","specialty":"Endocrinologist","qualifications":"MBBS, MD (Endocrinology)","focus":["Weight management","Diabetes"],"experience":8,"rating":4.7,"reviews":314,"fee":3900,"city":"Islamabad","clinic":"Aafiyat Specialty Clinic","languages":["Urdu","English"],"video":true,"offDay":4,"shift":"morning","hue":340,"bio":"Focuses on weight management and diabetes. 8 years of practice in Islamabad."},{"id":"D022","name":"Dr. Danish Ansari","gender":"M","specialty":"Gastroenterologist","qualifications":"MBBS, FCPS (Gastroenterology)","focus":["Acidity and reflux","Liver health"],"experience":12,"rating":4.7,"reviews":259,"fee":3700,"city":"Karachi","clinic":"Sukoon Health Hub","languages":["Urdu","English"],"video":true,"offDay":2,"shift":"evening","hue":200,"bio":"Focuses on acidity and reflux and liver health. 12 years of practice in Karachi."},{"id":"D023","name":"Dr. Faisal Abbasi","gender":"M","specialty":"ENT Specialist","qualifications":"MBBS, FCPS (ENT)","focus":["Sinus problems","Allergic rhinitis"],"experience":20,"rating":4.5,"reviews":652,"fee":3700,"city":"Multan","clinic":"Noor Health Hub","languages":["Urdu","English"],"video":true,"offDay":4,"shift":"evening","hue":125,"bio":"Focuses on sinus problems and allergic rhinitis. 20 years of practice in Multan."},{"id":"D024","name":"Dr. Rabia Mirza","gender":"F","specialty":"Clinical Psychologist","qualifications":"MPhil Clinical Psychology","focus":["Stress management","Cognitive behavioral therapy"],"experience":25,"rating":4.7,"reviews":98,"fee":3500,"city":"Islamabad","clinic":"Rahat Care Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":6,"shift":"evening","hue":190,"bio":"Focuses on stress management and cognitive behavioral therapy. 25 years of practice in Islamabad."},{"id":"D025","name":"Dr. Sidra Sheikh","gender":"F","specialty":"ENT Specialist","qualifications":"MBBS, FCPS (ENT)","focus":["Ear infections","Sinus problems"],"experience":32,"rating":4.7,"reviews":51,"fee":3900,"city":"Multan","clinic":"Barkat Care Clinic","languages":["Urdu","English"],"video":true,"offDay":0,"shift":"morning","hue":255,"bio":"Focuses on ear infections and sinus problems. 32 years of practice in Multan."},{"id":"D026","name":"Dr. Beenish Siddiqui","gender":"F","specialty":"Gastroenterologist","qualifications":"MBBS, FCPS (Gastroenterology)","focus":["Irritable bowel","Liver health"],"experience":30,"rating":4.5,"reviews":874,"fee":4500,"city":"Rawalpindi","clinic":"Shafa Specialty Clinic","languages":["Urdu","English"],"video":false,"offDay":6,"shift":"evening","hue":45,"bio":"Focuses on irritable bowel and liver health. 30 years of practice in Rawalpindi."},{"id":"D027","name":"Dr. Nimra Yousafzai","gender":"F","specialty":"Cardiologist","qualifications":"MBBS, FCPS (Cardiology)","focus":["Hypertension","Heart rhythm problems"],"experience":23,"rating":4.8,"reviews":682,"fee":3900,"city":"Karachi","clinic":"Meher Family Hospital","languages":["Urdu","English"],"video":true,"offDay":1,"shift":"morning","hue":340,"bio":"Focuses on hypertension and heart rhythm problems. 23 years of practice in Karachi."},{"id":"D028","name":"Dr. Naveed Cheema","gender":"M","specialty":"Urologist","qualifications":"MBBS, FCPS (Urology)","focus":["Urinary infections","Kidney stones"],"experience":9,"rating":4.1,"reviews":69,"fee":3700,"city":"Karachi","clinic":"Sehat Family Hospital","languages":["Urdu","English","Sindhi"],"video":true,"offDay":1,"shift":"morning","hue":165,"bio":"Focuses on urinary infections and kidney stones. 9 years of practice in Karachi."},{"id":"D029","name":"Dr. Hassan Hashmi","gender":"M","specialty":"Ophthalmologist","qualifications":"MBBS, MD (Ophthalmology)","focus":["Vision checks","Dry eye"],"experience":17,"rating":4.3,"reviews":765,"fee":3700,"city":"Quetta","clinic":"Zindagi Medical Centre","languages":["Urdu","English","Pashto"],"video":true,"offDay":4,"shift":"evening","hue":45,"bio":"Focuses on vision checks and dry eye. 17 years of practice in Quetta."},{"id":"D030","name":"Dr. Adnan Lodhi","gender":"M","specialty":"Gynecologist","qualifications":"MBBS, FCPS (Gynecology)","focus":["PCOS","Fertility advice"],"experience":12,"rating":4.5,"reviews":291,"fee":3500,"city":"Lahore","clinic":"Shafa Health Hub","languages":["Urdu","English"],"video":true,"offDay":5,"shift":"evening","hue":340,"bio":"Focuses on pcos and fertility advice. 12 years of practice in Lahore."},{"id":"D031","name":"Dr. Hafsa Gill","gender":"F","specialty":"Endocrinologist","qualifications":"MBBS, MD (Endocrinology)","focus":["Diabetes","Thyroid disorders"],"experience":23,"rating":4.3,"reviews":215,"fee":4000,"city":"Islamabad","clinic":"Meher Wellness Centre","languages":["Urdu","English"],"video":true,"offDay":1,"shift":"evening","hue":340,"bio":"Focuses on diabetes and thyroid disorders. 23 years of practice in Islamabad."},{"id":"D032","name":"Dr. Erum Baig","gender":"F","specialty":"Nephrologist","qualifications":"MBBS, MD (Nephrology)","focus":["Dialysis care","Blood pressure and kidneys"],"experience":19,"rating":4.5,"reviews":808,"fee":4100,"city":"Islamabad","clinic":"Sehat Care Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":6,"shift":"evening","hue":340,"bio":"Focuses on dialysis care and blood pressure and kidneys. 19 years of practice in Islamabad."},{"id":"D033","name":"Dr. Tariq Yousafzai","gender":"M","specialty":"Ophthalmologist","qualifications":"MBBS, MD (Ophthalmology)","focus":["Eye strain","Dry eye"],"experience":26,"rating":4,"reviews":491,"fee":4200,"city":"Karachi","clinic":"Rahat Family Hospital","languages":["Urdu","English","Punjabi"],"video":true,"offDay":5,"shift":"evening","hue":165,"bio":"Focuses on eye strain and dry eye. 26 years of practice in Karachi."},{"id":"D034","name":"Dr. Naveed Qureshi","gender":"M","specialty":"Clinical Psychologist","qualifications":"MS Clinical Psychology","focus":["Stress management","Grief and life changes"],"experience":4,"rating":4.5,"reviews":59,"fee":3000,"city":"Peshawar","clinic":"Dua Care Clinic","languages":["Urdu","English","Punjabi","Pashto"],"video":true,"offDay":1,"shift":"evening","hue":28,"bio":"Focuses on stress management and grief and life changes. 4 years of practice in Peshawar."},{"id":"D035","name":"Dr. Noor Durrani","gender":"F","specialty":"Gynecologist","qualifications":"MBBS, FCPS (Gynecology)","focus":["Menstrual health","Fertility advice"],"experience":26,"rating":4.5,"reviews":164,"fee":3500,"city":"Karachi","clinic":"Sukoon Medical Centre","languages":["Urdu","Sindhi"],"video":true,"offDay":5,"shift":"morning","hue":125,"bio":"Focuses on menstrual health and fertility advice. 26 years of practice in Karachi."},{"id":"D036","name":"Dr. Beenish Mirza","gender":"F","specialty":"Clinical Psychologist","qualifications":"MS Clinical Psychology","focus":["Grief and life changes","Stress management"],"experience":26,"rating":4.8,"reviews":196,"fee":3600,"city":"Karachi","clinic":"Sukoon Family Hospital","languages":["Urdu"],"video":false,"offDay":6,"shift":"evening","hue":28,"bio":"Focuses on grief and life changes and stress management. 26 years of practice in Karachi."},{"id":"D037","name":"Dr. Humaira Siddiqui","gender":"F","specialty":"Neurologist","qualifications":"MBBS, FCPS (Neurology)","focus":["Stroke recovery","Nerve pain"],"experience":25,"rating":4.6,"reviews":580,"fee":4500,"city":"Multan","clinic":"Shafa Wellness Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":0,"shift":"morning","hue":255,"bio":"Focuses on stroke recovery and nerve pain. 25 years of practice in Multan."},{"id":"D038","name":"Dr. Hamza Awan","gender":"M","specialty":"Endocrinologist","qualifications":"MBBS, FCPS (Endocrinology)","focus":["Hormonal imbalance","Thyroid disorders"],"experience":13,"rating":4.3,"reviews":832,"fee":3500,"city":"Peshawar","clinic":"Sehat Specialty Clinic","languages":["Urdu","English","Pashto"],"video":true,"offDay":4,"shift":"evening","hue":165,"bio":"Focuses on hormonal imbalance and thyroid disorders. 13 years of practice in Peshawar."},{"id":"D039","name":"Dr. Tariq Qureshi","gender":"M","specialty":"Pediatrician","qualifications":"MBBS, FCPS (Pediatrics)","focus":["Child growth","Childhood infections"],"experience":30,"rating":4.9,"reviews":804,"fee":3500,"city":"Hyderabad","clinic":"Meher Wellness Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":6,"shift":"morning","hue":28,"bio":"Focuses on child growth and childhood infections. 30 years of practice in Hyderabad."},{"id":"D040","name":"Dr. Bushra Abbasi","gender":"F","specialty":"ENT Specialist","qualifications":"MBBS, FCPS (ENT)","focus":["Ear infections","Sinus problems"],"experience":20,"rating":4.8,"reviews":701,"fee":3500,"city":"Karachi","clinic":"Barkat Care Clinic","languages":["Urdu","English","Punjabi","Sindhi"],"video":false,"offDay":5,"shift":"evening","hue":45,"bio":"Focuses on ear infections and sinus problems. 20 years of practice in Karachi."},{"id":"D041","name":"Dr. Kiran Mirza","gender":"F","specialty":"General Physician","qualifications":"MBBS","focus":["Blood pressure and diabetes care","Preventive check-ups"],"experience":29,"rating":4,"reviews":178,"fee":2800,"city":"Multan","clinic":"Amaan Specialty Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":0,"shift":"evening","hue":200,"bio":"Focuses on blood pressure and diabetes care and preventive check-ups. 29 years of practice in Multan."},{"id":"D042","name":"Dr. Hamza Ansari","gender":"M","specialty":"Orthopedic Surgeon","qualifications":"MBBS, FCPS (Orthopedic Surgery)","focus":["Fracture care","Sports injuries"],"experience":6,"rating":4.1,"reviews":199,"fee":3600,"city":"Hyderabad","clinic":"Meher Family Hospital","languages":["Urdu","English"],"video":true,"offDay":6,"shift":"evening","hue":255,"bio":"Focuses on fracture care and sports injuries. 6 years of practice in Hyderabad."},{"id":"D043","name":"Dr. Asad Anwar","gender":"M","specialty":"ENT Specialist","qualifications":"MBBS, FCPS (ENT)","focus":["Sinus problems","Ear infections"],"experience":30,"rating":4.8,"reviews":359,"fee":4100,"city":"Rawalpindi","clinic":"Dua Specialty Clinic","languages":["Urdu","English","Punjabi"],"video":false,"offDay":5,"shift":"evening","hue":45,"bio":"Focuses on sinus problems and ear infections. 30 years of practice in Rawalpindi."},{"id":"D044","name":"Dr. Junaid Lashari","gender":"M","specialty":"Neurologist","qualifications":"MBBS, FCPS (Neurology)","focus":["Stroke recovery","Nerve pain"],"experience":24,"rating":4.4,"reviews":412,"fee":4200,"city":"Sialkot","clinic":"Noor Family Hospital","languages":["Urdu","English","Punjabi"],"video":false,"offDay":2,"shift":"morning","hue":255,"bio":"Focuses on stroke recovery and nerve pain. 24 years of practice in Sialkot."},{"id":"D045","name":"Dr. Waqar Butt","gender":"M","specialty":"Ophthalmologist","qualifications":"MBBS, FCPS (Ophthalmology)","focus":["Vision checks","Eye strain"],"experience":20,"rating":4.7,"reviews":410,"fee":3800,"city":"Lahore","clinic":"Aafiyat Care Clinic","languages":["Urdu","English","Punjabi"],"video":false,"offDay":5,"shift":"evening","hue":190,"bio":"Focuses on vision checks and eye strain. 20 years of practice in Lahore."},{"id":"D046","name":"Dr. Faisal Naqvi","gender":"M","specialty":"Nephrologist","qualifications":"MBBS, FCPS (Nephrology)","focus":["Kidney disease","Blood pressure and kidneys"],"experience":29,"rating":4.6,"reviews":608,"fee":4300,"city":"Islamabad","clinic":"Rahat Care Clinic","languages":["Urdu","English"],"video":true,"offDay":0,"shift":"evening","hue":340,"bio":"Focuses on kidney disease and blood pressure and kidneys. 29 years of practice in Islamabad."},{"id":"D047","name":"Dr. Danish Butt","gender":"M","specialty":"Pediatrician","qualifications":"MBBS, FCPS (Pediatrics)","focus":["Child growth","Childhood infections"],"experience":6,"rating":4.2,"reviews":267,"fee":2300,"city":"Islamabad","clinic":"Sukoon Care Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":4,"shift":"morning","hue":45,"bio":"Focuses on child growth and childhood infections. 6 years of practice in Islamabad."},{"id":"D048","name":"Dr. Nadia Chaudhry","gender":"F","specialty":"Cardiologist","qualifications":"MBBS, FCPS (Cardiology)","focus":["Hypertension","Heart rhythm problems"],"experience":29,"rating":4.8,"reviews":712,"fee":4200,"city":"Multan","clinic":"Noor Medical Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":3,"shift":"morning","hue":200,"bio":"Focuses on hypertension and heart rhythm problems. 29 years of practice in Multan."},{"id":"D049","name":"Dr. Shahid Abbasi","gender":"M","specialty":"Orthopedic Surgeon","qualifications":"MBBS, FCPS (Orthopedic Surgery)","focus":["Joint pain","Sports injuries"],"experience":17,"rating":4.4,"reviews":117,"fee":4000,"city":"Peshawar","clinic":"Meher Wellness Centre","languages":["Urdu","English","Pashto"],"video":true,"offDay":2,"shift":"morning","hue":165,"bio":"Focuses on joint pain and sports injuries. 17 years of practice in Peshawar."},{"id":"D050","name":"Dr. Usman Naqvi","gender":"M","specialty":"Dentist","qualifications":"BDS, RDS","focus":["Smile correction","Gum care"],"experience":16,"rating":4.8,"reviews":460,"fee":2700,"city":"Sialkot","clinic":"Rahat Care Clinic","languages":["Urdu","English","Punjabi"],"video":false,"offDay":1,"shift":"morning","hue":340,"bio":"Focuses on smile correction and gum care. 16 years of practice in Sialkot."},{"id":"D051","name":"Dr. Faisal Yousafzai","gender":"M","specialty":"Dentist","qualifications":"BDS, RDS","focus":["Root canal","Tooth pain"],"experience":12,"rating":4,"reviews":27,"fee":3200,"city":"Lahore","clinic":"Dua Care Clinic","languages":["Urdu","English"],"video":false,"offDay":2,"shift":"evening","hue":165,"bio":"Focuses on root canal and tooth pain. 12 years of practice in Lahore."},{"id":"D052","name":"Dr. Tahira Cheema","gender":"F","specialty":"Gynecologist","qualifications":"MBBS, MD (Gynecology)","focus":["Menstrual health","Pregnancy care"],"experience":22,"rating":4.5,"reviews":218,"fee":3500,"city":"Multan","clinic":"Sukoon Medical Centre","languages":["Urdu","English"],"video":true,"offDay":3,"shift":"morning","hue":200,"bio":"Focuses on menstrual health and pregnancy care. 22 years of practice in Multan."},{"id":"D053","name":"Dr. Amna Raza","gender":"F","specialty":"Ophthalmologist","qualifications":"MBBS, FCPS (Ophthalmology)","focus":["Eye strain","Cataract"],"experience":28,"rating":4.7,"reviews":568,"fee":4000,"city":"Faisalabad","clinic":"Aafiyat Care Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":4,"shift":"morning","hue":45,"bio":"Focuses on eye strain and cataract. 28 years of practice in Faisalabad."},{"id":"D054","name":"Dr. Nimra Sheikh","gender":"F","specialty":"Clinical Psychologist","qualifications":"MS Clinical Psychology","focus":["Stress management","Grief and life changes"],"experience":14,"rating":4.5,"reviews":725,"fee":3500,"city":"Faisalabad","clinic":"Sukoon Wellness Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":6,"shift":"morning","hue":165,"bio":"Focuses on stress management and grief and life changes. 14 years of practice in Faisalabad."},{"id":"D055","name":"Dr. Anum Durrani","gender":"F","specialty":"Gynecologist","qualifications":"MBBS, FCPS (Gynecology)","focus":["Pregnancy care","Menstrual health"],"experience":7,"rating":4.5,"reviews":247,"fee":3300,"city":"Rawalpindi","clinic":"Noor Family Hospital","languages":["Urdu","English","Punjabi"],"video":true,"offDay":5,"shift":"evening","hue":125,"bio":"Focuses on pregnancy care and menstrual health. 7 years of practice in Rawalpindi."},{"id":"D056","name":"Dr. Tariq Malik","gender":"M","specialty":"Dermatologist","qualifications":"MBBS, FCPS (Dermatology)","focus":["Skin infections","Acne and skin allergy"],"experience":31,"rating":4.6,"reviews":695,"fee":4200,"city":"Karachi","clinic":"Aafiyat Health Hub","languages":["Urdu","English","Sindhi"],"video":true,"offDay":6,"shift":"morning","hue":165,"bio":"Focuses on skin infections and acne and skin allergy. 31 years of practice in Karachi."},{"id":"D057","name":"Dr. Tahira Abbasi","gender":"F","specialty":"Pediatrician","qualifications":"MBBS, FCPS (Pediatrics)","focus":["Newborn care","Child growth"],"experience":16,"rating":4.5,"reviews":204,"fee":2700,"city":"Sialkot","clinic":"Hayat Specialty Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":1,"shift":"morning","hue":340,"bio":"Focuses on newborn care and child growth. 16 years of practice in Sialkot."},{"id":"D058","name":"Dr. Omar Javed","gender":"M","specialty":"Pediatrician","qualifications":"MBBS, FCPS (Pediatrics)","focus":["Child growth","Childhood infections"],"experience":15,"rating":4.9,"reviews":238,"fee":2900,"city":"Rawalpindi","clinic":"Sukoon Family Hospital","languages":["Urdu","English","Punjabi"],"video":false,"offDay":1,"shift":"morning","hue":165,"bio":"Focuses on child growth and childhood infections. 15 years of practice in Rawalpindi."},{"id":"D059","name":"Dr. Naveed Farooq","gender":"M","specialty":"Pulmonologist","qualifications":"MBBS, FCPS (Pulmonology)","focus":["Allergy-related breathing issues","Chronic cough"],"experience":7,"rating":4.8,"reviews":568,"fee":3500,"city":"Lahore","clinic":"Amaan Medical Centre","languages":["Urdu","English"],"video":true,"offDay":5,"shift":"evening","hue":165,"bio":"Focuses on allergy-related breathing issues and chronic cough. 7 years of practice in Lahore."},{"id":"D060","name":"Dr. Mariam Hussain","gender":"F","specialty":"Pediatrician","qualifications":"MBBS, FCPS (Pediatrics)","focus":["Newborn care","Childhood infections"],"experience":31,"rating":4.3,"reviews":776,"fee":3400,"city":"Faisalabad","clinic":"Zindagi Medical Centre","languages":["Urdu","English"],"video":true,"offDay":1,"shift":"evening","hue":28,"bio":"Focuses on newborn care and childhood infections. 31 years of practice in Faisalabad."},{"id":"D061","name":"Dr. Mubashir Chaudhry","gender":"M","specialty":"Psychiatrist","qualifications":"MBBS, FCPS (Psychiatry)","focus":["Sleep problems","Burnout and stress"],"experience":19,"rating":4.5,"reviews":455,"fee":4100,"city":"Karachi","clinic":"Shafa Family Hospital","languages":["Urdu","English","Punjabi"],"video":true,"offDay":1,"shift":"morning","hue":255,"bio":"Focuses on sleep problems and burnout and stress. 19 years of practice in Karachi."},{"id":"D062","name":"Dr. Babar Butt","gender":"M","specialty":"ENT Specialist","qualifications":"MBBS, FCPS (ENT)","focus":["Sinus problems","Ear infections"],"experience":12,"rating":4,"reviews":312,"fee":3200,"city":"Lahore","clinic":"Sukoon Family Hospital","languages":["Urdu","English","Punjabi"],"video":true,"offDay":0,"shift":"morning","hue":340,"bio":"Focuses on sinus problems and ear infections. 12 years of practice in Lahore."},{"id":"D063","name":"Dr. Qasim Javed","gender":"M","specialty":"Psychiatrist","qualifications":"MBBS, FCPS (Psychiatry)","focus":["Depression","Burnout and stress"],"experience":26,"rating":4.9,"reviews":110,"fee":4400,"city":"Lahore","clinic":"Aafiyat Family Hospital","languages":["Urdu","English"],"video":false,"offDay":5,"shift":"morning","hue":340,"bio":"Focuses on depression and burnout and stress. 26 years of practice in Lahore."},{"id":"D064","name":"Dr. Zeeshan Baig","gender":"M","specialty":"Gastroenterologist","qualifications":"MBBS, FCPS (Gastroenterology)","focus":["Stomach infections","Irritable bowel"],"experience":21,"rating":4.7,"reviews":204,"fee":4500,"city":"Islamabad","clinic":"Shafa Medical Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":5,"shift":"evening","hue":340,"bio":"Focuses on stomach infections and irritable bowel. 21 years of practice in Islamabad."},{"id":"D065","name":"Dr. Mahnoor Zaidi","gender":"F","specialty":"Orthopedic Surgeon","qualifications":"MBBS, FCPS (Orthopedic Surgery)","focus":["Joint pain","Sports injuries"],"experience":25,"rating":4.7,"reviews":485,"fee":4400,"city":"Hyderabad","clinic":"Dua Health Hub","languages":["Urdu","English","Punjabi","Sindhi"],"video":false,"offDay":3,"shift":"morning","hue":255,"bio":"Focuses on joint pain and sports injuries. 25 years of practice in Hyderabad."},{"id":"D066","name":"Dr. Laiba Qureshi","gender":"F","specialty":"Cardiologist","qualifications":"MBBS, FCPS (Cardiology)","focus":["Hypertension","Heart rhythm problems"],"experience":9,"rating":4.6,"reviews":513,"fee":3600,"city":"Lahore","clinic":"Shafa Wellness Centre","languages":["Urdu","English","Punjabi"],"video":false,"offDay":0,"shift":"morning","hue":340,"bio":"Focuses on hypertension and heart rhythm problems. 9 years of practice in Lahore."},{"id":"D067","name":"Dr. Qasim Rana","gender":"M","specialty":"Pulmonologist","qualifications":"MBBS, FCPS (Pulmonology)","focus":["Asthma","Chronic cough"],"experience":22,"rating":4.1,"reviews":71,"fee":3900,"city":"Rawalpindi","clinic":"Shafa Family Hospital","languages":["Urdu","English","Punjabi"],"video":true,"offDay":4,"shift":"evening","hue":165,"bio":"Focuses on asthma and chronic cough. 22 years of practice in Rawalpindi."},{"id":"D068","name":"Dr. Nadia Anwar","gender":"F","specialty":"Gastroenterologist","qualifications":"MBBS, FCPS (Gastroenterology)","focus":["Stomach infections","Irritable bowel"],"experience":4,"rating":4.5,"reviews":854,"fee":3600,"city":"Sialkot","clinic":"Noor Medical Centre","languages":["Urdu","English"],"video":true,"offDay":6,"shift":"evening","hue":200,"bio":"Focuses on stomach infections and irritable bowel. 4 years of practice in Sialkot."},{"id":"D069","name":"Dr. Salman Naqvi","gender":"M","specialty":"Pediatrician","qualifications":"MBBS, MD (Pediatrics)","focus":["Newborn care","Vaccination"],"experience":27,"rating":4.4,"reviews":615,"fee":3400,"city":"Lahore","clinic":"Hayat Family Hospital","languages":["Urdu","English"],"video":false,"offDay":5,"shift":"evening","hue":190,"bio":"Focuses on newborn care and vaccination. 27 years of practice in Lahore."},{"id":"D070","name":"Dr. Rashid Ansari","gender":"M","specialty":"Cardiologist","qualifications":"MBBS, FCPS (Cardiology)","focus":["Hypertension","Chest pain evaluation"],"experience":25,"rating":4.3,"reviews":60,"fee":4100,"city":"Rawalpindi","clinic":"Sehat Family Hospital","languages":["Urdu","English"],"video":true,"offDay":4,"shift":"morning","hue":28,"bio":"Focuses on hypertension and chest pain evaluation. 25 years of practice in Rawalpindi."},{"id":"D071","name":"Dr. Sana Rana","gender":"F","specialty":"Cardiologist","qualifications":"MBBS, FCPS (Cardiology)","focus":["Hypertension","Preventive cardiology"],"experience":23,"rating":4.8,"reviews":425,"fee":4100,"city":"Sialkot","clinic":"Zindagi Medical Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":6,"shift":"evening","hue":255,"bio":"Focuses on hypertension and preventive cardiology. 23 years of practice in Sialkot."},{"id":"D072","name":"Dr. Dua Raza","gender":"F","specialty":"Dermatologist","qualifications":"MBBS, FCPS (Dermatology)","focus":["Eczema","Skin infections"],"experience":28,"rating":4.2,"reviews":617,"fee":4100,"city":"Karachi","clinic":"Shafa Care Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":6,"shift":"evening","hue":125,"bio":"Focuses on eczema and skin infections. 28 years of practice in Karachi."},{"id":"D073","name":"Dr. Saima Mirza","gender":"F","specialty":"Dermatologist","qualifications":"MBBS, FCPS (Dermatology)","focus":["Eczema","Skin infections"],"experience":25,"rating":4.6,"reviews":683,"fee":3900,"city":"Islamabad","clinic":"Rahat Family Hospital","languages":["Urdu","English"],"video":true,"offDay":5,"shift":"morning","hue":190,"bio":"Focuses on eczema and skin infections. 25 years of practice in Islamabad."},{"id":"D074","name":"Dr. Huma Lashari","gender":"F","specialty":"Cardiologist","qualifications":"MBBS, FCPS (Cardiology)","focus":["Hypertension","Preventive cardiology"],"experience":32,"rating":4.5,"reviews":569,"fee":4700,"city":"Karachi","clinic":"Noor Health Hub","languages":["Urdu","Punjabi","Sindhi"],"video":true,"offDay":0,"shift":"morning","hue":28,"bio":"Focuses on hypertension and preventive cardiology. 32 years of practice in Karachi."},{"id":"D075","name":"Dr. Rubina Ahmed","gender":"F","specialty":"Neurologist","qualifications":"MBBS, FCPS (Neurology)","focus":["Migraine","Stroke recovery"],"experience":12,"rating":4.4,"reviews":29,"fee":3900,"city":"Faisalabad","clinic":"Meher Care Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":4,"shift":"morning","hue":28,"bio":"Focuses on migraine and stroke recovery. 12 years of practice in Faisalabad."},{"id":"D076","name":"Dr. Junaid Gill","gender":"M","specialty":"Pulmonologist","qualifications":"MBBS, FCPS (Pulmonology)","focus":["Asthma","Chronic cough"],"experience":8,"rating":4.4,"reviews":241,"fee":3400,"city":"Karachi","clinic":"Shafa Wellness Centre","languages":["Urdu","English","Sindhi"],"video":true,"offDay":5,"shift":"evening","hue":190,"bio":"Focuses on asthma and chronic cough. 8 years of practice in Karachi."},{"id":"D077","name":"Dr. Kiran Abbasi","gender":"F","specialty":"Dermatologist","qualifications":"MBBS, FCPS (Dermatology)","focus":["Acne and skin allergy","Hair loss"],"experience":14,"rating":4.3,"reviews":180,"fee":3200,"city":"Islamabad","clinic":"Sukoon Medical Centre","languages":["Urdu","English","Punjabi"],"video":false,"offDay":3,"shift":"evening","hue":28,"bio":"Focuses on acne and skin allergy and hair loss. 14 years of practice in Islamabad."},{"id":"D078","name":"Dr. Naveed Kakar","gender":"M","specialty":"Pediatrician","qualifications":"MBBS, FCPS (Pediatrics)","focus":["Newborn care","Child growth"],"experience":26,"rating":4.2,"reviews":665,"fee":3200,"city":"Karachi","clinic":"Sukoon Medical Centre","languages":["Urdu","English","Sindhi"],"video":false,"offDay":4,"shift":"evening","hue":190,"bio":"Focuses on newborn care and child growth. 26 years of practice in Karachi."},{"id":"D079","name":"Dr. Nadia Rana","gender":"F","specialty":"General Physician","qualifications":"MBBS","focus":["Blood pressure and diabetes care","Preventive check-ups"],"experience":15,"rating":4.5,"reviews":741,"fee":2300,"city":"Lahore","clinic":"Noor Health Hub","languages":["Urdu","English"],"video":true,"offDay":2,"shift":"evening","hue":190,"bio":"Focuses on blood pressure and diabetes care and preventive check-ups. 15 years of practice in Lahore."},{"id":"D080","name":"Dr. Usman Khan","gender":"M","specialty":"Neurologist","qualifications":"MBBS, FCPS (Neurology)","focus":["Nerve pain","Epilepsy"],"experience":14,"rating":4.4,"reviews":20,"fee":3800,"city":"Sialkot","clinic":"Noor Care Clinic","languages":["Urdu"],"video":true,"offDay":5,"shift":"evening","hue":255,"bio":"Focuses on nerve pain and epilepsy. 14 years of practice in Sialkot."},{"id":"D081","name":"Dr. Salman Rana","gender":"M","specialty":"Nephrologist","qualifications":"MBBS, FCPS (Nephrology)","focus":["Kidney disease","Blood pressure and kidneys"],"experience":4,"rating":4.5,"reviews":151,"fee":3200,"city":"Karachi","clinic":"Hayat Wellness Centre","languages":["Urdu","English","Punjabi"],"video":false,"offDay":6,"shift":"evening","hue":190,"bio":"Focuses on kidney disease and blood pressure and kidneys. 4 years of practice in Karachi."},{"id":"D082","name":"Dr. Haroon Zaidi","gender":"M","specialty":"Ophthalmologist","qualifications":"MBBS, FCPS (Ophthalmology)","focus":["Vision checks","Dry eye"],"experience":12,"rating":4.6,"reviews":471,"fee":3000,"city":"Multan","clinic":"Sehat Family Hospital","languages":["Urdu","English"],"video":false,"offDay":3,"shift":"morning","hue":190,"bio":"Focuses on vision checks and dry eye. 12 years of practice in Multan."},{"id":"D083","name":"Dr. Nimra Khan","gender":"F","specialty":"Psychiatrist","qualifications":"MBBS, FCPS (Psychiatry)","focus":["Anxiety and panic","Sleep problems"],"experience":17,"rating":4.8,"reviews":772,"fee":3700,"city":"Karachi","clinic":"Barkat Wellness Centre","languages":["Urdu","English","Sindhi"],"video":false,"offDay":2,"shift":"morning","hue":165,"bio":"Focuses on anxiety and panic and sleep problems. 17 years of practice in Karachi."},{"id":"D084","name":"Dr. Dua Durrani","gender":"F","specialty":"Neurologist","qualifications":"MBBS, FCPS (Neurology)","focus":["Migraine","Stroke recovery"],"experience":12,"rating":4.9,"reviews":265,"fee":3600,"city":"Islamabad","clinic":"Aafiyat Wellness Centre","languages":["Urdu","English"],"video":true,"offDay":0,"shift":"morning","hue":165,"bio":"Focuses on migraine and stroke recovery. 12 years of practice in Islamabad."},{"id":"D085","name":"Dr. Bilal Javed","gender":"M","specialty":"Urologist","qualifications":"MBBS, FCPS (Urology)","focus":["Kidney stones","Men's health"],"experience":22,"rating":4.3,"reviews":624,"fee":4000,"city":"Karachi","clinic":"Zindagi Wellness Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":4,"shift":"evening","hue":200,"bio":"Focuses on kidney stones and men's health. 22 years of practice in Karachi."},{"id":"D086","name":"Dr. Samina Baig","gender":"F","specialty":"Endocrinologist","qualifications":"MBBS, FCPS (Endocrinology)","focus":["Hormonal imbalance","Thyroid disorders"],"experience":5,"rating":4.6,"reviews":191,"fee":3500,"city":"Rawalpindi","clinic":"Sukoon Family Hospital","languages":["Urdu","English"],"video":true,"offDay":4,"shift":"morning","hue":255,"bio":"Focuses on hormonal imbalance and thyroid disorders. 5 years of practice in Rawalpindi."},{"id":"D087","name":"Dr. Saad Gill","gender":"M","specialty":"General Physician","qualifications":"MBBS, FCPS (Family Medicine)","focus":["Preventive check-ups","Blood pressure and diabetes care"],"experience":23,"rating":4.1,"reviews":344,"fee":2500,"city":"Rawalpindi","clinic":"Aafiyat Wellness Centre","languages":["Urdu","English"],"video":true,"offDay":2,"shift":"evening","hue":45,"bio":"Focuses on preventive check-ups and blood pressure and diabetes care. 23 years of practice in Rawalpindi."},{"id":"D088","name":"Dr. Waqar Awan","gender":"M","specialty":"General Physician","qualifications":"MBBS, MRCGP","focus":["Preventive check-ups","Fever and infections"],"experience":32,"rating":4.4,"reviews":69,"fee":3000,"city":"Faisalabad","clinic":"Sukoon Care Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":0,"shift":"evening","hue":340,"bio":"Focuses on preventive check-ups and fever and infections. 32 years of practice in Faisalabad."},{"id":"D089","name":"Dr. Haroon Butt","gender":"M","specialty":"Psychiatrist","qualifications":"MBBS, FCPS (Psychiatry)","focus":["Depression","Sleep problems"],"experience":15,"rating":4.3,"reviews":898,"fee":4200,"city":"Karachi","clinic":"Amaan Specialty Clinic","languages":["Urdu","English","Punjabi"],"video":true,"offDay":3,"shift":"morning","hue":165,"bio":"Focuses on depression and sleep problems. 15 years of practice in Karachi."},{"id":"D090","name":"Dr. Nimra Qureshi","gender":"F","specialty":"Urologist","qualifications":"MBBS, FCPS (Urology)","focus":["Prostate health","Urinary infections"],"experience":7,"rating":4.7,"reviews":48,"fee":3900,"city":"Faisalabad","clinic":"Zindagi Wellness Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":6,"shift":"evening","hue":125,"bio":"Focuses on prostate health and urinary infections. 7 years of practice in Faisalabad."},{"id":"D091","name":"Dr. Adnan Siddiqui","gender":"M","specialty":"Nephrologist","qualifications":"MBBS, FCPS (Nephrology)","focus":["Kidney disease","Dialysis care"],"experience":30,"rating":4.4,"reviews":754,"fee":4700,"city":"Karachi","clinic":"Meher Specialty Clinic","languages":["Urdu","English","Punjabi"],"video":false,"offDay":1,"shift":"morning","hue":45,"bio":"Focuses on kidney disease and dialysis care. 30 years of practice in Karachi."},{"id":"D092","name":"Dr. Dua Butt","gender":"F","specialty":"Gastroenterologist","qualifications":"MBBS, FCPS (Gastroenterology)","focus":["Acidity and reflux","Irritable bowel"],"experience":17,"rating":4.6,"reviews":310,"fee":3800,"city":"Sialkot","clinic":"Noor Family Hospital","languages":["Urdu","English","Punjabi"],"video":false,"offDay":6,"shift":"morning","hue":340,"bio":"Focuses on acidity and reflux and irritable bowel. 17 years of practice in Sialkot."},{"id":"D093","name":"Dr. Taimoor Lodhi","gender":"M","specialty":"Orthopedic Surgeon","qualifications":"MBBS, MD (Orthopedic Surgery)","focus":["Fracture care","Sports injuries"],"experience":20,"rating":4,"reviews":310,"fee":4000,"city":"Lahore","clinic":"Zindagi Health Hub","languages":["Urdu","English","Punjabi"],"video":true,"offDay":5,"shift":"morning","hue":200,"bio":"Focuses on fracture care and sports injuries. 20 years of practice in Lahore."},{"id":"D094","name":"Dr. Hamza Siddiqui","gender":"M","specialty":"Dentist","qualifications":"BDS, RDS","focus":["Smile correction","Root canal"],"experience":27,"rating":4.3,"reviews":847,"fee":3200,"city":"Lahore","clinic":"Meher Wellness Centre","languages":["Urdu"],"video":true,"offDay":1,"shift":"evening","hue":340,"bio":"Focuses on smile correction and root canal. 27 years of practice in Lahore."},{"id":"D095","name":"Dr. Aliya Chaudhry","gender":"F","specialty":"Clinical Psychologist","qualifications":"MPhil Clinical Psychology","focus":["Work burnout","Grief and life changes"],"experience":8,"rating":4.3,"reviews":826,"fee":3500,"city":"Multan","clinic":"Noor Specialty Clinic","languages":["Urdu","English"],"video":true,"offDay":1,"shift":"evening","hue":255,"bio":"Focuses on work burnout and grief and life changes. 8 years of practice in Multan."},{"id":"D096","name":"Dr. Rabia Butt","gender":"F","specialty":"Psychiatrist","qualifications":"MBBS, FCPS (Psychiatry)","focus":["Anxiety and panic","Depression"],"experience":13,"rating":4.9,"reviews":231,"fee":3700,"city":"Multan","clinic":"Sukoon Health Hub","languages":["Urdu","English"],"video":true,"offDay":4,"shift":"morning","hue":190,"bio":"Focuses on anxiety and panic and depression. 13 years of practice in Multan."},{"id":"D097","name":"Dr. Mehwish Farooq","gender":"F","specialty":"Urologist","qualifications":"MBBS, FCPS (Urology)","focus":["Kidney stones","Urinary infections"],"experience":18,"rating":4.6,"reviews":567,"fee":3700,"city":"Islamabad","clinic":"Zindagi Medical Centre","languages":["Urdu","English","Punjabi"],"video":true,"offDay":1,"shift":"morning","hue":45,"bio":"Focuses on kidney stones and urinary infections. 18 years of practice in Islamabad."},{"id":"D098","name":"Dr. Taimoor Ahmed","gender":"M","specialty":"Pulmonologist","qualifications":"MBBS, MD (Pulmonology)","focus":["Allergy-related breathing issues","Sleep apnea"],"experience":10,"rating":4.9,"reviews":375,"fee":3800,"city":"Faisalabad","clinic":"Rahat Family Hospital","languages":["Urdu","English","Punjabi"],"video":true,"offDay":6,"shift":"morning","hue":125,"bio":"Focuses on allergy-related breathing issues and sleep apnea. 10 years of practice in Faisalabad."},{"id":"D099","name":"Dr. Kiran Chaudhry","gender":"F","specialty":"Gastroenterologist","qualifications":"MBBS, FCPS (Gastroenterology)","focus":["Acidity and reflux","Liver health"],"experience":9,"rating":4,"reviews":825,"fee":3900,"city":"Karachi","clinic":"Hayat Family Hospital","languages":["Urdu","English","Sindhi"],"video":false,"offDay":1,"shift":"morning","hue":190,"bio":"Focuses on acidity and reflux and liver health. 9 years of practice in Karachi."},{"id":"D100","name":"Dr. Beenish Farooq","gender":"F","specialty":"Pulmonologist","qualifications":"MBBS, MD (Pulmonology)","focus":["Sleep apnea","Allergy-related breathing issues"],"experience":20,"rating":4.9,"reviews":864,"fee":4000,"city":"Peshawar","clinic":"Zindagi Specialty Clinic","languages":["Urdu","English","Pashto"],"video":true,"offDay":5,"shift":"evening","hue":255,"bio":"Focuses on sleep apnea and allergy-related breathing issues. 20 years of practice in Peshawar."}];
+const SPECIALTIES = ['General Physician','Cardiologist','Dermatologist','Neurologist','Orthopedic Surgeon','Pediatrician','Gynecologist','Psychiatrist','Clinical Psychologist','ENT Specialist','Gastroenterologist','Pulmonologist','Endocrinologist','Ophthalmologist','Urologist','Dentist','Nephrologist'];
+const LANGS = [['auto','Auto-detect'],['English','English'],['Urdu (Urdu script)','اردو'],['Roman Urdu','Roman Urdu'],['Hindi','हिन्दी'],['Arabic','العربية'],['Punjabi (Shahmukhi script)','پنجابی'],['Pashto','پښتو'],['Spanish','Español'],['French','Français']];
+
+/* ---------- helpers ---------- */
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const pad = n => String(n).padStart(2, '0');
+const iso = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const parseISO = s => { const p = s.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); };
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function fmtTime(t){ let p = t.split(':').map(Number), h = p[0], m = p[1]; const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; return h + ':' + pad(m) + ' ' + ap; }
+function dayDiff(d){ const n = new Date(); return Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - new Date(n.getFullYear(), n.getMonth(), n.getDate())) / 864e5); }
+function dayLabel(d){ const x = dayDiff(d); return x === 0 ? 'Today' : x === 1 ? 'Tomorrow' : DOW[d.getDay()]; }
+function longDate(d){ return DOW[d.getDay()] + ', ' + d.getDate() + ' ' + MON[d.getMonth()]; }
+const fmtMoney = n => 'PKR ' + n.toLocaleString('en-US');
+function hash(str){ let h = 2166136261; for (let i = 0; i < str.length; i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function initials(name){ const p = name.replace(/^Dr\.?\s*/, '').split(' '); return (p[0][0] + p[p.length - 1][0]).toUpperCase(); }
+function h(tag, attrs){
+  const e = document.createElement(tag);
+  if (attrs) for (const k in attrs){ const v = attrs[k]; const aria = k.slice(0,5) === 'aria-'; if (v == null || (v === false && !aria)) continue;
+    if (k === 'class') e.className = v; else if (k === 'html') e.innerHTML = v;
+    else if (k.slice(0,2) === 'on') e.addEventListener(k.slice(2), v); else e.setAttribute(k, (v === true && !aria) ? '' : String(v)); }
+  for (let i = 2; i < arguments.length; i++){ const kids = [].concat(arguments[i]); for (const kid of kids){ if (kid == null || kid === false) continue; e.append(kid.nodeType ? kid : document.createTextNode(kid)); } }
+  return e;
+}
+const ICONS = {
+  home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/>',
+  pulse:'<path d="M20.4 8.6c0 5-8.4 10.4-8.4 10.4S3.6 13.6 3.6 8.6A4.4 4.4 0 0 1 12 6.8a4.4 4.4 0 0 1 8.4 1.8Z"/><path d="M6.5 11.5h3l1.5-2.5 2 4 1.5-1.5h3"/>',
+  compass:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/>',
+  steth:'<path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M5 3h2M13 3h2"/><path d="M10 13v2a4.5 4.5 0 0 0 9 0v-2"/><circle cx="19" cy="11" r="2"/>',
+  file:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/><path d="M8 14h2l1.2-2.4 1.6 4.4 1.2-2H16"/>',
+  chat:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5v-8Z"/><path d="M8.5 9.5h.01M12 9.5h.01M15.5 9.5h.01"/>',
+  calendar:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/>',
+  send:'<path d="m4 12 16-8-6 16-3-7-7-1Z"/>',
+  star:'<path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9L3.5 9.7l5.9-.8L12 3.5Z"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  x:'<path d="M6 6l12 12M18 6 6 18"/>',
+  video:'<rect x="3" y="6.5" width="12.5" height="11" rx="3"/><path d="m15.5 11 5-3v8l-5-3"/>',
+  alert:'<path d="M12 4 3 19.5h18L12 4Z"/><path d="M12 10v4.5M12 17.2h.01"/>',
+  pin:'<path d="M12 21s7-6.2 7-11.2A7 7 0 0 0 5 9.8C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.8" r="2.5"/>',
+  check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  face:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c.9 1.1 2 1.7 3.5 1.7s2.6-.6 3.5-1.7"/><path d="M9 9.8h.01M15 9.8h.01"/>',
+};
+function icon(n, s, cls){ s = s || 20; return '<svg class="ic' + (cls ? ' ' + cls : '') + '" width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[n] + '</svg>'; }
+function toast(msg){ const host = $('#toast-host'); host.replaceChildren(h('div', {class:'toast'}, msg)); clearTimeout(toast.t); toast.t = setTimeout(() => host.replaceChildren(), 2600); }
+
+const store = {
+  get(k, d){ try { const v = localStorage.getItem('pbm_' + k); return v ? JSON.parse(v) : d; } catch (e){ return d; } },
+  set(k, v){ try { localStorage.setItem('pbm_' + k, JSON.stringify(v)); } catch (e){} }
+};
+
+/* ---------- state ---------- */
+const S = {
+  lang: store.get('lang', 'auto'),
+  checkins: store.get('checkins', []),
+  visits: store.get('visits', []),
+  triage: null,
+  lab: null,
+  docTab: 'find',
+  f: { q:'', specialty:'All', city:'All', today:false, video:false, sort:'recommended', limit:12 },
+  fuVisit: '', fuLab: false,
+};
+
+/* ---------- Claude access ---------- */
+let sample = null, sampleLimits = null;
+const sampleReady = (async () => {
+  try {
+    if (!window.claude || !window.claude.use) return null;
+    sample = await window.claude.use('sample');
+    if (sample) { try { sampleLimits = await sample.limits(); } catch (e) {} }
+  } catch (e) { sample = null; }
+  $$('[data-ai-notice]').forEach(n => { n.hidden = !!sample; });
+  return sample;
+})();
+const getSample = () => sampleReady;
+function errText(e){
+  const c = e && e.code;
+  return ({
+    not_granted:'This page needs your permission to use Claude. Allow it from this page’s permissions menu, then try again.',
+    sampling_disabled:'Claude isn’t available for this account right now.',
+    rate_limited:'Claude is getting a lot of requests. Please wait a moment and try again.',
+    session_expired:'Your session expired. Sign in again, then retry.',
+    image_rejected:'That file couldn’t be read as an image. Try a clearer photo or a PDF.',
+    images_unavailable:'This view can’t send images to Claude. Paste the report text instead.',
+    prompt_too_large:'That was too much text at once. Try something shorter.',
+    refused:'Claude can’t help with that request as written. Try rephrasing it.',
+    invalid_json:'The answer came back in an unexpected shape. Please try again.',
+    empty_completion:'No answer came back. Please try again.',
+    cancelled:''
+  })[c] || (c === 'cancelled' ? '' : 'Something went wrong while reaching Claude. Please try again.');
+}
+function langRule(l){
+  l = l || S.lang;
+  return l === 'auto'
+    ? 'Reply in the same language and script the person writes in (for example English, Urdu script, Roman Urdu, Hindi, Arabic, Punjabi or Pashto). If they mix languages, follow their latest message.'
+    : 'Always reply in ' + l + '.';
+}
+
+/* ---------- doctors & slots ---------- */
+const bookedSet = () => new Set(S.visits.map(v => v.docId + '|' + v.date + '|' + v.time));
+function slotsFor(d, date){
+  if (date.getDay() === d.offDay) return [];
+  const a = d.shift === 'morning' ? 9 : 16, b = d.shift === 'morning' ? 14 : 21;
+  const key = iso(date), booked = bookedSet(), now = new Date();
+  const isToday = key === iso(now), nowMin = now.getHours() * 60 + now.getMinutes() + 30, out = [];
+  for (let hh = a; hh < b; hh++) for (const m of [0, 30]){
+    const t = pad(hh) + ':' + pad(m);
+    if (hash(d.id + key + t) % 100 < 30) continue;
+    if (booked.has(d.id + '|' + key + '|' + t)) continue;
+    if (isToday && hh * 60 + m < nowMin) continue;
+    out.push(t);
+  }
+  return out;
+}
+function nextSlot(d){
+  const now = new Date();
+  for (let i = 0; i < 7; i++){ const dt = addDays(now, i), s = slotsFor(d, dt);
+    if (s.length){ const p = s[0].split(':').map(Number); return { date: dt, time: s[0], offset: i, ts: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), p[0], p[1]).getTime() }; } }
+  return null;
+}
+const docById = id => DOCTORS.find(d => d.id === id);
+
+function docCard(d, compact){
+  const ns = nextSlot(d);
+  const next = ns ? dayLabel(ns.date) + ' ' + fmtTime(ns.time) : 'No slots this week';
+  const art = h('article', { class: 'doc' + (compact ? ' compact' : '') });
+  art.innerHTML =
+    '<div class="avatar" style="--h:' + d.hue + '" aria-hidden="true">' + initials(d.name) + '</div>' +
+    '<div class="doc-main"><h3>' + esc(d.name) + '</h3>' +
+    '<p class="spec">' + esc(d.specialty) + '<span class="dot-sep"></span>' + esc(d.focus[0]) + '</p>' +
+    '<p class="meta"><span class="rate">' + icon('star', 14, 'fill') + d.rating.toFixed(1) + '</span><span>(' + d.reviews + ')</span><span class="dot-sep"></span>' + d.experience + ' yrs<span class="dot-sep"></span>' + esc(d.city) + '</p>' +
+    (compact ? '' : '<p class="meta muted">' + esc(d.qualifications) + ' · ' + esc(d.clinic) + '</p><div class="tags">' + d.languages.map(l => '<span class="tag">' + esc(l) + '</span>').join('') + (d.video ? '<span class="tag vid">' + icon('video', 13) + 'Video</span>' : '') + '</div>') +
+    '</div>' +
+    '<div class="doc-side"><div class="fee">' + fmtMoney(d.fee) + '</div><div class="next' + (ns && ns.offset === 0 ? ' today' : '') + '">' + icon('clock', 13) + esc(next) + '</div></div>';
+  art.querySelector('.doc-side').append(h('button', { class: 'btn small primary', type: 'button', 'aria-label': 'Book ' + d.name, onclick: () => openBooking(d) }, 'Book'));
+  return art;
+}
+
+/* ---------- navigation ---------- */
+const VIEWS = [['home','Home','home'],['checkin','Check-in','pulse'],['stress','Stress','face'],['triage','Triage','compass'],['doctors','Doctors','steth'],['labs','Labs','file'],['followup','Follow-up','chat']];
+let current = null, pending = null;
+function buildNav(){
+  const side = $('#nav-side'), tab = $('#nav-tab');
+  VIEWS.forEach(v => {
+    const sb = h('button', { type:'button', 'data-nav': v[0], html: icon(v[2], 20) + '<span>' + v[1] + '</span>', onclick: () => go(v[0]) });
+    side.append(sb);
+    const tb = h('button', { type:'button', class:'tab', 'data-nav': v[0], 'aria-label': v[1], html: '<span class="pill">' + icon(v[2], 21) + '</span><span>' + v[1] + '</span>', onclick: () => go(v[0]) });
+    tab.append(tb);
+  });
+  const mark = icon('pulse', 20);
+  $('#brand-mark-side').innerHTML = mark; $('#brand-mark-top').innerHTML = mark;
+}
+function routeFromHash(){
+  const n = location.hash.slice(1);
+  if (n === 'visits'){ S.docTab = 'visits'; return 'doctors'; }
+  return VIEWS.some(v => v[0] === n) ? n : 'home';
+}
+function go(name, opts){
+  if (opts) pending = opts;
+  if (location.hash.slice(1) !== name){ try { location.hash = name; } catch (e) {} }
+  show(name);
+}
+const onShow = {};
+function show(name){
+  const same = current === name;
+  current = name;
+  $$('.view').forEach(v => { v.hidden = v.id !== 'v-' + name; });
+  const v = $('#v-' + name);
+  if (!same){ v.style.animation = 'none'; void v.offsetWidth; v.style.animation = ''; }
+  $$('[data-nav]').forEach(b => { if (b.dataset.nav === name) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+  if (onShow[name]) onShow[name]();
+  if (!same) { try { window.scrollTo(0, 0); } catch (e) {} }
+}
+window.addEventListener('hashchange', () => { const r = routeFromHash(); if (r !== current) show(r); });
+
+/* ---------- week chart & check-in data ---------- */
+const bandOf = s => s <= 4 ? 'low' : s <= 6 ? 'mid' : 'high';
+const bandLabel = s => s <= 2 ? 'Running on empty' : s <= 4 ? 'Feeling quite drained' : s <= 6 ? 'Somewhere in the middle' : s <= 8 ? 'Doing pretty well' : 'Full of energy';
+function todayEntry(){ return S.checkins.find(c => c.date === iso(new Date())); }
+function renderWeek(box, noteEl){
+  const real = S.checkins.length > 0, now = new Date(), ex = [5,4,6,3,5,6,7];
+  box.replaceChildren();
+  const wrap = h('div', { class: 'week' + (real ? '' : ' example'), role: 'img', 'aria-label': real ? 'Your mental energy over the last 7 days' : 'Example week of mental energy scores' });
+  for (let i = 6, idx = 0; i >= 0; i--, idx++){
+    const d = addDays(now, -i), c = S.checkins.find(x => x.date === iso(d));
+    const score = real ? (c ? c.score : null) : ex[idx];
+    const bar = h('div', { class: 'bar ' + (score == null ? 'none' : bandOf(score)) });
+    bar.style.setProperty('--hh', (score == null ? 8 : score * 10) + '%');
+    const col = h('div', { class: 'wk' }, h('div', { class: 'track' }, bar), h('span', { class: 'n' }, score == null ? '–' : String(score)), h('span', { class: 'd' }, DOW[d.getDay()].slice(0, 1)));
+    col.style.setProperty('--i', idx); bar.style.setProperty('--i', idx);
+    wrap.append(col);
+  }
+  box.append(wrap);
+  requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add('on')));
+  if (noteEl) noteEl.textContent = real ? 'Taller bars mean more energy. Dashed days have no check-in yet.' : 'Example week. Your own check-ins will replace it.';
+}
+function lowStreak(){
+  const last = S.checkins.slice(-3);
+  return last.length === 3 && last.every(c => c.score <= 4);
+}
+
+/* ---------- HOME ---------- */
+const JOURNEY = [
+  ['checkin','pulse','Check in','Track your mental energy each day and catch burnout early.'],
+  ['triage','compass','Calm triage','Describe symptoms in your own words, in any language.'],
+  ['doctors','steth','Specialist match','Get pointed to the right kind of doctor, not just any doctor.'],
+  ['doctors','calendar','Instant booking','Pick a time with one of 100 demo doctors, inside the app.'],
+  ['labs','file','Lab translation','Upload a report and read every result in plain language.'],
+  ['followup','chat','Post-visit Q&A','Ask what you forgot to ask, with your visit as context.'],
+];
+function renderHome(){
+  const now = new Date(), hr = now.getHours();
+  $('#home-date').textContent = DOW[now.getDay()] + ', ' + now.getDate() + ' ' + MON[now.getMonth()];
+  const g = hr >= 5 && hr < 12 ? 'Good morning.' : hr >= 12 && hr < 17 ? 'Good afternoon.' : 'Good evening.';
+  const hh = $('#home-h'); hh.replaceChildren(g, h('br'), 'How are you feeling today?');
+  const te = todayEntry(), n = $('#home-nudge'); n.replaceChildren();
+  const top = h('div', { class: 'row' });
+  if (te){
+    top.append(h('div', {}, h('p', { class: 'eyebrow' }, 'Today’s check-in'), h('p', { class: 'big-score', style: 'margin-top:8px', html: te.score + ' <small>/ 10</small>' }), h('p', { class: 'muted', style: 'margin-top:4px' }, bandLabel(te.score))));
+    top.append(h('button', { class: 'btn small ghost', type: 'button', onclick: () => go('checkin') }, 'Update'));
+  } else {
+    top.append(h('div', {}, h('p', { class: 'eyebrow' }, 'Daily check-in'), h('h2', { style: 'margin-top:6px' }, 'You haven’t checked in today'), h('p', { class: 'muted', style: 'margin-top:4px' }, 'One slider, under a minute.')));
+    top.append(h('button', { class: 'btn small primary', type: 'button', onclick: () => go('checkin') }, 'Check in'));
+  }
+  const wk = h('div'); const note = h('p', { class: 'chart-note' });
+  n.append(top, wk, note);
+  const ts = stLog().find(x => x.date === iso(new Date()));
+  if (ts) n.append(h('p', { class: 'small muted' }, 'Today’s photo scan: ' + ts.level + '/10, ' + ST_BAND[stBand(ts.level)][0].toLowerCase() + '. ', h('a', { href: '#stress' }, 'See details')));
+  if (lowStreak()) n.append(h('p', { class: 'small', style: 'color:var(--warn);font-weight:700' }, 'Your energy has been low for a few days. Talking to someone can help.'));
+  renderWeek(wk, note);
+  const nx = $('#home-next'); nx.replaceChildren();
+  const up = upcomingVisits()[0];
+  if (up){
+    const d = docById(up.docId), dt = parseISO(up.date);
+    nx.append(h('p', { class: 'eyebrow' }, 'Next visit'), h('h2', { style: 'margin-top:8px' }, d.name), h('p', { class: 'muted' }, d.specialty + ' · ' + (up.type === 'video' ? 'Video call' : d.clinic)),
+      h('p', { class: 'visit-when', style: 'margin-top:12px' }, dayLabel(dt) + ', ' + longDate(dt) + ' · ' + fmtTime(up.time)),
+      h('div', { style: 'margin-top:14px' }, h('button', { class: 'btn small ghost', type: 'button', onclick: () => go('doctors', { tab: 'visits' }) }, 'See my visits')));
+  } else {
+    nx.append(h('p', { class: 'eyebrow' }, 'Next visit'), h('h2', { style: 'margin-top:8px' }, 'Nothing booked yet'), h('p', { class: 'muted', style: 'margin-top:4px' }, 'When you’re ready, find a doctor and book in a few taps.'),
+      h('div', { style: 'margin-top:14px' }, h('button', { class: 'btn small primary', type: 'button', onclick: () => go('doctors') }, 'Find a doctor')));
+  }
+  const orb = $('.hero .orb'); if (orb) orb.dataset.band = te ? bandOf(te.score) : 'mid';
+}
+function buildJourney(){
+  const box = $('#journey');
+  JOURNEY.forEach((j, i) => box.append(h('button', { class: 'step', type: 'button', onclick: () => go(j[0]), html:
+    '<span class="num">' + icon(j[1], 22) + '</span><span><span class="n">Step ' + (i + 1) + '</span><b>' + esc(j[2]) + '</b><span class="d">' + esc(j[3]) + '</span></span>' })));
+}
+onShow.home = renderHome;
+
+/* ---------- CHECK-IN ---------- */
+const TAGS = ['Work pressure','Poor sleep','Family','Health worries','Studies','Money','Feeling alone','Nothing specific'];
+const SLEEP = ['Under 4 h','4–6 h','6–8 h','8 h or more'];
+const ci = { score: 5, tags: new Set(), sleep: '', ctl: null };
+function paintOrb(){
+  const o = $('#ci-orb'); o.dataset.band = bandOf(ci.score);
+  $('#ci-num').textContent = ci.score; $('#ci-label').textContent = bandLabel(ci.score);
+  const r = $('#ci-range'); r.style.setProperty('--p', ((ci.score - 1) / 9 * 100) + '%'); r.setAttribute('aria-valuetext', ci.score + ' out of 10, ' + bandLabel(ci.score));
+}
+function buildCheckin(){
+  const tags = $('#ci-tags'), sl = $('#ci-sleep');
+  TAGS.forEach(t => tags.append(h('button', { class: 'chip', type: 'button', 'aria-pressed': 'false', onclick: e => { const b = e.currentTarget; if (ci.tags.has(t)) ci.tags.delete(t); else ci.tags.add(t); b.setAttribute('aria-pressed', ci.tags.has(t)); } }, t)));
+  SLEEP.forEach(t => sl.append(h('button', { class: 'chip', type: 'button', 'aria-pressed': 'false', onclick: () => { ci.sleep = ci.sleep === t ? '' : t; $$('button', sl).forEach(b => b.setAttribute('aria-pressed', b.textContent === ci.sleep)); } }, t)));
+  $('#ci-range').addEventListener('input', e => { ci.score = +e.target.value; paintOrb(); });
+  $('#ci-submit').addEventListener('click', submitCheckin);
+}
+onShow.checkin = function(){
+  const te = todayEntry();
+  if (te && !ci.touched){ ci.score = te.score; ci.tags = new Set(te.tags || []); ci.sleep = te.sleep || ''; $('#ci-range').value = te.score; $('#ci-note').value = te.note || '';
+    $$('#ci-tags button').forEach(b => b.setAttribute('aria-pressed', ci.tags.has(b.textContent)));
+    $$('#ci-sleep button').forEach(b => b.setAttribute('aria-pressed', b.textContent === ci.sleep)); ci.touched = true; }
+  paintOrb(); renderWeek($('#ci-week'), $('#ci-week-note')); renderWatch();
+};
+function renderWatch(){
+  const box = $('#ci-watch'); box.replaceChildren();
+  if (!lowStreak()) return;
+  const btns = h('div', { class: 'btns' },
+    h('button', { class: 'btn small primary', type: 'button', onclick: () => go('doctors', { specialty: 'Psychiatrist' }) }, 'See psychiatrists'),
+    h('button', { class: 'btn small ghost', type: 'button', onclick: () => go('doctors', { specialty: 'Clinical Psychologist' }) }, 'See psychologists'));
+  box.append(h('div', { class: 'watch' }, h('span', { html: icon('alert', 22) }), h('div', {}, h('b', {}, 'Your energy has been low for three check-ins in a row.'), h('p', { class: 'muted', style: 'margin-top:4px' }, 'That’s worth taking seriously, and you don’t have to handle it alone. A short conversation with a professional can make a real difference.'), btns)));
+}
+const PLAN_FALLBACK = {
+  low: 'That sounds like a heavy day, and it’s okay to go slowly.\n- Drink a glass of water and take five slow breaths, longer out than in.\n- Step outside or sit by a window for two minutes.\n- Tell one person you trust how you’re feeling.\nIf low days keep stacking up, talking to a professional can help. You can find one under Doctors.',
+  mid: 'A middle-of-the-road day is still a day you’re getting through.\n- Pick one small task and finish it, then take a real break.\n- Eat something and stretch your shoulders and neck.\n- Decide on a stopping time tonight and keep it.',
+  high: 'It’s good to hear you have some energy today.\n- Use it on the one thing that matters most.\n- Keep your water and meals regular so it lasts.\n- Make a note of what helped, so you can repeat it on harder days.'
+};
+async function submitCheckin(){
+  const entry = { date: iso(new Date()), score: ci.score, tags: Array.from(ci.tags), sleep: ci.sleep, note: $('#ci-note').value.trim() };
+  S.checkins = S.checkins.filter(c => c.date !== entry.date).concat(entry).sort((a, b) => a.date < b.date ? -1 : 1).slice(-60);
+  store.set('checkins', S.checkins);
+  renderWeek($('#ci-week'), $('#ci-week-note')); renderWatch();
+  const card = $('#ci-plan'), out = $('#ci-plan-text');
+  card.hidden = false; out.innerHTML = '<span class="dots" aria-label="Thinking"><i></i><i></i><i></i></span>';
+  try { card.scrollIntoView({ block: 'nearest', behavior: RM ? 'auto' : 'smooth' }); } catch (e) {}
+  toast('Check-in saved');
+  if (ci.ctl) ci.ctl.abort();
+  const s = await getSample();
+  if (!s){ await sleep(400); out.textContent = PLAN_FALLBACK[bandOf(entry.score)]; return; }
+  const ctl = ci.ctl = new AbortController();
+  const prompt = 'You are the gentle check-in companion inside PocketBaymax, a healthcare navigation app. The person just rated their mental energy ' + entry.score + ' out of 10 today.\n' +
+    'What is weighing on them: ' + (entry.tags.length ? entry.tags.join(', ') : 'not said') + '\nSleep last night: ' + (entry.sleep || 'not said') + '\nTheir own words: ' + (entry.note ? '"' + entry.note + '"' : 'none') + '\n\n' +
+    'Write a short, warm reply. First one sentence that acknowledges how they feel. Then three tiny things they can do in the next hour, one per line, each starting with "- ". ' +
+    (entry.score <= 4 ? 'Then one gentle line suggesting they talk to someone they trust or a professional if the heavy feeling continues. ' : '') +
+    'If their words suggest thoughts of self-harm or ending their life, respond with real care instead, encourage them to reach someone they trust and local crisis services right now, and stay supportive. ' +
+    'Plain text only: no markdown, no emojis, no headings, under 120 words. ' + langRule();
+  try {
+    const r = await s(prompt, { signal: ctl.signal, modelTier: 'quick', cache: false, onText: u => { out.textContent = u.text; } });
+    out.textContent = r.text;
+  } catch (e){
+    if (e && e.code === 'cancelled') return;
+    out.textContent = (e && e.text) || (errText(e) + '\n\n' + PLAN_FALLBACK[bandOf(entry.score)]);
+  } finally { if (ci.ctl === ctl) ci.ctl = null; }
+}
+
+/* ---------- generic chat ---------- */
+function makeChat(cfg){
+  const root = cfg.mount; root.classList.add('chat');
+  const log = h('div', { class: 'chat-log', role: 'log', 'aria-live': 'polite' });
+  const chips = h('div', { class: 'chips' });
+  const ta = h('textarea', { rows: '1', placeholder: cfg.placeholder, dir: 'auto', id: cfg.id + '-input', 'aria-label': cfg.label });
+  const sendBtn = h('button', { class: 'send', type: 'submit', 'aria-label': 'Send', html: icon('send', 20) });
+  const stopBtn = h('button', { class: 'btn small ghost', type: 'button', hidden: true }, 'Stop');
+  const form = h('form', { class: 'composer' }, ta, sendBtn, stopBtn);
+  root.append(log, chips, form);
+  const turns = []; let busy = false, ctl = null;
+  const scrollEnd = () => { log.scrollTop = log.scrollHeight; };
+  function addMsg(role, text){ const b = h('div', { class: 'bubble', dir: 'auto' }); b.textContent = text || ''; log.append(h('div', { class: 'msg ' + role }, b)); scrollEnd(); return b; }
+  function setBusy(v){ busy = v; sendBtn.disabled = v; stopBtn.hidden = !v; ta.disabled = v; if (!v) { try { ta.focus({ preventScroll: true }); } catch (e) {} } }
+  function autosize(){ ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight, 140) + 'px'; }
+  async function send(raw){
+    const text = (raw || '').trim(); if (!text || busy) return;
+    chips.hidden = true;
+    addMsg('user', text); turns.push({ role: 'user', content: text }); if (cfg.onTurns) cfg.onTurns(turns);
+    const bubble = addMsg('bot', ''); bubble.innerHTML = '<span class="dots" aria-label="Thinking"><i></i><i></i><i></i></span>';
+    setBusy(true);
+    const s = await getSample();
+    try {
+      if (!s){
+        const t = cfg.fallback ? cfg.fallback(text, turns) : 'Claude isn’t available in this view.';
+        await sleep(500); bubble.textContent = t; turns.push({ role: 'assistant', content: t }); return;
+      }
+      ctl = new AbortController();
+      const win = turns.slice(-14); while (win.length && win[0].role === 'assistant') win.shift();
+      const res = await s(cfg.buildInput(win), { cache: false, signal: ctl.signal, modelTier: cfg.tier || 'default', onText: u => { bubble.textContent = u.text; scrollEnd(); } });
+      bubble.textContent = res.text; turns.push({ role: 'assistant', content: res.text });
+    } catch (e){
+      if (e && e.text){ bubble.textContent = e.text; turns.push({ role: 'assistant', content: e.text }); }
+      else { bubble.textContent = errText(e) || 'Stopped.'; bubble.classList.add('err'); }
+    } finally { ctl = null; setBusy(false); if (cfg.onTurns) cfg.onTurns(turns); scrollEnd(); }
+  }
+  function reset(){ if (ctl) ctl.abort(); turns.length = 0; log.replaceChildren(); intro(); chips.hidden = false; if (cfg.onTurns) cfg.onTurns(turns); }
+  function intro(){ const b = addMsg('bot', cfg.intro); b.parentElement.style.animation = 'none'; }
+  (cfg.chips || []).forEach(c => chips.append(h('button', { class: 'chip', type: 'button', onclick: () => send(c) }, c)));
+  form.addEventListener('submit', e => { e.preventDefault(); const t = ta.value; ta.value = ''; autosize(); send(t); });
+  ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing){ e.preventDefault(); form.dispatchEvent(new Event('submit', { cancelable: true })); } });
+  ta.addEventListener('input', autosize);
+  stopBtn.addEventListener('click', () => { if (ctl) ctl.abort(); });
+  intro();
+  return { turns, reset, send };
+}
+
+/* ---------- TRIAGE ---------- */
+const TRIAGE_FALLBACK = [
+  [/chest|seene|heart|palpit|dhadkan/i, 'Cardiologist', 'today'],
+  [/skin|rash|itch|acne|daane|khujli|hair/i, 'Dermatologist', 'soon'],
+  [/headache|migraine|dizz|numb|seizure|sar dard|chakkar/i, 'Neurologist', 'soon'],
+  [/stomach|abdom|acid|nausea|vomit|diarr|pait|ulti|gas\b/i, 'Gastroenterologist', 'soon'],
+  [/cough|asthma|wheez|breath|khansi|saans/i, 'Pulmonologist', 'soon'],
+  [/anxi|panic|depress|stress|sleep|udas|ghabra|tension|burnout|exhaust/i, 'Psychiatrist', 'soon'],
+  [/knee|back pain|joint|bone|fractur|ghutna|kamar|jor/i, 'Orthopedic Surgeon', 'soon'],
+  [/child|baby|bacha|bachay|infant|toddler/i, 'Pediatrician', 'today'],
+  [/period|pregnan|menstru|hamal|ovar/i, 'Gynecologist', 'soon'],
+  [/\bear\b|nose|throat|sinus|gala|kaan|tonsil/i, 'ENT Specialist', 'soon'],
+  [/\beye|vision|aankh|nazar/i, 'Ophthalmologist', 'soon'],
+  [/tooth|teeth|dant|daant|gum/i, 'Dentist', 'soon'],
+  [/kidney|gurda|creatinine/i, 'Nephrologist', 'soon'],
+  [/urine|pishab|prostate/i, 'Urologist', 'soon'],
+  [/sugar|diabet|thyroid|hormone/i, 'Endocrinologist', 'soon'],
+];
+function localTriage(text){
+  for (const r of TRIAGE_FALLBACK) if (r[0].test(text)) return { urgency: r[2], specialty: r[1], alternate: 'General Physician', summary: 'From what you shared, a ' + r[1].toLowerCase() + ' is a sensible next step.', why: 'This is a simple keyword match, not a clinical assessment.', watchFor: ['Symptoms that get worse quickly', 'Fever that doesn’t settle', 'Anything that feels like an emergency to you'], selfCare: ['Rest and drink water', 'Write down when it started and what makes it better or worse'] };
+  return { urgency: 'soon', specialty: 'General Physician', alternate: '', summary: 'A general physician is a good first stop and can refer you onward if needed.', why: 'Your description didn’t point to one specialty.', watchFor: ['Symptoms that get worse quickly', 'Fever that doesn’t settle'], selfCare: ['Rest and drink water', 'Note when it started and what changes it'] };
+}
+let triageChat;
+const URG = { selfcare: ['Can usually be managed at home', 'check'], soon: ['See a doctor in the next few days', 'clock'], today: ['See a doctor today', 'alert'], emergency: ['Get emergency care now', 'alert'] };
+function buildTriage(){
+  triageChat = makeChat({
+    mount: $('#triage-chat'), id: 'tr', label: 'Describe how you feel', placeholder: 'Describe what you’re feeling…', tier: 'quick',
+    intro: 'Hi, I’m here to help you work out what to do next. Tell me what you’re feeling, in any language, and take your time.',
+    chips: ['Headache for three days with nausea', 'Mujhe seene mein halka dard aur ghabrahat ho rahi hai', 'میرے بچے کو دو دن سے بخار ہے', 'I’m exhausted, can’t sleep and my mind keeps racing'],
+    buildInput: turns => {
+      const te = todayEntry();
+      const rules = 'You are the triage guide inside PocketBaymax, a healthcare navigation app. You talk with someone who feels unwell or worried. You are not a doctor and you never diagnose.\n' +
+        'Style: warm, calm and short (under 90 words), plain text only, no markdown, no bullet symbols, no emojis. Never frighten the person.\n' +
+        'Method: acknowledge how they feel in one sentence. Ask at most two short clarifying questions at a time (how long, how bad, other symptoms, age if relevant). Once you know enough, say in simple words what kind of doctor fits and how soon, and tell them they can tap "Find my specialist" below for the full recommendation.\n' +
+        'Safety: if they describe a possible emergency (chest pain, trouble breathing, signs of a stroke, heavy bleeding, severe allergic reaction, loss of consciousness, a very sick infant, thoughts of self-harm), calmly tell them first to contact local emergency services or go to the nearest emergency room right now.\n' +
+        (te ? 'Context: their latest mental-energy check-in was ' + te.score + ' out of 10.\n' : '') + langRule();
+      return [{ role: 'user', content: rules }].concat(turns);
+    },
+    fallback: text => 'I can’t talk this through in detail in this view, but I’ve noted what you shared. Tap “Find my specialist” and I’ll suggest a doctor type from your words.',
+    onTurns: turns => { $('#triage-run').disabled = !turns.some(t => t.role === 'user'); }
+  });
+  $('#triage-run').addEventListener('click', runTriage);
+  $('#triage-reset').addEventListener('click', () => { triageChat.reset(); $('#triage-result').replaceChildren(); S.triage = null; });
+}
+function normTriage(r){
+  r = r || {};
+  const urgency = URG[r.urgency] ? r.urgency : 'soon';
+  const specialty = SPECIALTIES.includes(r.specialty) ? r.specialty : 'General Physician';
+  const alternate = SPECIALTIES.includes(r.alternate) && r.alternate !== specialty ? r.alternate : '';
+  const arr = x => (Array.isArray(x) ? x : []).map(String).filter(Boolean).slice(0, 5);
+  return { urgency, specialty, alternate, summary: String(r.summary || ''), why: String(r.why || ''), watchFor: arr(r.watchFor), selfCare: arr(r.selfCare) };
+}
+function topMatches(spec, alt){
+  const score = d => (d.specialty === spec ? 100 : d.specialty === alt ? 50 : 0) + d.rating * 10 + Math.min(d.reviews, 500) / 100 + (nextSlot(d) && nextSlot(d).offset === 0 ? 6 : 0);
+  return DOCTORS.filter(d => d.specialty === spec || d.specialty === alt).sort((a, b) => score(b) - score(a)).slice(0, 3);
+}
+async function runTriage(){
+  const box = $('#triage-result'), btn = $('#triage-run');
+  const users = triageChat.turns.filter(t => t.role === 'user'); if (!users.length) return;
+  btn.disabled = true;
+  box.replaceChildren(h('div', { class: 'card stack' }, h('p', { class: 'eyebrow' }, 'Matching you with the right specialist'), h('div', { class: 'skel', style: 'width:70%' }), h('div', { class: 'skel', style: 'width:92%' }), h('div', { class: 'skel', style: 'width:55%' })));
+  const s = await getSample(); let r;
+  try {
+    if (!s) { await sleep(500); r = localTriage(users.map(u => u.content).join(' ')); }
+    else {
+      const transcript = triageChat.turns.map(t => (t.role === 'user' ? 'Patient: ' : 'Guide: ') + t.content).join('\n');
+      const prompt = 'Based on this conversation between a patient and a triage guide, produce a calm triage recommendation. You are not diagnosing.\n\nConversation:\n' + transcript + '\n\n' +
+        'Allowed specialties (choose exactly one string from this list): ' + SPECIALTIES.join(', ') + '.\n' +
+        'Return only a JSON object: {"urgency":"selfcare|soon|today|emergency","specialty":"<one allowed value>","alternate":"<another allowed value or empty string>","summary":"one or two calm sentences","why":"one or two sentences on why this specialty fits","watchFor":["2 to 4 warning signs that mean get help sooner"],"selfCare":["2 to 3 safe things to do meanwhile"]}.\n' +
+        'Use "emergency" only for genuine red flags. Write summary, why, watchFor and selfCare in this language rule: ' + langRule() + ' Keep urgency, specialty and alternate as the exact English values.';
+      r = await s.json(prompt, { modelTier: 'default' });
+    }
+    r = normTriage(r);
+  } catch (e){
+    box.replaceChildren(h('div', { class: 'card stack' }, h('p', {}, errText(e) || 'Stopped.'), h('div', {}, h('button', { class: 'btn small primary', type: 'button', onclick: runTriage }, 'Try again'))));
+    btn.disabled = false; return;
+  }
+  S.triage = r; btn.disabled = false;
+  const u = URG[r.urgency];
+  const res = h('div', { class: 'result' });
+  res.append(h('div', { class: 'urg ' + r.urgency }, h('span', { html: icon(u[1], 22) }), u[0]));
+  const main = h('div', { class: 'card stack' },
+    h('p', { class: 'eyebrow' }, 'Suggested specialist'),
+    h('p', { class: 'spec-big' }, r.specialty),
+    r.alternate ? h('p', { class: 'muted small' }, 'Also worth considering: ' + r.alternate) : null,
+    r.summary ? h('p', { dir: 'auto' }, r.summary) : null,
+    r.why ? h('p', { class: 'muted', dir: 'auto' }, r.why) : null);
+  if (r.selfCare.length) main.append(h('div', {}, h('h2', {}, 'Meanwhile'), h('ul', { class: 'list', dir: 'auto' }, r.selfCare.map(x => h('li', {}, x)))));
+  if (r.watchFor.length) main.append(h('div', {}, h('h2', {}, 'Get help sooner if'), h('ul', { class: 'list', dir: 'auto' }, r.watchFor.map(x => h('li', {}, x)))));
+  res.append(main);
+  const matches = topMatches(r.specialty, r.alternate);
+  const mbox = h('div', { class: 'card stack' }, h('h2', {}, 'Top matches'));
+  matches.forEach(d => mbox.append(docCard(d, true)));
+  mbox.append(h('div', {}, h('button', { class: 'btn ghost', type: 'button', onclick: () => go('doctors', { specialty: r.specialty }) }, 'See all ' + r.specialty + ' doctors ', h('span', { html: icon('arrow', 18) }))));
+  res.append(mbox);
+  box.replaceChildren(res);
+  try { res.scrollIntoView({ block: 'start', behavior: RM ? 'auto' : 'smooth' }); } catch (e) {}
+}
+onShow.triage = function(){ $('#triage-run').disabled = !triageChat.turns.some(t => t.role === 'user'); };
+
+/* ---------- DOCTORS ---------- */
+function buildDoctors(){
+  const sel = $('#d-city'); ['All'].concat(Array.from(new Set(DOCTORS.map(d => d.city))).sort()).forEach(c => sel.append(h('option', { value: c }, c === 'All' ? 'All cities' : c)));
+  const so = $('#d-sort'); [['recommended','Recommended'],['rating','Highest rated'],['experience','Most experienced'],['fee','Lowest fee'],['earliest','Earliest available']].forEach(o => so.append(h('option', { value: o[0] }, o[1])));
+  $('#d-q').addEventListener('input', e => { S.f.q = e.target.value; S.f.limit = 12; renderDoctors(); });
+  sel.addEventListener('change', e => { S.f.city = e.target.value; S.f.limit = 12; renderDoctors(); });
+  so.addEventListener('change', e => { S.f.sort = e.target.value; renderDoctors(); });
+  [['d-today','today'],['d-video','video']].forEach(p => $('#' + p[0]).addEventListener('click', e => { S.f[p[1]] = !S.f[p[1]]; e.currentTarget.setAttribute('aria-pressed', S.f[p[1]]); S.f.limit = 12; renderDoctors(); }));
+  $('#d-more').addEventListener('click', () => { S.f.limit += 12; renderDoctors(); });
+  $('#tab-find').addEventListener('click', () => setDocTab('find'));
+  $('#tab-visits').addEventListener('click', () => setDocTab('visits'));
+}
+function setDocTab(t){
+  S.docTab = t;
+  $('#tab-find').setAttribute('aria-selected', t === 'find'); $('#tab-visits').setAttribute('aria-selected', t === 'visits');
+  $('#pane-find').hidden = t !== 'find'; $('#pane-visits').hidden = t !== 'visits';
+  if (t === 'visits') renderVisits(); else renderDoctors();
+}
+function renderSpecChips(){
+  const box = $('#d-spec'); box.replaceChildren();
+  const rec = S.triage ? S.triage.specialty : null;
+  const order = ['All'].concat(rec ? [rec] : [], SPECIALTIES.filter(s => s !== rec));
+  order.forEach(s => {
+    const n = s === 'All' ? DOCTORS.length : DOCTORS.filter(d => d.specialty === s).length;
+    const b = h('button', { class: 'chip' + (s === rec ? ' rec' : ''), type: 'button', 'aria-pressed': S.f.specialty === s, title: s === rec ? 'Recommended from your triage' : null, onclick: () => { S.f.specialty = s; S.f.limit = 12; renderSpecChips(); renderDoctors(); } }, s + ' ' + n);
+    box.append(b);
+  });
+  const rb = $('#d-rec'); rb.replaceChildren();
+  if (rec) rb.append(h('p', { class: 'small', style: 'color:var(--good);font-weight:700' }, 'Matched from your triage: ' + rec + (S.triage.alternate ? ' or ' + S.triage.alternate : '')));
+}
+function filteredDoctors(){
+  const f = S.f, q = f.q.trim().toLowerCase(), rec = S.triage;
+  let list = DOCTORS.filter(d => {
+    if (f.specialty !== 'All' && d.specialty !== f.specialty) return false;
+    if (f.city !== 'All' && d.city !== f.city) return false;
+    if (f.video && !d.video) return false;
+    if (f.today && !slotsFor(d, new Date()).length) return false;
+    if (q){ const hay = (d.name + ' ' + d.specialty + ' ' + d.city + ' ' + d.clinic + ' ' + d.languages.join(' ') + ' ' + d.focus.join(' ')).toLowerCase(); if (!q.split(/\s+/).every(w => hay.includes(w))) return false; }
+    return true;
+  });
+  const base = d => d.rating * 10 + Math.min(d.reviews, 500) / 100;
+  const cmp = {
+    recommended: (a, b) => ((rec && (b.specialty === rec.specialty ? 100 : b.specialty === rec.alternate ? 50 : 0)) + base(b)) - ((rec && (a.specialty === rec.specialty ? 100 : a.specialty === rec.alternate ? 50 : 0)) + base(a)),
+    rating: (a, b) => b.rating - a.rating || b.reviews - a.reviews,
+    experience: (a, b) => b.experience - a.experience,
+    fee: (a, b) => a.fee - b.fee,
+    earliest: (a, b) => { const x = nextSlot(a), y = nextSlot(b); return (x ? x.ts : Infinity) - (y ? y.ts : Infinity); }
+  }[f.sort];
+  return list.sort(cmp);
+}
+function renderDoctors(){
+  const list = filteredDoctors(), box = $('#d-list'); box.replaceChildren();
+  $('#d-count').textContent = list.length + (list.length === 1 ? ' doctor' : ' doctors') + ' found';
+  list.slice(0, S.f.limit).forEach((d, i) => { const c = docCard(d); c.style.animationDelay = Math.min(i, 8) * 40 + 'ms'; box.append(c); });
+  if (!list.length) box.append(h('div', { class: 'card empty', style: 'grid-column:1/-1' }, h('b', {}, 'No doctors match these filters'), h('p', {}, 'Try another city or turn off a filter.'), h('button', { class: 'btn small ghost', type: 'button', onclick: () => { S.f = { q:'', specialty:'All', city:'All', today:false, video:false, sort:'recommended', limit:12 }; syncFilters(); renderSpecChips(); renderDoctors(); } }, 'Clear filters')));
+  $('#d-more').parentElement.hidden = list.length <= S.f.limit;
+}
+function syncFilters(){
+  $('#d-q').value = S.f.q; $('#d-city').value = S.f.city; $('#d-sort').value = S.f.sort;
+  $('#d-today').setAttribute('aria-pressed', S.f.today); $('#d-video').setAttribute('aria-pressed', S.f.video);
+}
+function upcomingVisits(){
+  const now = Date.now();
+  return S.visits.filter(v => { const p = v.time.split(':').map(Number), d = parseISO(v.date); d.setHours(p[0], p[1]); return d.getTime() >= now - 36e5; })
+    .sort((a, b) => (a.date + a.time) < (b.date + b.time) ? -1 : 1);
+}
+function renderVisits(){
+  const box = $('#pane-visits'); box.replaceChildren();
+  $('#visit-count').textContent = S.visits.length;
+  if (!S.visits.length){
+    box.append(h('div', { class: 'card empty', style: 'margin-top:14px' }, h('b', {}, 'No visits yet'), h('p', {}, 'Book a doctor and your appointment will show up here.'), h('button', { class: 'btn primary', type: 'button', onclick: () => setDocTab('find') }, 'Find a doctor')));
+    return;
+  }
+  const up = upcomingVisits(), upIds = new Set(up.map(v => v.id)), past = S.visits.filter(v => !upIds.has(v.id)).sort((a, b) => (a.date + a.time) < (b.date + b.time) ? 1 : -1);
+  const section = (title, arr, isPast) => {
+    if (!arr.length) return;
+    box.append(h('h2', { class: 'sec-title' }, title));
+    const grid = h('div', { class: 'visit-list' });
+    arr.forEach(v => grid.append(visitCard(v, isPast)));
+    box.append(grid);
+  };
+  section('Upcoming', up, false); section('Past', past, true);
+  box.append(h('p', { class: 'fine' }, 'Prototype note: appointments are saved only in this browser and no clinic is actually contacted.'));
+}
+function visitCard(v, isPast){
+  const d = docById(v.docId), dt = parseISO(v.date);
+  const card = h('div', { class: 'card visit' });
+  card.append(h('div', { class: 'visit-top' },
+    h('div', { class: 'avatar', style: '--h:' + d.hue }, initials(d.name)),
+    h('div', { style: 'min-width:0' }, h('p', { class: 'visit-when' }, dayLabel(dt) + ', ' + longDate(dt) + ' · ' + fmtTime(v.time)), h('p', { style: 'font-weight:700' }, d.name), h('p', { class: 'muted small' }, d.specialty + ' · ' + (v.type === 'video' ? 'Video call' : d.clinic + ', ' + d.city)))));
+  if (v.reason) card.append(h('p', { class: 'muted small', dir: 'auto' }, 'Reason: ' + v.reason));
+  card.append(h('p', { class: 'small' }, h('span', { class: 'ref' }, 'PBM-' + hash(v.id).toString(36).toUpperCase().slice(0, 5))));
+  const acts = h('div', { class: 'visit-actions' });
+  acts.append(h('button', { class: 'btn small primary', type: 'button', onclick: () => go('followup', { visitId: v.id }) }, 'Ask about this visit'));
+  const cancel = h('button', { class: 'btn small ghost', type: 'button' }, isPast ? 'Remove' : 'Cancel visit');
+  cancel.addEventListener('click', () => {
+    if (cancel.dataset.sure){ S.visits = S.visits.filter(x => x.id !== v.id); store.set('visits', S.visits); renderVisits(); toast(isPast ? 'Removed' : 'Visit cancelled'); return; }
+    cancel.dataset.sure = '1'; cancel.textContent = 'Tap again to confirm'; setTimeout(() => { if (cancel.isConnected){ delete cancel.dataset.sure; cancel.textContent = isPast ? 'Remove' : 'Cancel visit'; } }, 3500);
+  });
+  acts.append(cancel); card.append(acts);
+  return card;
+}
+onShow.doctors = function(){
+  if (pending){
+    if (pending.specialty){ S.f.specialty = pending.specialty; S.f.limit = 12; S.f.sort = 'recommended'; S.docTab = 'find'; }
+    if (pending.tab) S.docTab = pending.tab;
+    pending = null;
+  }
+  syncFilters(); renderSpecChips(); $('#visit-count').textContent = S.visits.length; setDocTab(S.docTab);
+};
+
+/* ---------- booking sheet ---------- */
+let lastFocus = null;
+const overlay = $('#overlay');
+function openSheet(node){
+  lastFocus = document.activeElement; overlay.replaceChildren(node); overlay.hidden = false; document.body.style.overflow = 'hidden';
+  const f = node.querySelector('button,textarea,input'); if (f) f.focus({ preventScroll: true });
+}
+function closeSheet(){
+  overlay.hidden = true; overlay.replaceChildren(); document.body.style.overflow = '';
+  if (lastFocus && lastFocus.focus) { try { lastFocus.focus({ preventScroll: true }); } catch (e) {} }
+}
+overlay.addEventListener('mousedown', e => { if (e.target === overlay) closeSheet(); });
+document.addEventListener('keydown', e => {
+  if (overlay.hidden) return;
+  if (e.key === 'Escape'){ closeSheet(); return; }
+  if (e.key === 'Tab'){
+    const f = $$('button:not([disabled]),textarea,input', overlay); if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+});
+function openBooking(d){
+  const st = { date: null, time: null, type: 'clinic' };
+  const days = Array.from({ length: 7 }, (_, i) => addDays(new Date(), i));
+  const sheet = h('div', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'sheet-title' });
+  const typeBox = h('div', { class: 'seg', role: 'group', 'aria-label': 'Visit type' });
+  const dateBox = h('div', { class: 'dates', role: 'group', 'aria-label': 'Choose a day' });
+  const timeBox = h('div', { class: 'times', role: 'group', 'aria-label': 'Choose a time' });
+  const timeHint = h('p', { class: 'muted small' });
+  const reason = h('textarea', { id: 'bk-reason', rows: '2', placeholder: 'What would you like help with? (optional)', dir: 'auto', 'aria-label': 'Reason for visit' });
+  if (S.triage && (S.triage.specialty === d.specialty || S.triage.alternate === d.specialty)) reason.value = S.triage.summary;
+  const err = h('p', { class: 'form-err', role: 'alert', hidden: true });
+  const confirm = h('button', { class: 'btn primary wide', type: 'button' }, 'Confirm appointment');
+  function renderType(){
+    typeBox.replaceChildren(
+      h('button', { type: 'button', 'aria-pressed': st.type === 'clinic', onclick: () => { st.type = 'clinic'; renderType(); } }, 'In clinic'),
+      h('button', { type: 'button', 'aria-pressed': st.type === 'video', disabled: !d.video, title: d.video ? null : 'This doctor doesn’t offer video visits', onclick: () => { st.type = 'video'; renderType(); } }, 'Video call'));
+  }
+  function renderDates(){
+    dateBox.replaceChildren();
+    days.forEach(day => {
+      const n = slotsFor(d, day).length, k = iso(day);
+      dateBox.append(h('button', { class: 'date', type: 'button', disabled: n === 0, 'aria-pressed': st.date === k, 'aria-label': longDate(day) + (n ? ', ' + n + ' times' : ', no times'), onclick: () => { st.date = k; st.time = null; renderDates(); renderTimes(); } }, h('small', {}, dayLabel(day).slice(0, 3)), h('span', {}, String(day.getDate()))));
+    });
+  }
+  function renderTimes(){
+    timeBox.replaceChildren(); const slots = st.date ? slotsFor(d, parseISO(st.date)) : [];
+    timeHint.textContent = st.date ? (slots.length ? slots.length + ' times open on ' + longDate(parseISO(st.date)) : 'No times left on this day.') : 'Choose a day first.';
+    slots.forEach(t => timeBox.append(h('button', { class: 'time', type: 'button', 'aria-pressed': st.time === t, onclick: () => { st.time = t; err.hidden = true; renderTimes(); } }, fmtTime(t))));
+  }
+  const first = days.find(x => slotsFor(d, x).length); if (first) st.date = iso(first);
+  sheet.append(
+    h('div', { class: 'sheet-head' }, h('div', { class: 'avatar', style: '--h:' + d.hue }, initials(d.name)),
+      h('div', {}, h('h2', { id: 'sheet-title' }, 'Book ' + d.name), h('p', { class: 'muted small' }, d.specialty + ' · ' + d.clinic + ', ' + d.city + ' · ' + fmtMoney(d.fee))),
+      h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Close', onclick: closeSheet, html: icon('x', 20) })),
+    h('div', {}, h('p', { class: 'eyebrow', style: 'margin-bottom:8px' }, 'Visit type'), typeBox),
+    h('div', {}, h('p', { class: 'eyebrow', style: 'margin-bottom:8px' }, 'Day'), dateBox),
+    h('div', { style: 'display:flex;flex-direction:column;gap:10px' }, h('p', { class: 'eyebrow' }, 'Time'), timeHint, timeBox),
+    h('label', { class: 'f', for: 'bk-reason' }, 'Reason for visit', reason),
+    err, confirm);
+  renderType(); renderDates(); renderTimes();
+  confirm.addEventListener('click', () => {
+    if (!st.date || !st.time){ err.textContent = 'Choose a day and a time to continue.'; err.hidden = false; return; }
+    if (!slotsFor(d, parseISO(st.date)).includes(st.time)){ err.textContent = 'That time was just taken. Pick another.'; err.hidden = false; renderTimes(); return; }
+    const v = { id: 'V' + Date.now().toString(36) + Math.floor(Math.random() * 1e4), docId: d.id, date: st.date, time: st.time, type: st.type, reason: reason.value.trim() };
+    S.visits.push(v); store.set('visits', S.visits); $('#visit-count').textContent = S.visits.length;
+    const dt = parseISO(v.date);
+    sheet.replaceChildren(h('div', { class: 'done' },
+      h('div', { class: 'done-ring', html: '<svg viewBox="0 0 52 52" width="68" height="68" aria-hidden="true"><circle class="ring" cx="26" cy="26" r="23" fill="none" stroke="currentColor" stroke-width="3"/><path class="tick" d="M15 27l8 8 14-16" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' }),
+      h('h2', { id: 'sheet-title' }, 'You’re booked'),
+      h('p', { style: 'font-weight:700' }, d.name),
+      h('p', { class: 'muted' }, dayLabel(dt) + ', ' + longDate(dt) + ' · ' + fmtTime(v.time) + ' · ' + (v.type === 'video' ? 'Video call' : 'In clinic')),
+      h('span', { class: 'ref' }, 'PBM-' + hash(v.id).toString(36).toUpperCase().slice(0, 5)),
+      h('p', { class: 'muted small' }, 'Saved to My visits. After the appointment, come back here to ask your follow-up questions.'),
+      h('div', { class: 'btns' },
+        h('button', { class: 'btn primary', type: 'button', onclick: () => { closeSheet(); go('doctors', { tab: 'visits' }); } }, 'View my visits'),
+        h('button', { class: 'btn ghost', type: 'button', onclick: () => { closeSheet(); if (current === 'doctors') renderDoctors(); else if (current === 'triage') runTriageRefresh(); } }, 'Done'))));
+    const f = sheet.querySelector('button'); if (f) f.focus({ preventScroll: true });
+    if (current === 'doctors') { if (S.docTab === 'find') renderDoctors(); }
+  });
+  openSheet(sheet);
+}
+function runTriageRefresh(){ /* match cards show slots at render time; nothing to do until next run */ }
+
+/* ---------- LABS ---------- */
+const SAMPLE_LAB = [
+  ['Hemoglobin','10.4','g/dL',12.0,15.5],['Hematocrit','32.1','%',36,46],['Red blood cells','4.1','million/µL',4.0,5.2],['MCV','74','fL',80,100],
+  ['White blood cells','7.2','thousand/µL',4.0,11.0],['Platelets','268','thousand/µL',150,400],['Ferritin','9','ng/mL',15,150],['Vitamin D (25-OH)','18','ng/mL',30,100],
+  ['TSH','2.1','mIU/L',0.4,4.0],['Fasting glucose','94','mg/dL',70,99],['ALT','52','U/L',7,35],['Creatinine','0.8','mg/dL',0.5,1.1]
+];
+const LAB_MEANING = { 'Hemoglobin':'Carries oxygen around your body','Hematocrit':'Share of your blood made of red cells','Red blood cells':'The cells that carry oxygen','MCV':'Average size of your red blood cells','White blood cells':'Cells that fight infection','Platelets':'Cells that help your blood clot','Ferritin':'Your body’s iron storage','Vitamin D (25-OH)':'Supports bones and immunity','TSH':'Signals how active your thyroid is','Fasting glucose':'Blood sugar after not eating','ALT':'A liver enzyme','Creatinine':'A waste product your kidneys filter' };
+const LAB_NOTE = { 'Hemoglobin|low':'A little below range. This often goes along with low iron and is worth discussing.','Hematocrit|low':'Moves together with hemoglobin, so it points the same way.','MCV|low':'Smaller red cells can go along with low iron.','Ferritin|low':'Iron stores look low, which fits with the other blood counts.','Vitamin D (25-OH)|low':'Common, and usually easy to correct with your doctor’s advice.','ALT|high':'A mild rise has many everyday causes. A doctor can say if a repeat test is needed.' };
+function sampleLabText(){ return 'DEMO LAB: Complete blood count and basic panel\nPatient: Sample Patient, 29 years, Female\nTest | Result | Unit | Reference range\n' + SAMPLE_LAB.map(r => r.slice(0, 3).join(' | ') + ' | ' + r[3] + ' - ' + r[4]).join('\n'); }
+function localLab(){
+  const items = SAMPLE_LAB.map(r => { const v = parseFloat(r[1]), st = v < r[3] ? 'low' : v > r[4] ? 'high' : 'normal';
+    return { test: r[0], value: r[1], unit: r[2], range: r[3] + ' - ' + r[4], low: r[3], high: r[4], num: v, status: st, meaning: LAB_MEANING[r[0]] || '', note: LAB_NOTE[r[0] + '|' + st] || 'Within the expected range.' }; });
+  return { isLabReport: true, headline: 'Most results are fine, a few are worth a conversation', reportKind: 'Complete blood count and basic panel',
+    summary: 'Most of your results sit in the normal range. A few blood-count and iron results are slightly low, and one liver enzyme is slightly high. None of this is a diagnosis, and these patterns are common and often easy to address once a doctor reviews them.',
+    items, questions: ['Could my low iron and hemoglobin be treated with diet or supplements?', 'Should I repeat the liver enzyme test, and when?', 'Do I need a vitamin D supplement, and how much?', 'Is there anything else I should be tested for?'], specialty: 'General Physician' };
+}
+const lab = { ctl: null, last: null };
+function buildLabs(){
+  const sel = $('#lab-lang'); LANGS.filter(l => l[0] !== 'auto').forEach(l => sel.append(h('option', { value: l[0] }, l[1])));
+  sel.value = S.lang === 'auto' ? 'English' : S.lang;
+  const file = $('#lab-file'), drop = $('#drop');
+  $('#lab-pick').addEventListener('click', () => file.click());
+  file.addEventListener('change', () => { if (file.files[0]) runLab({ kind: 'file', file: file.files[0] }); file.value = ''; });
+  ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => { const f = e.dataTransfer && e.dataTransfer.files[0]; if (f) runLab({ kind: 'file', file: f }); });
+  $('#lab-sample').addEventListener('click', () => runLab({ kind: 'sample' }));
+  $('#lab-paste-go').addEventListener('click', () => { const t = $('#lab-text').value.trim(); if (t) runLab({ kind: 'text', text: t }); else toast('Paste some report text first'); });
+}
+async function pdfToImages(file, max){
+  if (!window.pdfjsLib) throw new Error('pdf');
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const pdf = await window.pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
+  const n = Math.min(pdf.numPages, max), blobs = []; let text = '';
+  for (let i = 1; i <= n; i++){
+    const page = await pdf.getPage(i), v1 = page.getViewport({ scale: 1 }), vp = page.getViewport({ scale: Math.min(2.2, 1500 / v1.width) });
+    const c = document.createElement('canvas'); c.width = Math.ceil(vp.width); c.height = Math.ceil(vp.height);
+    const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+    await page.render({ canvasContext: ctx, viewport: vp }).promise;
+    blobs.push(await new Promise(r => c.toBlob(r, 'image/jpeg', 0.86)));
+    try { const tc = await page.getTextContent(); text += tc.items.map(x => x.str).join(' ') + '\n'; } catch (e) {}
+  }
+  return { blobs, text, pages: pdf.numPages };
+}
+function labLoading(msg, onCancel){
+  const out = $('#lab-out');
+  out.replaceChildren(h('div', { class: 'card scanbox' }, h('div', { class: 'doc-ico', html: icon('file', 28) }), h('div', { class: 'stack', style: 'flex:1' }, h('b', {}, msg), h('div', { class: 'skel', style: 'width:80%' }), h('div', { class: 'skel', style: 'width:55%' }), h('div', {}, h('button', { class: 'btn small ghost', type: 'button', onclick: onCancel }, 'Cancel')))));
+  try { out.scrollIntoView({ block: 'nearest', behavior: RM ? 'auto' : 'smooth' }); } catch (e) {}
+}
+async function runLab(src){
+  const out = $('#lab-out'); lab.last = src;
+  if (lab.ctl) lab.ctl.abort();
+  const ctl = lab.ctl = new AbortController(); let cancelled = false;
+  const cancel = () => { cancelled = true; ctl.abort(); out.replaceChildren(); };
+  labLoading('Reading your report…', cancel);
+  const s = await getSample(); const language = $('#lab-lang').value || 'English';
+  try {
+    if (src.kind === 'sample' && !s){ await sleep(900); if (cancelled) return; return renderLab(localLab(), true, src); }
+    if (!s) throw { code: 'sampling_disabled' };
+    let images = [], text = '', note = '';
+    if (src.kind === 'sample') text = sampleLabText();
+    else if (src.kind === 'text') text = src.text.slice(0, 15000);
+    else {
+      const f = src.file; if (f.size > 20 * 1024 * 1024) throw { code: 'image_rejected', message: 'too large' };
+      const imgCap = sampleLimits && sampleLimits.images;
+      if (/pdf$/i.test(f.type) || /\.pdf$/i.test(f.name)){
+        try {
+          const r = await pdfToImages(f, imgCap ? Math.min(3, imgCap.maxCount) : 3);
+          text = r.text.slice(0, 15000); if (imgCap) images = r.blobs; if (r.pages > 3) note = ' Only the first 3 pages were read.';
+          if (!imgCap && text.trim().length < 40) throw { code: 'images_unavailable' };
+        } catch (e){ if (e && e.code) throw e; throw { code: 'image_rejected', message: 'pdf' }; }
+      } else if (/^image\/(jpeg|png|webp|gif)$/.test(f.type)){
+        if (!imgCap) throw { code: 'images_unavailable' };
+        images = [f];
+      } else throw { code: 'image_rejected', message: 'type' };
+      src.note = note;
+    }
+    if (cancelled) return;
+    const prompt = 'You are the lab-report translator inside PocketBaymax. Read the report (' + (images.length ? 'attached image' + (images.length > 1 ? 's' : '') + (text ? ' and extracted text' : '') : 'text below') + ') and explain it to someone with no medical background. You are not diagnosing anyone.\n' +
+      'If this is not a medical lab report, return only {"isLabReport":false,"message":"a short, kind explanation in the requested language"}.\n' +
+      'Otherwise return only a JSON object: {"isLabReport":true,"reportKind":"e.g. Complete blood count","headline":"one calm line","summary":"2 to 3 reassuring, honest sentences","items":[{"test":"name as printed","value":"result as printed","unit":"unit or empty","range":"reference range as printed or empty","low":<number or null>,"high":<number or null>,"num":<number or null>,"status":"normal|low|high|borderline|unknown","meaning":"what this test measures, under 15 words","note":"what this result may mean, calm and non-alarming, under 25 words, never a diagnosis"}],"questions":["3 to 5 questions to ask the doctor"],"specialty":"<one of: ' + SPECIALTIES.join(', ') + '>"}.\n' +
+      'List every measured test you can read (up to 30), using the report’s own reference ranges to set status. Write every text field in ' + language + ', but keep status and specialty as the exact English values.\n' +
+      (text ? '\nReport text:\n' + text : '');
+    labLoading('Translating into plain language…', cancel);
+    const opts = { signal: ctl.signal, modelTier: 'default' }; if (images.length) opts.images = images;
+    const r = await s.json(prompt, opts);
+    if (cancelled) return;
+    renderLab(r, false, src);
+  } catch (e){
+    if (cancelled || (e && e.code === 'cancelled')) return;
+    const box = h('div', { class: 'card stack' }, h('b', {}, 'We couldn’t read that report'), h('p', { class: 'muted' }, errText(e) || (e && e.message) || 'Please try again.'),
+      h('div', { class: 'btns', style: 'display:flex;gap:8px;flex-wrap:wrap' }, h('button', { class: 'btn small primary', type: 'button', onclick: () => runLab(src) }, 'Try again'), h('button', { class: 'btn small ghost', type: 'button', onclick: () => runLab({ kind: 'sample' }) }, 'Use the sample instead')));
+    out.replaceChildren(box);
+  } finally { if (lab.ctl === ctl) lab.ctl = null; }
+}
+function normLab(r){
+  r = r || {};
+  if (r.isLabReport === false) return { isLabReport: false, message: String(r.message || 'This doesn’t look like a lab report.') };
+  const num = x => (typeof x === 'number' && isFinite(x)) ? x : (x != null && x !== '' && isFinite(parseFloat(x)) ? parseFloat(x) : null);
+  const items = (Array.isArray(r.items) ? r.items : []).slice(0, 40).map(i => ({
+    test: String(i.test || ''), value: String(i.value == null ? '' : i.value), unit: String(i.unit || ''), range: String(i.range || ''),
+    low: num(i.low), high: num(i.high), num: num(i.num != null ? i.num : i.value),
+    status: ['normal','low','high','borderline','unknown'].includes(i.status) ? i.status : 'unknown', meaning: String(i.meaning || ''), note: String(i.note || '')
+  })).filter(i => i.test);
+  return { isLabReport: true, reportKind: String(r.reportKind || 'Lab report'), headline: String(r.headline || ''), summary: String(r.summary || ''), items,
+    questions: (Array.isArray(r.questions) ? r.questions : []).map(String).filter(Boolean).slice(0, 6), specialty: SPECIALTIES.includes(r.specialty) ? r.specialty : 'General Physician' };
+}
+function gauge(i){
+  if (i.low == null || i.high == null || i.num == null || i.high <= i.low) return null;
+  const span = i.high - i.low, min = i.low - span * 0.7, max = i.high + span * 0.7, pos = x => Math.max(2, Math.min(98, (x - min) / (max - min) * 100));
+  const band = h('div', { class: 'band' }); band.style.left = pos(i.low) + '%'; band.style.width = (pos(i.high) - pos(i.low)) + '%';
+  const dot = h('div', { class: 'dot ' + i.status, role: 'img', 'aria-label': 'Your result' + (i.status !== 'normal' ? ', outside the range' : ', inside the range') }); dot.style.left = '50%';
+  const g = h('div', { class: 'gauge' }, band, dot);
+  requestAnimationFrame(() => requestAnimationFrame(() => { dot.style.left = pos(i.num) + '%'; }));
+  return g;
+}
+function renderLab(raw, isLocal, src){
+  const r = isLocal ? raw : normLab(raw), out = $('#lab-out');
+  if (!r.isLabReport){ out.replaceChildren(h('div', { class: 'card stack' }, h('b', {}, 'That doesn’t look like a lab report'), h('p', { class: 'muted', dir: 'auto' }, r.message), h('div', {}, h('button', { class: 'btn small ghost', type: 'button', onclick: () => $('#lab-pick').click() }, 'Choose another file')))); return; }
+  S.lab = { headline: r.headline, summary: r.summary, items: r.items.filter(i => i.status !== 'normal').map(i => i.test + ' ' + i.value + ' ' + i.unit + ' (' + i.status + ')') };
+  const flagged = r.items.filter(i => i.status !== 'normal' && i.status !== 'unknown'), normal = r.items.filter(i => i.status === 'normal'), unknown = r.items.filter(i => i.status === 'unknown');
+  const wrap = h('div', { class: 'stack rise' });
+  wrap.append(h('div', { class: 'card stack' },
+    h('p', { class: 'eyebrow' }, r.reportKind + (src && src.kind === 'sample' ? ' · sample report' : '')),
+    h('h2', { style: 'font-family:var(--font-display);font-weight:500;font-size:26px;line-height:1.2', dir: 'auto' }, r.headline || 'Here’s what your report says'),
+    h('p', { dir: 'auto' }, r.summary),
+    h('div', { class: 'counts' }, h('span', { class: 'badge normal' }, normal.length + ' in range'), flagged.length ? h('span', { class: 'badge low' }, flagged.length + ' worth a conversation') : null, unknown.length ? h('span', { class: 'badge unknown' }, unknown.length + ' without a range') : null),
+    src && src.note ? h('p', { class: 'muted small' }, src.note.trim()) : null));
+  const group = (title, arr) => {
+    if (!arr.length) return;
+    const box = h('div', {}, h('h2', { class: 'sec-title', style: 'margin-top:6px' }, title)), grid = h('div', { class: 'items' });
+    arr.forEach((i, idx) => {
+      const g = gauge(i), label = { low:'Low', high:'High', borderline:'Borderline', normal:'In range', unknown:'No range' }[i.status];
+      const card = h('div', { class: 'item' + (i.status === 'low' || i.status === 'high' || i.status === 'borderline' ? ' flag' : '') },
+        h('div', { class: 'item-top' }, h('div', { style: 'min-width:0' }, h('b', { dir: 'auto' }, i.test), i.meaning ? h('p', { class: 'muted small', dir: 'auto' }, i.meaning) : null),
+          h('div', {}, h('p', { class: 'val' }, i.value + ' ', h('small', {}, i.unit)), i.range ? h('p', { class: 'rng' }, 'Range ' + i.range) : null)),
+        g, h('div', {}, h('span', { class: 'badge ' + i.status }, label)),
+        i.note ? h('p', { class: 'small', dir: 'auto' }, i.note) : null);
+      card.style.animationDelay = Math.min(idx, 10) * 40 + 'ms'; grid.append(card);
+    });
+    box.append(grid); wrap.append(box);
+  };
+  group('Worth a conversation', flagged); group('In the normal range', normal); group('Without a reference range', unknown);
+  if (r.questions.length) wrap.append(h('div', { class: 'card stack' }, h('h2', {}, 'Questions to ask your doctor'), h('ul', { class: 'list', dir: 'auto' }, r.questions.map(q => h('li', {}, q)))));
+  const acts = h('div', { class: 'card stack' }, h('h2', {}, 'What next?'),
+    h('div', { style: 'display:flex;flex-wrap:wrap;gap:10px' },
+      h('button', { class: 'btn primary', type: 'button', onclick: () => go('doctors', { specialty: r.specialty }) }, 'Find a ' + r.specialty),
+      h('button', { class: 'btn ghost', type: 'button', onclick: () => { S.fuLab = true; go('followup'); } }, 'Ask follow-up questions'),
+      src && src.kind !== 'sample' || (src && src.kind === 'sample' && sample) ? h('button', { class: 'btn ghost', type: 'button', onclick: () => runLab(src) }, 'Explain again in ' + ($('#lab-lang').selectedOptions[0] || {}).textContent) : null),
+    h('p', { class: 'fine', style: 'margin-top:0' }, 'This explanation is not a diagnosis. Your doctor knows your history and should confirm what any result means for you.'));
+  wrap.append(acts);
+  out.replaceChildren(wrap);
+  try { wrap.scrollIntoView({ block: 'start', behavior: RM ? 'auto' : 'smooth' }); } catch (e) {}
+}
+
+/* ---------- STRESS SCAN (photo) ---------- */
+const st = { ctl: null, url: null };
+const stBand = n => n <= 3 ? 'low' : n <= 6 ? 'moderate' : 'high';
+const ST_BAND = { low: ['Low stress', 'normal'], moderate: ['Moderate stress', 'mod'], high: ['High stress', 'hi'] };
+const stLog = () => store.get('stress', []);
+function stressWeek(){
+  const log = stLog(), real = log.length > 0, now = new Date(), ex = [6,7,5,4,6,3,4], box = $('#st-week');
+  box.replaceChildren();
+  const wrap = h('div', { class: 'week' + (real ? '' : ' example'), role: 'img', 'aria-label': real ? 'Your estimated stress over the last 7 days' : 'Example week of stress scores' });
+  for (let i = 6, idx = 0; i >= 0; i--, idx++){
+    const d = addDays(now, -i), e = log.find(x => x.date === iso(d)), v = real ? (e ? e.level : null) : ex[idx];
+    const bar = h('div', { class: 'bar ' + (v == null ? 'none' : { low: 'sl', moderate: 'sm', high: 'sh' }[stBand(v)]) });
+    bar.style.setProperty('--hh', (v == null ? 8 : v * 10) + '%'); bar.style.setProperty('--i', idx);
+    const col = h('div', { class: 'wk' }, h('div', { class: 'track' }, bar), h('span', { class: 'n' }, v == null ? '–' : String(v)), h('span', { class: 'd' }, DOW[d.getDay()].slice(0, 1)));
+    col.style.setProperty('--i', idx); wrap.append(col);
+  }
+  box.append(wrap); requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add('on')));
+  $('#st-week-note').textContent = real ? 'Taller, redder bars mean more stress. Dashed days have no scan yet.' : 'Example week. Your own scans will replace it.';
+  $('#st-clear').hidden = !real;
+  const w = $('#st-watch'); w.replaceChildren();
+  const last = log.slice(-3);
+  if (last.length === 3 && last.every(x => x.level >= 7))
+    w.append(h('div', { class: 'watch' }, h('span', { html: icon('alert', 22) }), h('div', {}, h('b', {}, 'Your stress has looked high for three scans in a row.'),
+      h('p', { class: 'muted', style: 'margin-top:4px' }, 'That’s worth taking seriously, and you don’t have to handle it alone. A short talk with a professional can help.'),
+      h('div', { class: 'btns' }, h('button', { class: 'btn small primary', type: 'button', onclick: () => go('doctors', { specialty: 'Clinical Psychologist' }) }, 'See psychologists'),
+        h('button', { class: 'btn small ghost', type: 'button', onclick: () => go('doctors', { specialty: 'Psychiatrist' }) }, 'See psychiatrists')))));
+}
+onShow.stress = stressWeek;
+function buildStress(){
+  $('#st-clear').addEventListener('click', () => { store.set('stress', []); stressWeek(); toast('Scan history cleared'); });
+  const file = $('#st-file'), cam = $('#st-file-cam'), drop = $('#st-drop');
+  $('#st-pick').addEventListener('click', () => file.click());
+  $('#st-cam').addEventListener('click', () => cam.click());
+  [file, cam].forEach(inp => inp.addEventListener('change', () => { if (inp.files[0]) runStress(inp.files[0]); inp.value = ''; }));
+  ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => { const f = e.dataTransfer && e.dataTransfer.files[0]; if (f) runStress(f); });
+}
+function stressLoading(onCancel){
+  $('#st-out').replaceChildren(h('div', { class: 'card scanbox' }, h('div', { class: 'doc-ico', html: icon('face', 28) }),
+    h('div', { class: 'stack', style: 'flex:1' }, h('b', {}, 'Baymax is taking a gentle look…'), h('div', { class: 'skel', style: 'width:80%' }), h('div', { class: 'skel', style: 'width:55%' }),
+      h('div', {}, h('button', { class: 'btn small ghost', type: 'button', onclick: onCancel }, 'Cancel')))));
+  try { $('#st-out').scrollIntoView({ block: 'nearest', behavior: RM ? 'auto' : 'smooth' }); } catch (e) {}
+}
+async function runStress(f){
+  const out = $('#st-out');
+  if (st.ctl) st.ctl.abort();
+  const ctl = st.ctl = new AbortController(); let cancelled = false;
+  const cancel = () => { cancelled = true; ctl.abort(); out.replaceChildren(); };
+  try {
+    if (!/^image\/(jpeg|png|webp|gif)$/.test(f.type) || f.size > 20 * 1024 * 1024) throw { code: 'image_rejected' };
+    if (st.url) URL.revokeObjectURL(st.url);
+    st.url = URL.createObjectURL(f);
+    stressLoading(cancel);
+    const s = await getSample();
+    if (!s) throw { code: 'sampling_disabled' };
+    if (!(sampleLimits && sampleLimits.images)) throw { code: 'images_unavailable' };
+    if (cancelled) return;
+    const note = $('#st-note').value.trim().slice(0, 600);
+    const prompt = 'You are Baymax, the calm and caring companion inside PocketBaymax, a healthcare navigation app. Look at the attached photo and give a gentle, honest estimate of how stressed the person looks right now.\n' +
+      'Rules: Base this only on visible cues such as the brow, eyes, jaw and mouth, how tired the face looks, and posture. Do not identify the person and do not guess their age, gender, ethnicity or any medical condition. A single photo is only one moment, so be modest: use confidence "low" when the light is poor, the face is small, blurry, turned away, partly covered or filtered, or when the expression is neutral. Never be alarming. Do not diagnose.\n' +
+      'If there is no clear human face, more than one face, or the image is too dark or blurry to judge, return only {"faceFound":false,"message":"one short kind sentence telling them what to retake"}.\n' +
+      'Otherwise return only a JSON object: {"faceFound":true,"stressLevel":<integer 1 to 10, where 1 is very relaxed and 10 is very stressed>,"confidence":"low|medium|high","cues":["2 to 4 short visible cues in plain words"],"summary":"two warm, hedged sentences, for example starting with \"You seem a little...\"","tips":["3 tiny things they can do in the next hour"],"ask":"one gentle question inviting them to share what is going on"}.\n' +
+      (note ? 'The person also wrote: "' + note.replace(/"/g, "'") + '". Use it as context, but still judge the photo itself. If their words suggest thoughts of self-harm or ending their life, set stressLevel to at least 8 and make the summary and tips about reaching someone they trust and local crisis services right now.\n' : '') +
+      'Write every text field in the person’s language. ' + langRule() + ' Keep the JSON keys, "faceFound" and "confidence" values exactly as specified in English. Plain text only, no emojis.';
+    const r = await s.json(prompt, { signal: ctl.signal, modelTier: 'default', images: [f] });
+    if (cancelled) return;
+    renderStress(r);
+  } catch (e){
+    if (cancelled || (e && e.code === 'cancelled')) return;
+    const msg = e && e.code === 'image_rejected' ? 'That file couldn’t be read as a photo. Try a JPG, PNG or WebP image.' : (errText(e) || (e && e.message) || 'Please try again.');
+    out.replaceChildren(h('div', { class: 'card stack' }, h('b', {}, 'We couldn’t analyse that photo'), h('p', { class: 'muted' }, msg),
+      h('div', {}, h('button', { class: 'btn small primary', type: 'button', onclick: () => $('#st-pick').click() }, 'Choose another photo'))));
+  } finally { if (st.ctl === ctl) st.ctl = null; }
+}
+function normStress(r){
+  r = r || {};
+  const lvl = Math.round(parseFloat(r.stressLevel));
+  if (r.faceFound === false || !isFinite(lvl)) return { faceFound: false, message: String(r.message || 'I couldn’t see a clear face. Try a well-lit photo facing the camera.') };
+  const arr = x => (Array.isArray(x) ? x : []).map(String).filter(Boolean);
+  return { faceFound: true, level: Math.max(1, Math.min(10, lvl)), confidence: ['low','medium','high'].includes(r.confidence) ? r.confidence : 'low',
+    cues: arr(r.cues).slice(0, 4), summary: String(r.summary || ''), tips: arr(r.tips).slice(0, 4), ask: String(r.ask || '') };
+}
+function renderStress(raw){
+  const r = normStress(raw), out = $('#st-out');
+  if (!r.faceFound){
+    out.replaceChildren(h('div', { class: 'card stack' }, h('b', {}, 'Let’s try that again'), h('p', { class: 'muted', dir: 'auto' }, r.message),
+      h('div', {}, h('button', { class: 'btn small primary', type: 'button', onclick: () => $('#st-pick').click() }, 'Choose another photo'))));
+    return;
+  }
+  const band = stBand(r.level), lbl = ST_BAND[band];
+  const before = stLog().filter(x => x.date !== iso(new Date())), prev = before[before.length - 1];
+  store.set('stress', before.concat({ date: iso(new Date()), level: r.level }).slice(-30)); // score only, the photo is never stored
+  stressWeek();
+  const diff = prev ? r.level - prev.level : 0;
+  const trend = !prev ? null : Math.abs(diff) < 1 ? h('p', { class: 'st-trend muted' }, 'About the same as your last scan.')
+    : h('p', { class: 'st-trend ' + (diff > 0 ? 'up' : 'down') }, (diff > 0 ? 'Up ' : 'Down ') + Math.abs(diff) + ' from your last scan (' + prev.level + '/10).');
+  const pin = h('div', { class: 'pin' }); pin.style.left = '0%';
+  requestAnimationFrame(() => requestAnimationFrame(() => { pin.style.left = ((r.level - 1) / 9 * 92 + 4) + '%'; }));
+  const wrap = h('div', { class: 'stack rise' });
+  wrap.append(h('div', { class: 'card stack' },
+    h('div', { class: 'st-top' }, st.url ? h('img', { class: 'st-photo', src: st.url, alt: 'The photo you uploaded' }) : null,
+      h('div', { class: 'stack', style: 'gap:8px' }, h('p', { class: 'eyebrow' }, 'Estimated stress level'),
+        h('p', { class: 'st-level', html: r.level + ' <small>/ 10</small>' }),
+        h('div', { class: 'counts' }, h('span', { class: 'badge ' + lbl[1] }, lbl[0]), h('span', { class: 'badge unknown' }, { low: 'Low', medium: 'Medium', high: 'High' }[r.confidence] + ' confidence')))),
+    h('div', { role: 'img', 'aria-label': 'Stress level ' + r.level + ' out of 10' }, h('div', { class: 'meter' }, pin), h('div', { class: 'meter-scale' }, h('span', {}, 'Relaxed'), h('span', {}, 'Very stressed'))),
+    trend, r.summary ? h('p', { dir: 'auto' }, r.summary) : null,
+    r.cues.length ? h('div', { class: 'stack', style: 'gap:8px' }, h('b', {}, 'What Baymax noticed'), h('div', { class: 'cues', dir: 'auto' }, r.cues.map(c => h('span', { class: 'cue' }, c)))) : null));
+  if (r.level >= 8) wrap.append(h('div', { class: 'st-care' }, h('span', { html: icon('alert', 22) }), h('div', {}, h('b', {}, 'You don’t have to carry this alone.'),
+    h('p', { class: 'muted', style: 'margin-top:4px' }, 'Please reach out to someone you trust today. If you feel unsafe or think about harming yourself, call your local emergency number or crisis line right now.'))));
+  if (r.tips.length) wrap.append(h('div', { class: 'card stack' }, h('h2', {}, 'Small things to try right now'), h('ul', { class: 'list', dir: 'auto' }, r.tips.map(t => h('li', {}, t)))));
+  if (r.ask) wrap.append(h('div', { class: 'st-ask', dir: 'auto' }, r.ask));
+  const acts = h('div', { class: 'st-actions' },
+    h('button', { class: 'btn primary', type: 'button', onclick: () => go('checkin') }, 'Do a check-in'),
+    band !== 'low' ? h('button', { class: 'btn ghost', type: 'button', onclick: () => go('doctors', { specialty: 'Clinical Psychologist' }) }, 'Talk to a psychologist') : null,
+    h('button', { class: 'btn ghost', type: 'button', onclick: () => $('#st-pick').click() }, 'Scan another photo'));
+  wrap.append(acts);
+  out.replaceChildren(wrap);
+  try { wrap.scrollIntoView({ block: 'start', behavior: RM ? 'auto' : 'smooth' }); } catch (e) {}
+}
+
+/* ---------- FOLLOW-UP ---------- */
+let fuChat;
+function visitLabel(v){ const d = docById(v.docId), dt = parseISO(v.date); return d.name + ' · ' + longDate(dt) + ', ' + fmtTime(v.time); }
+function refreshFollowupCtx(){
+  const sel = $('#fu-visit'); sel.replaceChildren(h('option', { value: '' }, 'No specific visit'));
+  S.visits.slice().sort((a, b) => (a.date + a.time) < (b.date + b.time) ? 1 : -1).forEach(v => sel.append(h('option', { value: v.id }, visitLabel(v))));
+  sel.value = S.visits.some(v => v.id === S.fuVisit) ? S.fuVisit : '';
+  const lb = $('#fu-lab'); lb.disabled = !S.lab; lb.setAttribute('aria-pressed', !!S.lab && S.fuLab);
+  lb.textContent = S.lab ? 'Include my lab summary' : 'Upload a lab report first to include it';
+}
+function buildFollowup(){
+  $('#fu-visit').addEventListener('change', e => { S.fuVisit = e.target.value; });
+  $('#fu-lab').addEventListener('click', () => { if (!S.lab) return; S.fuLab = !S.fuLab; $('#fu-lab').setAttribute('aria-pressed', S.fuLab); });
+  const notes = $('#fu-notes'); notes.value = store.get('fu_notes', '');
+  notes.addEventListener('input', () => store.set('fu_notes', notes.value));
+  fuChat = makeChat({
+    mount: $('#fu-chat'), id: 'fu', label: 'Ask a question about your visit', placeholder: 'Ask anything about your visit, medicine or results…', tier: 'default',
+    intro: 'Hi again. What would you like to understand better about your visit? You can ask in any language.',
+    chips: ['Explain what the doctor said in simple words', 'What should I avoid eating or doing?', 'I missed a dose. What should I do?', 'Which side effects are normal, and which are not?', 'When should I call the clinic again?'],
+    buildInput: turns => {
+      const v = S.visits.find(x => x.id === S.fuVisit), d = v && docById(v.docId), n = $('#fu-notes').value.trim();
+      const ctx = [];
+      if (v) ctx.push('Visit: ' + d.name + ', ' + d.specialty + ', on ' + longDate(parseISO(v.date)) + ' at ' + fmtTime(v.time) + (v.reason ? '. Reason given: ' + v.reason : ''));
+      if (n) ctx.push('What the person says the doctor told them (their notes, treat as unverified): ' + n.slice(0, 4000));
+      if (S.lab && S.fuLab) ctx.push('Lab summary from their uploaded report: ' + S.lab.headline + '. ' + S.lab.summary + ' Results outside the range: ' + (S.lab.items.join('; ') || 'none') + '.');
+      const rules = 'You are the after-visit helper inside PocketBaymax. The person has seen a doctor and has questions. You are not their doctor.\n' +
+        'Rules: explain in simple words. Never change, add or invent a prescription, dose or diagnosis. If their question conflicts with their doctor’s instructions, tell them to follow the doctor and call the clinic. Mention warning signs that need prompt care when relevant. If they describe emergency signs, tell them to get emergency care right now. Ask at most one short clarifying question, only if truly needed.\n' +
+        'Style: warm, plain text only, no markdown, no emojis, under 130 words.\n' + (ctx.length ? 'Context:\n' + ctx.join('\n') + '\n' : 'No visit details were given.\n') + langRule();
+      return [{ role: 'user', content: rules }].concat(turns);
+    },
+    fallback: () => 'I can’t generate answers in this view. Your doctor or the clinic is the best place to ask this question.'
+  });
+}
+onShow.followup = function(){
+  if (pending && pending.visitId){ S.fuVisit = pending.visitId; pending = null; }
+  refreshFollowupCtx();
+};
+
+/* ---------- language & boot ---------- */
+function buildLang(){
+  const sel = $('#lang'); LANGS.forEach(l => sel.append(h('option', { value: l[0] }, l[1]))); sel.value = S.lang;
+  sel.addEventListener('change', e => { S.lang = e.target.value; store.set('lang', S.lang); $('#lab-lang').value = S.lang === 'auto' ? 'English' : S.lang; toast('Claude will reply in ' + (sel.selectedOptions[0] ? sel.selectedOptions[0].textContent : 'your language')); });
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) go(b.dataset.go); });
+
+buildNav(); buildLang(); buildJourney(); buildCheckin(); buildTriage(); buildDoctors(); buildLabs(); buildStress(); buildFollowup();
+show(routeFromHash());
+})();
+</script>
+
+</body>
+</html>

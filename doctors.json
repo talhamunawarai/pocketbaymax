@@ -1,0 +1,2665 @@
+[
+  {
+    "id": "D001",
+    "name": "Dr. Ahmed Durrani",
+    "gender": "M",
+    "specialty": "Dentist",
+    "qualifications": "BDS, RDS",
+    "focus": [
+      "Smile correction",
+      "Tooth pain"
+    ],
+    "experience": 10,
+    "rating": 4.9,
+    "reviews": 305,
+    "fee": 2600,
+    "city": "Islamabad",
+    "clinic": "Noor Family Hospital",
+    "languages": [
+      "Urdu"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "morning",
+    "hue": 125,
+    "bio": "Focuses on smile correction and tooth pain. 10 years of practice in Islamabad."
+  },
+  {
+    "id": "D002",
+    "name": "Dr. Haroon Kakar",
+    "gender": "M",
+    "specialty": "General Physician",
+    "qualifications": "MBBS, MRCGP",
+    "focus": [
+      "Preventive check-ups",
+      "Blood pressure and diabetes care"
+    ],
+    "experience": 4,
+    "rating": 4.8,
+    "reviews": 418,
+    "fee": 1800,
+    "city": "Hyderabad",
+    "clinic": "Sehat Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi",
+      "Sindhi"
+    ],
+    "video": true,
+    "offDay": 3,
+    "shift": "evening",
+    "hue": 200,
+    "bio": "Focuses on preventive check-ups and blood pressure and diabetes care. 4 years of practice in Hyderabad."
+  },
+  {
+    "id": "D003",
+    "name": "Dr. Dua Malik",
+    "gender": "F",
+    "specialty": "Gynecologist",
+    "qualifications": "MBBS, MD (Gynecology)",
+    "focus": [
+      "Menstrual health",
+      "Pregnancy care"
+    ],
+    "experience": 30,
+    "rating": 4.2,
+    "reviews": 834,
+    "fee": 3900,
+    "city": "Karachi",
+    "clinic": "Hayat Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "morning",
+    "hue": 28,
+    "bio": "Focuses on menstrual health and pregnancy care. 30 years of practice in Karachi."
+  },
+  {
+    "id": "D004",
+    "name": "Dr. Waqar Ahmed",
+    "gender": "M",
+    "specialty": "Dermatologist",
+    "qualifications": "MBBS, FCPS (Dermatology)",
+    "focus": [
+      "Eczema",
+      "Hair loss"
+    ],
+    "experience": 17,
+    "rating": 4.3,
+    "reviews": 553,
+    "fee": 3700,
+    "city": "Islamabad",
+    "clinic": "Rahat Health Hub",
+    "languages": [
+      "Urdu"
+    ],
+    "video": true,
+    "offDay": 2,
+    "shift": "morning",
+    "hue": 125,
+    "bio": "Focuses on eczema and hair loss. 17 years of practice in Islamabad."
+  },
+  {
+    "id": "D005",
+    "name": "Dr. Mubashir Mirza",
+    "gender": "M",
+    "specialty": "Dermatologist",
+    "qualifications": "MBBS, FCPS (Dermatology)",
+    "focus": [
+      "Hair loss",
+      "Acne and skin allergy"
+    ],
+    "experience": 11,
+    "rating": 4.3,
+    "reviews": 490,
+    "fee": 3100,
+    "city": "Faisalabad",
+    "clinic": "Dua Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "morning",
+    "hue": 45,
+    "bio": "Focuses on hair loss and acne and skin allergy. 11 years of practice in Faisalabad."
+  },
+  {
+    "id": "D006",
+    "name": "Dr. Hassan Niazi",
+    "gender": "M",
+    "specialty": "General Physician",
+    "qualifications": "MBBS, MRCGP",
+    "focus": [
+      "Preventive check-ups",
+      "Blood pressure and diabetes care"
+    ],
+    "experience": 7,
+    "rating": 4.2,
+    "reviews": 567,
+    "fee": 1900,
+    "city": "Peshawar",
+    "clinic": "Dua Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 3,
+    "shift": "evening",
+    "hue": 125,
+    "bio": "Focuses on preventive check-ups and blood pressure and diabetes care. 7 years of practice in Peshawar."
+  },
+  {
+    "id": "D007",
+    "name": "Dr. Fatima Yousafzai",
+    "gender": "F",
+    "specialty": "Gynecologist",
+    "qualifications": "MBBS, FCPS (Gynecology)",
+    "focus": [
+      "Pregnancy care",
+      "PCOS"
+    ],
+    "experience": 28,
+    "rating": 4.5,
+    "reviews": 688,
+    "fee": 4200,
+    "city": "Peshawar",
+    "clinic": "Sehat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi",
+      "Pashto"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 190,
+    "bio": "Focuses on pregnancy care and pcos. 28 years of practice in Peshawar."
+  },
+  {
+    "id": "D008",
+    "name": "Dr. Kiran Hashmi",
+    "gender": "F",
+    "specialty": "General Physician",
+    "qualifications": "MBBS, MRCGP",
+    "focus": [
+      "Blood pressure and diabetes care",
+      "Fever and infections"
+    ],
+    "experience": 28,
+    "rating": 4.7,
+    "reviews": 438,
+    "fee": 2900,
+    "city": "Karachi",
+    "clinic": "Barkat Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi",
+      "Sindhi"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "evening",
+    "hue": 200,
+    "bio": "Focuses on blood pressure and diabetes care and fever and infections. 28 years of practice in Karachi."
+  },
+  {
+    "id": "D009",
+    "name": "Dr. Nadia Butt",
+    "gender": "F",
+    "specialty": "Dermatologist",
+    "qualifications": "MBBS, MD (Dermatology)",
+    "focus": [
+      "Eczema",
+      "Hair loss"
+    ],
+    "experience": 26,
+    "rating": 4.8,
+    "reviews": 45,
+    "fee": 3900,
+    "city": "Karachi",
+    "clinic": "Shafa Health Hub",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 3,
+    "shift": "evening",
+    "hue": 255,
+    "bio": "Focuses on eczema and hair loss. 26 years of practice in Karachi."
+  },
+  {
+    "id": "D010",
+    "name": "Dr. Mariam Rana",
+    "gender": "F",
+    "specialty": "General Physician",
+    "qualifications": "MBBS, FCPS (Family Medicine)",
+    "focus": [
+      "Family medicine",
+      "Preventive check-ups"
+    ],
+    "experience": 9,
+    "rating": 4.8,
+    "reviews": 251,
+    "fee": 2600,
+    "city": "Lahore",
+    "clinic": "Barkat Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "evening",
+    "hue": 190,
+    "bio": "Focuses on family medicine and preventive check-ups. 9 years of practice in Lahore."
+  },
+  {
+    "id": "D011",
+    "name": "Dr. Asad Abbasi",
+    "gender": "M",
+    "specialty": "General Physician",
+    "qualifications": "MBBS, FCPS (Family Medicine)",
+    "focus": [
+      "Family medicine",
+      "Preventive check-ups"
+    ],
+    "experience": 14,
+    "rating": 4.8,
+    "reviews": 38,
+    "fee": 2400,
+    "city": "Sialkot",
+    "clinic": "Meher Care Clinic",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": false,
+    "offDay": 5,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on family medicine and preventive check-ups. 14 years of practice in Sialkot."
+  },
+  {
+    "id": "D012",
+    "name": "Dr. Saima Zaidi",
+    "gender": "F",
+    "specialty": "Neurologist",
+    "qualifications": "MBBS, MD (Neurology)",
+    "focus": [
+      "Stroke recovery",
+      "Epilepsy"
+    ],
+    "experience": 32,
+    "rating": 4.3,
+    "reviews": 404,
+    "fee": 4800,
+    "city": "Lahore",
+    "clinic": "Dua Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "morning",
+    "hue": 190,
+    "bio": "Focuses on stroke recovery and epilepsy. 32 years of practice in Lahore."
+  },
+  {
+    "id": "D013",
+    "name": "Dr. Sana Sheikh",
+    "gender": "F",
+    "specialty": "General Physician",
+    "qualifications": "MBBS",
+    "focus": [
+      "Family medicine",
+      "Fever and infections"
+    ],
+    "experience": 21,
+    "rating": 4.1,
+    "reviews": 516,
+    "fee": 2600,
+    "city": "Rawalpindi",
+    "clinic": "Rahat Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": false,
+    "offDay": 6,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on family medicine and fever and infections. 21 years of practice in Rawalpindi."
+  },
+  {
+    "id": "D014",
+    "name": "Dr. Nimra Naqvi",
+    "gender": "F",
+    "specialty": "Gynecologist",
+    "qualifications": "MBBS, FCPS (Gynecology)",
+    "focus": [
+      "PCOS",
+      "Pregnancy care"
+    ],
+    "experience": 6,
+    "rating": 4.1,
+    "reviews": 789,
+    "fee": 2900,
+    "city": "Peshawar",
+    "clinic": "Meher Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Pashto"
+    ],
+    "video": true,
+    "offDay": 2,
+    "shift": "evening",
+    "hue": 200,
+    "bio": "Focuses on pcos and pregnancy care. 6 years of practice in Peshawar."
+  },
+  {
+    "id": "D015",
+    "name": "Dr. Sana Khan",
+    "gender": "F",
+    "specialty": "Cardiologist",
+    "qualifications": "MBBS, FCPS (Cardiology)",
+    "focus": [
+      "Chest pain evaluation",
+      "Preventive cardiology"
+    ],
+    "experience": 4,
+    "rating": 4.5,
+    "reviews": 689,
+    "fee": 3300,
+    "city": "Faisalabad",
+    "clinic": "Zindagi Health Hub",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 2,
+    "shift": "evening",
+    "hue": 200,
+    "bio": "Focuses on chest pain evaluation and preventive cardiology. 4 years of practice in Faisalabad."
+  },
+  {
+    "id": "D016",
+    "name": "Dr. Tariq Kakar",
+    "gender": "M",
+    "specialty": "Psychiatrist",
+    "qualifications": "MBBS, FCPS (Psychiatry)",
+    "focus": [
+      "Sleep problems",
+      "Burnout and stress"
+    ],
+    "experience": 30,
+    "rating": 4.3,
+    "reviews": 154,
+    "fee": 4400,
+    "city": "Lahore",
+    "clinic": "Zindagi Health Hub",
+    "languages": [
+      "Urdu",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on sleep problems and burnout and stress. 30 years of practice in Lahore."
+  },
+  {
+    "id": "D017",
+    "name": "Dr. Faisal Gill",
+    "gender": "M",
+    "specialty": "Orthopedic Surgeon",
+    "qualifications": "MBBS, FCPS (Orthopedic Surgery)",
+    "focus": [
+      "Spine and back pain",
+      "Sports injuries"
+    ],
+    "experience": 9,
+    "rating": 4.9,
+    "reviews": 861,
+    "fee": 3400,
+    "city": "Karachi",
+    "clinic": "Aafiyat Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Sindhi"
+    ],
+    "video": true,
+    "offDay": 3,
+    "shift": "evening",
+    "hue": 45,
+    "bio": "Focuses on spine and back pain and sports injuries. 9 years of practice in Karachi."
+  },
+  {
+    "id": "D018",
+    "name": "Dr. Hamza Yousafzai",
+    "gender": "M",
+    "specialty": "Clinical Psychologist",
+    "qualifications": "MS Clinical Psychology",
+    "focus": [
+      "Stress management",
+      "Cognitive behavioral therapy"
+    ],
+    "experience": 18,
+    "rating": 4.2,
+    "reviews": 475,
+    "fee": 3200,
+    "city": "Islamabad",
+    "clinic": "Zindagi Medical Centre",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": false,
+    "offDay": 2,
+    "shift": "evening",
+    "hue": 340,
+    "bio": "Focuses on stress management and cognitive behavioral therapy. 18 years of practice in Islamabad."
+  },
+  {
+    "id": "D019",
+    "name": "Dr. Naveed Ansari",
+    "gender": "M",
+    "specialty": "Endocrinologist",
+    "qualifications": "MBBS, FCPS (Endocrinology)",
+    "focus": [
+      "Diabetes",
+      "Thyroid disorders"
+    ],
+    "experience": 29,
+    "rating": 4.3,
+    "reviews": 68,
+    "fee": 4900,
+    "city": "Islamabad",
+    "clinic": "Barkat Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 340,
+    "bio": "Focuses on diabetes and thyroid disorders. 29 years of practice in Islamabad."
+  },
+  {
+    "id": "D020",
+    "name": "Dr. Saad Lashari",
+    "gender": "M",
+    "specialty": "Orthopedic Surgeon",
+    "qualifications": "MBBS, FCPS (Orthopedic Surgery)",
+    "focus": [
+      "Spine and back pain",
+      "Joint pain"
+    ],
+    "experience": 16,
+    "rating": 4.8,
+    "reviews": 345,
+    "fee": 3700,
+    "city": "Lahore",
+    "clinic": "Rahat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 3,
+    "shift": "evening",
+    "hue": 255,
+    "bio": "Focuses on spine and back pain and joint pain. 16 years of practice in Lahore."
+  },
+  {
+    "id": "D021",
+    "name": "Dr. Sana Siddiqui",
+    "gender": "F",
+    "specialty": "Endocrinologist",
+    "qualifications": "MBBS, MD (Endocrinology)",
+    "focus": [
+      "Weight management",
+      "Diabetes"
+    ],
+    "experience": 8,
+    "rating": 4.7,
+    "reviews": 314,
+    "fee": 3900,
+    "city": "Islamabad",
+    "clinic": "Aafiyat Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "morning",
+    "hue": 340,
+    "bio": "Focuses on weight management and diabetes. 8 years of practice in Islamabad."
+  },
+  {
+    "id": "D022",
+    "name": "Dr. Danish Ansari",
+    "gender": "M",
+    "specialty": "Gastroenterologist",
+    "qualifications": "MBBS, FCPS (Gastroenterology)",
+    "focus": [
+      "Acidity and reflux",
+      "Liver health"
+    ],
+    "experience": 12,
+    "rating": 4.7,
+    "reviews": 259,
+    "fee": 3700,
+    "city": "Karachi",
+    "clinic": "Sukoon Health Hub",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 2,
+    "shift": "evening",
+    "hue": 200,
+    "bio": "Focuses on acidity and reflux and liver health. 12 years of practice in Karachi."
+  },
+  {
+    "id": "D023",
+    "name": "Dr. Faisal Abbasi",
+    "gender": "M",
+    "specialty": "ENT Specialist",
+    "qualifications": "MBBS, FCPS (ENT)",
+    "focus": [
+      "Sinus problems",
+      "Allergic rhinitis"
+    ],
+    "experience": 20,
+    "rating": 4.5,
+    "reviews": 652,
+    "fee": 3700,
+    "city": "Multan",
+    "clinic": "Noor Health Hub",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "evening",
+    "hue": 125,
+    "bio": "Focuses on sinus problems and allergic rhinitis. 20 years of practice in Multan."
+  },
+  {
+    "id": "D024",
+    "name": "Dr. Rabia Mirza",
+    "gender": "F",
+    "specialty": "Clinical Psychologist",
+    "qualifications": "MPhil Clinical Psychology",
+    "focus": [
+      "Stress management",
+      "Cognitive behavioral therapy"
+    ],
+    "experience": 25,
+    "rating": 4.7,
+    "reviews": 98,
+    "fee": 3500,
+    "city": "Islamabad",
+    "clinic": "Rahat Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 190,
+    "bio": "Focuses on stress management and cognitive behavioral therapy. 25 years of practice in Islamabad."
+  },
+  {
+    "id": "D025",
+    "name": "Dr. Sidra Sheikh",
+    "gender": "F",
+    "specialty": "ENT Specialist",
+    "qualifications": "MBBS, FCPS (ENT)",
+    "focus": [
+      "Ear infections",
+      "Sinus problems"
+    ],
+    "experience": 32,
+    "rating": 4.7,
+    "reviews": 51,
+    "fee": 3900,
+    "city": "Multan",
+    "clinic": "Barkat Care Clinic",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "morning",
+    "hue": 255,
+    "bio": "Focuses on ear infections and sinus problems. 32 years of practice in Multan."
+  },
+  {
+    "id": "D026",
+    "name": "Dr. Beenish Siddiqui",
+    "gender": "F",
+    "specialty": "Gastroenterologist",
+    "qualifications": "MBBS, FCPS (Gastroenterology)",
+    "focus": [
+      "Irritable bowel",
+      "Liver health"
+    ],
+    "experience": 30,
+    "rating": 4.5,
+    "reviews": 874,
+    "fee": 4500,
+    "city": "Rawalpindi",
+    "clinic": "Shafa Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": false,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 45,
+    "bio": "Focuses on irritable bowel and liver health. 30 years of practice in Rawalpindi."
+  },
+  {
+    "id": "D027",
+    "name": "Dr. Nimra Yousafzai",
+    "gender": "F",
+    "specialty": "Cardiologist",
+    "qualifications": "MBBS, FCPS (Cardiology)",
+    "focus": [
+      "Hypertension",
+      "Heart rhythm problems"
+    ],
+    "experience": 23,
+    "rating": 4.8,
+    "reviews": 682,
+    "fee": 3900,
+    "city": "Karachi",
+    "clinic": "Meher Family Hospital",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "morning",
+    "hue": 340,
+    "bio": "Focuses on hypertension and heart rhythm problems. 23 years of practice in Karachi."
+  },
+  {
+    "id": "D028",
+    "name": "Dr. Naveed Cheema",
+    "gender": "M",
+    "specialty": "Urologist",
+    "qualifications": "MBBS, FCPS (Urology)",
+    "focus": [
+      "Urinary infections",
+      "Kidney stones"
+    ],
+    "experience": 9,
+    "rating": 4.1,
+    "reviews": 69,
+    "fee": 3700,
+    "city": "Karachi",
+    "clinic": "Sehat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Sindhi"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on urinary infections and kidney stones. 9 years of practice in Karachi."
+  },
+  {
+    "id": "D029",
+    "name": "Dr. Hassan Hashmi",
+    "gender": "M",
+    "specialty": "Ophthalmologist",
+    "qualifications": "MBBS, MD (Ophthalmology)",
+    "focus": [
+      "Vision checks",
+      "Dry eye"
+    ],
+    "experience": 17,
+    "rating": 4.3,
+    "reviews": 765,
+    "fee": 3700,
+    "city": "Quetta",
+    "clinic": "Zindagi Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Pashto"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "evening",
+    "hue": 45,
+    "bio": "Focuses on vision checks and dry eye. 17 years of practice in Quetta."
+  },
+  {
+    "id": "D030",
+    "name": "Dr. Adnan Lodhi",
+    "gender": "M",
+    "specialty": "Gynecologist",
+    "qualifications": "MBBS, FCPS (Gynecology)",
+    "focus": [
+      "PCOS",
+      "Fertility advice"
+    ],
+    "experience": 12,
+    "rating": 4.5,
+    "reviews": 291,
+    "fee": 3500,
+    "city": "Lahore",
+    "clinic": "Shafa Health Hub",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 340,
+    "bio": "Focuses on pcos and fertility advice. 12 years of practice in Lahore."
+  },
+  {
+    "id": "D031",
+    "name": "Dr. Hafsa Gill",
+    "gender": "F",
+    "specialty": "Endocrinologist",
+    "qualifications": "MBBS, MD (Endocrinology)",
+    "focus": [
+      "Diabetes",
+      "Thyroid disorders"
+    ],
+    "experience": 23,
+    "rating": 4.3,
+    "reviews": 215,
+    "fee": 4000,
+    "city": "Islamabad",
+    "clinic": "Meher Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "evening",
+    "hue": 340,
+    "bio": "Focuses on diabetes and thyroid disorders. 23 years of practice in Islamabad."
+  },
+  {
+    "id": "D032",
+    "name": "Dr. Erum Baig",
+    "gender": "F",
+    "specialty": "Nephrologist",
+    "qualifications": "MBBS, MD (Nephrology)",
+    "focus": [
+      "Dialysis care",
+      "Blood pressure and kidneys"
+    ],
+    "experience": 19,
+    "rating": 4.5,
+    "reviews": 808,
+    "fee": 4100,
+    "city": "Islamabad",
+    "clinic": "Sehat Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 340,
+    "bio": "Focuses on dialysis care and blood pressure and kidneys. 19 years of practice in Islamabad."
+  },
+  {
+    "id": "D033",
+    "name": "Dr. Tariq Yousafzai",
+    "gender": "M",
+    "specialty": "Ophthalmologist",
+    "qualifications": "MBBS, MD (Ophthalmology)",
+    "focus": [
+      "Eye strain",
+      "Dry eye"
+    ],
+    "experience": 26,
+    "rating": 4,
+    "reviews": 491,
+    "fee": 4200,
+    "city": "Karachi",
+    "clinic": "Rahat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 165,
+    "bio": "Focuses on eye strain and dry eye. 26 years of practice in Karachi."
+  },
+  {
+    "id": "D034",
+    "name": "Dr. Naveed Qureshi",
+    "gender": "M",
+    "specialty": "Clinical Psychologist",
+    "qualifications": "MS Clinical Psychology",
+    "focus": [
+      "Stress management",
+      "Grief and life changes"
+    ],
+    "experience": 4,
+    "rating": 4.5,
+    "reviews": 59,
+    "fee": 3000,
+    "city": "Peshawar",
+    "clinic": "Dua Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi",
+      "Pashto"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "evening",
+    "hue": 28,
+    "bio": "Focuses on stress management and grief and life changes. 4 years of practice in Peshawar."
+  },
+  {
+    "id": "D035",
+    "name": "Dr. Noor Durrani",
+    "gender": "F",
+    "specialty": "Gynecologist",
+    "qualifications": "MBBS, FCPS (Gynecology)",
+    "focus": [
+      "Menstrual health",
+      "Fertility advice"
+    ],
+    "experience": 26,
+    "rating": 4.5,
+    "reviews": 164,
+    "fee": 3500,
+    "city": "Karachi",
+    "clinic": "Sukoon Medical Centre",
+    "languages": [
+      "Urdu",
+      "Sindhi"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "morning",
+    "hue": 125,
+    "bio": "Focuses on menstrual health and fertility advice. 26 years of practice in Karachi."
+  },
+  {
+    "id": "D036",
+    "name": "Dr. Beenish Mirza",
+    "gender": "F",
+    "specialty": "Clinical Psychologist",
+    "qualifications": "MS Clinical Psychology",
+    "focus": [
+      "Grief and life changes",
+      "Stress management"
+    ],
+    "experience": 26,
+    "rating": 4.8,
+    "reviews": 196,
+    "fee": 3600,
+    "city": "Karachi",
+    "clinic": "Sukoon Family Hospital",
+    "languages": [
+      "Urdu"
+    ],
+    "video": false,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 28,
+    "bio": "Focuses on grief and life changes and stress management. 26 years of practice in Karachi."
+  },
+  {
+    "id": "D037",
+    "name": "Dr. Humaira Siddiqui",
+    "gender": "F",
+    "specialty": "Neurologist",
+    "qualifications": "MBBS, FCPS (Neurology)",
+    "focus": [
+      "Stroke recovery",
+      "Nerve pain"
+    ],
+    "experience": 25,
+    "rating": 4.6,
+    "reviews": 580,
+    "fee": 4500,
+    "city": "Multan",
+    "clinic": "Shafa Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "morning",
+    "hue": 255,
+    "bio": "Focuses on stroke recovery and nerve pain. 25 years of practice in Multan."
+  },
+  {
+    "id": "D038",
+    "name": "Dr. Hamza Awan",
+    "gender": "M",
+    "specialty": "Endocrinologist",
+    "qualifications": "MBBS, FCPS (Endocrinology)",
+    "focus": [
+      "Hormonal imbalance",
+      "Thyroid disorders"
+    ],
+    "experience": 13,
+    "rating": 4.3,
+    "reviews": 832,
+    "fee": 3500,
+    "city": "Peshawar",
+    "clinic": "Sehat Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Pashto"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "evening",
+    "hue": 165,
+    "bio": "Focuses on hormonal imbalance and thyroid disorders. 13 years of practice in Peshawar."
+  },
+  {
+    "id": "D039",
+    "name": "Dr. Tariq Qureshi",
+    "gender": "M",
+    "specialty": "Pediatrician",
+    "qualifications": "MBBS, FCPS (Pediatrics)",
+    "focus": [
+      "Child growth",
+      "Childhood infections"
+    ],
+    "experience": 30,
+    "rating": 4.9,
+    "reviews": 804,
+    "fee": 3500,
+    "city": "Hyderabad",
+    "clinic": "Meher Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "morning",
+    "hue": 28,
+    "bio": "Focuses on child growth and childhood infections. 30 years of practice in Hyderabad."
+  },
+  {
+    "id": "D040",
+    "name": "Dr. Bushra Abbasi",
+    "gender": "F",
+    "specialty": "ENT Specialist",
+    "qualifications": "MBBS, FCPS (ENT)",
+    "focus": [
+      "Ear infections",
+      "Sinus problems"
+    ],
+    "experience": 20,
+    "rating": 4.8,
+    "reviews": 701,
+    "fee": 3500,
+    "city": "Karachi",
+    "clinic": "Barkat Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi",
+      "Sindhi"
+    ],
+    "video": false,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 45,
+    "bio": "Focuses on ear infections and sinus problems. 20 years of practice in Karachi."
+  },
+  {
+    "id": "D041",
+    "name": "Dr. Kiran Mirza",
+    "gender": "F",
+    "specialty": "General Physician",
+    "qualifications": "MBBS",
+    "focus": [
+      "Blood pressure and diabetes care",
+      "Preventive check-ups"
+    ],
+    "experience": 29,
+    "rating": 4,
+    "reviews": 178,
+    "fee": 2800,
+    "city": "Multan",
+    "clinic": "Amaan Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "evening",
+    "hue": 200,
+    "bio": "Focuses on blood pressure and diabetes care and preventive check-ups. 29 years of practice in Multan."
+  },
+  {
+    "id": "D042",
+    "name": "Dr. Hamza Ansari",
+    "gender": "M",
+    "specialty": "Orthopedic Surgeon",
+    "qualifications": "MBBS, FCPS (Orthopedic Surgery)",
+    "focus": [
+      "Fracture care",
+      "Sports injuries"
+    ],
+    "experience": 6,
+    "rating": 4.1,
+    "reviews": 199,
+    "fee": 3600,
+    "city": "Hyderabad",
+    "clinic": "Meher Family Hospital",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 255,
+    "bio": "Focuses on fracture care and sports injuries. 6 years of practice in Hyderabad."
+  },
+  {
+    "id": "D043",
+    "name": "Dr. Asad Anwar",
+    "gender": "M",
+    "specialty": "ENT Specialist",
+    "qualifications": "MBBS, FCPS (ENT)",
+    "focus": [
+      "Sinus problems",
+      "Ear infections"
+    ],
+    "experience": 30,
+    "rating": 4.8,
+    "reviews": 359,
+    "fee": 4100,
+    "city": "Rawalpindi",
+    "clinic": "Dua Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 45,
+    "bio": "Focuses on sinus problems and ear infections. 30 years of practice in Rawalpindi."
+  },
+  {
+    "id": "D044",
+    "name": "Dr. Junaid Lashari",
+    "gender": "M",
+    "specialty": "Neurologist",
+    "qualifications": "MBBS, FCPS (Neurology)",
+    "focus": [
+      "Stroke recovery",
+      "Nerve pain"
+    ],
+    "experience": 24,
+    "rating": 4.4,
+    "reviews": 412,
+    "fee": 4200,
+    "city": "Sialkot",
+    "clinic": "Noor Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 2,
+    "shift": "morning",
+    "hue": 255,
+    "bio": "Focuses on stroke recovery and nerve pain. 24 years of practice in Sialkot."
+  },
+  {
+    "id": "D045",
+    "name": "Dr. Waqar Butt",
+    "gender": "M",
+    "specialty": "Ophthalmologist",
+    "qualifications": "MBBS, FCPS (Ophthalmology)",
+    "focus": [
+      "Vision checks",
+      "Eye strain"
+    ],
+    "experience": 20,
+    "rating": 4.7,
+    "reviews": 410,
+    "fee": 3800,
+    "city": "Lahore",
+    "clinic": "Aafiyat Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 190,
+    "bio": "Focuses on vision checks and eye strain. 20 years of practice in Lahore."
+  },
+  {
+    "id": "D046",
+    "name": "Dr. Faisal Naqvi",
+    "gender": "M",
+    "specialty": "Nephrologist",
+    "qualifications": "MBBS, FCPS (Nephrology)",
+    "focus": [
+      "Kidney disease",
+      "Blood pressure and kidneys"
+    ],
+    "experience": 29,
+    "rating": 4.6,
+    "reviews": 608,
+    "fee": 4300,
+    "city": "Islamabad",
+    "clinic": "Rahat Care Clinic",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "evening",
+    "hue": 340,
+    "bio": "Focuses on kidney disease and blood pressure and kidneys. 29 years of practice in Islamabad."
+  },
+  {
+    "id": "D047",
+    "name": "Dr. Danish Butt",
+    "gender": "M",
+    "specialty": "Pediatrician",
+    "qualifications": "MBBS, FCPS (Pediatrics)",
+    "focus": [
+      "Child growth",
+      "Childhood infections"
+    ],
+    "experience": 6,
+    "rating": 4.2,
+    "reviews": 267,
+    "fee": 2300,
+    "city": "Islamabad",
+    "clinic": "Sukoon Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "morning",
+    "hue": 45,
+    "bio": "Focuses on child growth and childhood infections. 6 years of practice in Islamabad."
+  },
+  {
+    "id": "D048",
+    "name": "Dr. Nadia Chaudhry",
+    "gender": "F",
+    "specialty": "Cardiologist",
+    "qualifications": "MBBS, FCPS (Cardiology)",
+    "focus": [
+      "Hypertension",
+      "Heart rhythm problems"
+    ],
+    "experience": 29,
+    "rating": 4.8,
+    "reviews": 712,
+    "fee": 4200,
+    "city": "Multan",
+    "clinic": "Noor Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 3,
+    "shift": "morning",
+    "hue": 200,
+    "bio": "Focuses on hypertension and heart rhythm problems. 29 years of practice in Multan."
+  },
+  {
+    "id": "D049",
+    "name": "Dr. Shahid Abbasi",
+    "gender": "M",
+    "specialty": "Orthopedic Surgeon",
+    "qualifications": "MBBS, FCPS (Orthopedic Surgery)",
+    "focus": [
+      "Joint pain",
+      "Sports injuries"
+    ],
+    "experience": 17,
+    "rating": 4.4,
+    "reviews": 117,
+    "fee": 4000,
+    "city": "Peshawar",
+    "clinic": "Meher Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Pashto"
+    ],
+    "video": true,
+    "offDay": 2,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on joint pain and sports injuries. 17 years of practice in Peshawar."
+  },
+  {
+    "id": "D050",
+    "name": "Dr. Usman Naqvi",
+    "gender": "M",
+    "specialty": "Dentist",
+    "qualifications": "BDS, RDS",
+    "focus": [
+      "Smile correction",
+      "Gum care"
+    ],
+    "experience": 16,
+    "rating": 4.8,
+    "reviews": 460,
+    "fee": 2700,
+    "city": "Sialkot",
+    "clinic": "Rahat Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 1,
+    "shift": "morning",
+    "hue": 340,
+    "bio": "Focuses on smile correction and gum care. 16 years of practice in Sialkot."
+  },
+  {
+    "id": "D051",
+    "name": "Dr. Faisal Yousafzai",
+    "gender": "M",
+    "specialty": "Dentist",
+    "qualifications": "BDS, RDS",
+    "focus": [
+      "Root canal",
+      "Tooth pain"
+    ],
+    "experience": 12,
+    "rating": 4,
+    "reviews": 27,
+    "fee": 3200,
+    "city": "Lahore",
+    "clinic": "Dua Care Clinic",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": false,
+    "offDay": 2,
+    "shift": "evening",
+    "hue": 165,
+    "bio": "Focuses on root canal and tooth pain. 12 years of practice in Lahore."
+  },
+  {
+    "id": "D052",
+    "name": "Dr. Tahira Cheema",
+    "gender": "F",
+    "specialty": "Gynecologist",
+    "qualifications": "MBBS, MD (Gynecology)",
+    "focus": [
+      "Menstrual health",
+      "Pregnancy care"
+    ],
+    "experience": 22,
+    "rating": 4.5,
+    "reviews": 218,
+    "fee": 3500,
+    "city": "Multan",
+    "clinic": "Sukoon Medical Centre",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 3,
+    "shift": "morning",
+    "hue": 200,
+    "bio": "Focuses on menstrual health and pregnancy care. 22 years of practice in Multan."
+  },
+  {
+    "id": "D053",
+    "name": "Dr. Amna Raza",
+    "gender": "F",
+    "specialty": "Ophthalmologist",
+    "qualifications": "MBBS, FCPS (Ophthalmology)",
+    "focus": [
+      "Eye strain",
+      "Cataract"
+    ],
+    "experience": 28,
+    "rating": 4.7,
+    "reviews": 568,
+    "fee": 4000,
+    "city": "Faisalabad",
+    "clinic": "Aafiyat Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "morning",
+    "hue": 45,
+    "bio": "Focuses on eye strain and cataract. 28 years of practice in Faisalabad."
+  },
+  {
+    "id": "D054",
+    "name": "Dr. Nimra Sheikh",
+    "gender": "F",
+    "specialty": "Clinical Psychologist",
+    "qualifications": "MS Clinical Psychology",
+    "focus": [
+      "Stress management",
+      "Grief and life changes"
+    ],
+    "experience": 14,
+    "rating": 4.5,
+    "reviews": 725,
+    "fee": 3500,
+    "city": "Faisalabad",
+    "clinic": "Sukoon Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on stress management and grief and life changes. 14 years of practice in Faisalabad."
+  },
+  {
+    "id": "D055",
+    "name": "Dr. Anum Durrani",
+    "gender": "F",
+    "specialty": "Gynecologist",
+    "qualifications": "MBBS, FCPS (Gynecology)",
+    "focus": [
+      "Pregnancy care",
+      "Menstrual health"
+    ],
+    "experience": 7,
+    "rating": 4.5,
+    "reviews": 247,
+    "fee": 3300,
+    "city": "Rawalpindi",
+    "clinic": "Noor Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 125,
+    "bio": "Focuses on pregnancy care and menstrual health. 7 years of practice in Rawalpindi."
+  },
+  {
+    "id": "D056",
+    "name": "Dr. Tariq Malik",
+    "gender": "M",
+    "specialty": "Dermatologist",
+    "qualifications": "MBBS, FCPS (Dermatology)",
+    "focus": [
+      "Skin infections",
+      "Acne and skin allergy"
+    ],
+    "experience": 31,
+    "rating": 4.6,
+    "reviews": 695,
+    "fee": 4200,
+    "city": "Karachi",
+    "clinic": "Aafiyat Health Hub",
+    "languages": [
+      "Urdu",
+      "English",
+      "Sindhi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on skin infections and acne and skin allergy. 31 years of practice in Karachi."
+  },
+  {
+    "id": "D057",
+    "name": "Dr. Tahira Abbasi",
+    "gender": "F",
+    "specialty": "Pediatrician",
+    "qualifications": "MBBS, FCPS (Pediatrics)",
+    "focus": [
+      "Newborn care",
+      "Child growth"
+    ],
+    "experience": 16,
+    "rating": 4.5,
+    "reviews": 204,
+    "fee": 2700,
+    "city": "Sialkot",
+    "clinic": "Hayat Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "morning",
+    "hue": 340,
+    "bio": "Focuses on newborn care and child growth. 16 years of practice in Sialkot."
+  },
+  {
+    "id": "D058",
+    "name": "Dr. Omar Javed",
+    "gender": "M",
+    "specialty": "Pediatrician",
+    "qualifications": "MBBS, FCPS (Pediatrics)",
+    "focus": [
+      "Child growth",
+      "Childhood infections"
+    ],
+    "experience": 15,
+    "rating": 4.9,
+    "reviews": 238,
+    "fee": 2900,
+    "city": "Rawalpindi",
+    "clinic": "Sukoon Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 1,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on child growth and childhood infections. 15 years of practice in Rawalpindi."
+  },
+  {
+    "id": "D059",
+    "name": "Dr. Naveed Farooq",
+    "gender": "M",
+    "specialty": "Pulmonologist",
+    "qualifications": "MBBS, FCPS (Pulmonology)",
+    "focus": [
+      "Allergy-related breathing issues",
+      "Chronic cough"
+    ],
+    "experience": 7,
+    "rating": 4.8,
+    "reviews": 568,
+    "fee": 3500,
+    "city": "Lahore",
+    "clinic": "Amaan Medical Centre",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 165,
+    "bio": "Focuses on allergy-related breathing issues and chronic cough. 7 years of practice in Lahore."
+  },
+  {
+    "id": "D060",
+    "name": "Dr. Mariam Hussain",
+    "gender": "F",
+    "specialty": "Pediatrician",
+    "qualifications": "MBBS, FCPS (Pediatrics)",
+    "focus": [
+      "Newborn care",
+      "Childhood infections"
+    ],
+    "experience": 31,
+    "rating": 4.3,
+    "reviews": 776,
+    "fee": 3400,
+    "city": "Faisalabad",
+    "clinic": "Zindagi Medical Centre",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "evening",
+    "hue": 28,
+    "bio": "Focuses on newborn care and childhood infections. 31 years of practice in Faisalabad."
+  },
+  {
+    "id": "D061",
+    "name": "Dr. Mubashir Chaudhry",
+    "gender": "M",
+    "specialty": "Psychiatrist",
+    "qualifications": "MBBS, FCPS (Psychiatry)",
+    "focus": [
+      "Sleep problems",
+      "Burnout and stress"
+    ],
+    "experience": 19,
+    "rating": 4.5,
+    "reviews": 455,
+    "fee": 4100,
+    "city": "Karachi",
+    "clinic": "Shafa Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "morning",
+    "hue": 255,
+    "bio": "Focuses on sleep problems and burnout and stress. 19 years of practice in Karachi."
+  },
+  {
+    "id": "D062",
+    "name": "Dr. Babar Butt",
+    "gender": "M",
+    "specialty": "ENT Specialist",
+    "qualifications": "MBBS, FCPS (ENT)",
+    "focus": [
+      "Sinus problems",
+      "Ear infections"
+    ],
+    "experience": 12,
+    "rating": 4,
+    "reviews": 312,
+    "fee": 3200,
+    "city": "Lahore",
+    "clinic": "Sukoon Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "morning",
+    "hue": 340,
+    "bio": "Focuses on sinus problems and ear infections. 12 years of practice in Lahore."
+  },
+  {
+    "id": "D063",
+    "name": "Dr. Qasim Javed",
+    "gender": "M",
+    "specialty": "Psychiatrist",
+    "qualifications": "MBBS, FCPS (Psychiatry)",
+    "focus": [
+      "Depression",
+      "Burnout and stress"
+    ],
+    "experience": 26,
+    "rating": 4.9,
+    "reviews": 110,
+    "fee": 4400,
+    "city": "Lahore",
+    "clinic": "Aafiyat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": false,
+    "offDay": 5,
+    "shift": "morning",
+    "hue": 340,
+    "bio": "Focuses on depression and burnout and stress. 26 years of practice in Lahore."
+  },
+  {
+    "id": "D064",
+    "name": "Dr. Zeeshan Baig",
+    "gender": "M",
+    "specialty": "Gastroenterologist",
+    "qualifications": "MBBS, FCPS (Gastroenterology)",
+    "focus": [
+      "Stomach infections",
+      "Irritable bowel"
+    ],
+    "experience": 21,
+    "rating": 4.7,
+    "reviews": 204,
+    "fee": 4500,
+    "city": "Islamabad",
+    "clinic": "Shafa Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 340,
+    "bio": "Focuses on stomach infections and irritable bowel. 21 years of practice in Islamabad."
+  },
+  {
+    "id": "D065",
+    "name": "Dr. Mahnoor Zaidi",
+    "gender": "F",
+    "specialty": "Orthopedic Surgeon",
+    "qualifications": "MBBS, FCPS (Orthopedic Surgery)",
+    "focus": [
+      "Joint pain",
+      "Sports injuries"
+    ],
+    "experience": 25,
+    "rating": 4.7,
+    "reviews": 485,
+    "fee": 4400,
+    "city": "Hyderabad",
+    "clinic": "Dua Health Hub",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi",
+      "Sindhi"
+    ],
+    "video": false,
+    "offDay": 3,
+    "shift": "morning",
+    "hue": 255,
+    "bio": "Focuses on joint pain and sports injuries. 25 years of practice in Hyderabad."
+  },
+  {
+    "id": "D066",
+    "name": "Dr. Laiba Qureshi",
+    "gender": "F",
+    "specialty": "Cardiologist",
+    "qualifications": "MBBS, FCPS (Cardiology)",
+    "focus": [
+      "Hypertension",
+      "Heart rhythm problems"
+    ],
+    "experience": 9,
+    "rating": 4.6,
+    "reviews": 513,
+    "fee": 3600,
+    "city": "Lahore",
+    "clinic": "Shafa Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 0,
+    "shift": "morning",
+    "hue": 340,
+    "bio": "Focuses on hypertension and heart rhythm problems. 9 years of practice in Lahore."
+  },
+  {
+    "id": "D067",
+    "name": "Dr. Qasim Rana",
+    "gender": "M",
+    "specialty": "Pulmonologist",
+    "qualifications": "MBBS, FCPS (Pulmonology)",
+    "focus": [
+      "Asthma",
+      "Chronic cough"
+    ],
+    "experience": 22,
+    "rating": 4.1,
+    "reviews": 71,
+    "fee": 3900,
+    "city": "Rawalpindi",
+    "clinic": "Shafa Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "evening",
+    "hue": 165,
+    "bio": "Focuses on asthma and chronic cough. 22 years of practice in Rawalpindi."
+  },
+  {
+    "id": "D068",
+    "name": "Dr. Nadia Anwar",
+    "gender": "F",
+    "specialty": "Gastroenterologist",
+    "qualifications": "MBBS, FCPS (Gastroenterology)",
+    "focus": [
+      "Stomach infections",
+      "Irritable bowel"
+    ],
+    "experience": 4,
+    "rating": 4.5,
+    "reviews": 854,
+    "fee": 3600,
+    "city": "Sialkot",
+    "clinic": "Noor Medical Centre",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 200,
+    "bio": "Focuses on stomach infections and irritable bowel. 4 years of practice in Sialkot."
+  },
+  {
+    "id": "D069",
+    "name": "Dr. Salman Naqvi",
+    "gender": "M",
+    "specialty": "Pediatrician",
+    "qualifications": "MBBS, MD (Pediatrics)",
+    "focus": [
+      "Newborn care",
+      "Vaccination"
+    ],
+    "experience": 27,
+    "rating": 4.4,
+    "reviews": 615,
+    "fee": 3400,
+    "city": "Lahore",
+    "clinic": "Hayat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": false,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 190,
+    "bio": "Focuses on newborn care and vaccination. 27 years of practice in Lahore."
+  },
+  {
+    "id": "D070",
+    "name": "Dr. Rashid Ansari",
+    "gender": "M",
+    "specialty": "Cardiologist",
+    "qualifications": "MBBS, FCPS (Cardiology)",
+    "focus": [
+      "Hypertension",
+      "Chest pain evaluation"
+    ],
+    "experience": 25,
+    "rating": 4.3,
+    "reviews": 60,
+    "fee": 4100,
+    "city": "Rawalpindi",
+    "clinic": "Sehat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "morning",
+    "hue": 28,
+    "bio": "Focuses on hypertension and chest pain evaluation. 25 years of practice in Rawalpindi."
+  },
+  {
+    "id": "D071",
+    "name": "Dr. Sana Rana",
+    "gender": "F",
+    "specialty": "Cardiologist",
+    "qualifications": "MBBS, FCPS (Cardiology)",
+    "focus": [
+      "Hypertension",
+      "Preventive cardiology"
+    ],
+    "experience": 23,
+    "rating": 4.8,
+    "reviews": 425,
+    "fee": 4100,
+    "city": "Sialkot",
+    "clinic": "Zindagi Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 255,
+    "bio": "Focuses on hypertension and preventive cardiology. 23 years of practice in Sialkot."
+  },
+  {
+    "id": "D072",
+    "name": "Dr. Dua Raza",
+    "gender": "F",
+    "specialty": "Dermatologist",
+    "qualifications": "MBBS, FCPS (Dermatology)",
+    "focus": [
+      "Eczema",
+      "Skin infections"
+    ],
+    "experience": 28,
+    "rating": 4.2,
+    "reviews": 617,
+    "fee": 4100,
+    "city": "Karachi",
+    "clinic": "Shafa Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 125,
+    "bio": "Focuses on eczema and skin infections. 28 years of practice in Karachi."
+  },
+  {
+    "id": "D073",
+    "name": "Dr. Saima Mirza",
+    "gender": "F",
+    "specialty": "Dermatologist",
+    "qualifications": "MBBS, FCPS (Dermatology)",
+    "focus": [
+      "Eczema",
+      "Skin infections"
+    ],
+    "experience": 25,
+    "rating": 4.6,
+    "reviews": 683,
+    "fee": 3900,
+    "city": "Islamabad",
+    "clinic": "Rahat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "morning",
+    "hue": 190,
+    "bio": "Focuses on eczema and skin infections. 25 years of practice in Islamabad."
+  },
+  {
+    "id": "D074",
+    "name": "Dr. Huma Lashari",
+    "gender": "F",
+    "specialty": "Cardiologist",
+    "qualifications": "MBBS, FCPS (Cardiology)",
+    "focus": [
+      "Hypertension",
+      "Preventive cardiology"
+    ],
+    "experience": 32,
+    "rating": 4.5,
+    "reviews": 569,
+    "fee": 4700,
+    "city": "Karachi",
+    "clinic": "Noor Health Hub",
+    "languages": [
+      "Urdu",
+      "Punjabi",
+      "Sindhi"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "morning",
+    "hue": 28,
+    "bio": "Focuses on hypertension and preventive cardiology. 32 years of practice in Karachi."
+  },
+  {
+    "id": "D075",
+    "name": "Dr. Rubina Ahmed",
+    "gender": "F",
+    "specialty": "Neurologist",
+    "qualifications": "MBBS, FCPS (Neurology)",
+    "focus": [
+      "Migraine",
+      "Stroke recovery"
+    ],
+    "experience": 12,
+    "rating": 4.4,
+    "reviews": 29,
+    "fee": 3900,
+    "city": "Faisalabad",
+    "clinic": "Meher Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "morning",
+    "hue": 28,
+    "bio": "Focuses on migraine and stroke recovery. 12 years of practice in Faisalabad."
+  },
+  {
+    "id": "D076",
+    "name": "Dr. Junaid Gill",
+    "gender": "M",
+    "specialty": "Pulmonologist",
+    "qualifications": "MBBS, FCPS (Pulmonology)",
+    "focus": [
+      "Asthma",
+      "Chronic cough"
+    ],
+    "experience": 8,
+    "rating": 4.4,
+    "reviews": 241,
+    "fee": 3400,
+    "city": "Karachi",
+    "clinic": "Shafa Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Sindhi"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 190,
+    "bio": "Focuses on asthma and chronic cough. 8 years of practice in Karachi."
+  },
+  {
+    "id": "D077",
+    "name": "Dr. Kiran Abbasi",
+    "gender": "F",
+    "specialty": "Dermatologist",
+    "qualifications": "MBBS, FCPS (Dermatology)",
+    "focus": [
+      "Acne and skin allergy",
+      "Hair loss"
+    ],
+    "experience": 14,
+    "rating": 4.3,
+    "reviews": 180,
+    "fee": 3200,
+    "city": "Islamabad",
+    "clinic": "Sukoon Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 3,
+    "shift": "evening",
+    "hue": 28,
+    "bio": "Focuses on acne and skin allergy and hair loss. 14 years of practice in Islamabad."
+  },
+  {
+    "id": "D078",
+    "name": "Dr. Naveed Kakar",
+    "gender": "M",
+    "specialty": "Pediatrician",
+    "qualifications": "MBBS, FCPS (Pediatrics)",
+    "focus": [
+      "Newborn care",
+      "Child growth"
+    ],
+    "experience": 26,
+    "rating": 4.2,
+    "reviews": 665,
+    "fee": 3200,
+    "city": "Karachi",
+    "clinic": "Sukoon Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Sindhi"
+    ],
+    "video": false,
+    "offDay": 4,
+    "shift": "evening",
+    "hue": 190,
+    "bio": "Focuses on newborn care and child growth. 26 years of practice in Karachi."
+  },
+  {
+    "id": "D079",
+    "name": "Dr. Nadia Rana",
+    "gender": "F",
+    "specialty": "General Physician",
+    "qualifications": "MBBS",
+    "focus": [
+      "Blood pressure and diabetes care",
+      "Preventive check-ups"
+    ],
+    "experience": 15,
+    "rating": 4.5,
+    "reviews": 741,
+    "fee": 2300,
+    "city": "Lahore",
+    "clinic": "Noor Health Hub",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 2,
+    "shift": "evening",
+    "hue": 190,
+    "bio": "Focuses on blood pressure and diabetes care and preventive check-ups. 15 years of practice in Lahore."
+  },
+  {
+    "id": "D080",
+    "name": "Dr. Usman Khan",
+    "gender": "M",
+    "specialty": "Neurologist",
+    "qualifications": "MBBS, FCPS (Neurology)",
+    "focus": [
+      "Nerve pain",
+      "Epilepsy"
+    ],
+    "experience": 14,
+    "rating": 4.4,
+    "reviews": 20,
+    "fee": 3800,
+    "city": "Sialkot",
+    "clinic": "Noor Care Clinic",
+    "languages": [
+      "Urdu"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 255,
+    "bio": "Focuses on nerve pain and epilepsy. 14 years of practice in Sialkot."
+  },
+  {
+    "id": "D081",
+    "name": "Dr. Salman Rana",
+    "gender": "M",
+    "specialty": "Nephrologist",
+    "qualifications": "MBBS, FCPS (Nephrology)",
+    "focus": [
+      "Kidney disease",
+      "Blood pressure and kidneys"
+    ],
+    "experience": 4,
+    "rating": 4.5,
+    "reviews": 151,
+    "fee": 3200,
+    "city": "Karachi",
+    "clinic": "Hayat Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 190,
+    "bio": "Focuses on kidney disease and blood pressure and kidneys. 4 years of practice in Karachi."
+  },
+  {
+    "id": "D082",
+    "name": "Dr. Haroon Zaidi",
+    "gender": "M",
+    "specialty": "Ophthalmologist",
+    "qualifications": "MBBS, FCPS (Ophthalmology)",
+    "focus": [
+      "Vision checks",
+      "Dry eye"
+    ],
+    "experience": 12,
+    "rating": 4.6,
+    "reviews": 471,
+    "fee": 3000,
+    "city": "Multan",
+    "clinic": "Sehat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": false,
+    "offDay": 3,
+    "shift": "morning",
+    "hue": 190,
+    "bio": "Focuses on vision checks and dry eye. 12 years of practice in Multan."
+  },
+  {
+    "id": "D083",
+    "name": "Dr. Nimra Khan",
+    "gender": "F",
+    "specialty": "Psychiatrist",
+    "qualifications": "MBBS, FCPS (Psychiatry)",
+    "focus": [
+      "Anxiety and panic",
+      "Sleep problems"
+    ],
+    "experience": 17,
+    "rating": 4.8,
+    "reviews": 772,
+    "fee": 3700,
+    "city": "Karachi",
+    "clinic": "Barkat Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Sindhi"
+    ],
+    "video": false,
+    "offDay": 2,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on anxiety and panic and sleep problems. 17 years of practice in Karachi."
+  },
+  {
+    "id": "D084",
+    "name": "Dr. Dua Durrani",
+    "gender": "F",
+    "specialty": "Neurologist",
+    "qualifications": "MBBS, FCPS (Neurology)",
+    "focus": [
+      "Migraine",
+      "Stroke recovery"
+    ],
+    "experience": 12,
+    "rating": 4.9,
+    "reviews": 265,
+    "fee": 3600,
+    "city": "Islamabad",
+    "clinic": "Aafiyat Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on migraine and stroke recovery. 12 years of practice in Islamabad."
+  },
+  {
+    "id": "D085",
+    "name": "Dr. Bilal Javed",
+    "gender": "M",
+    "specialty": "Urologist",
+    "qualifications": "MBBS, FCPS (Urology)",
+    "focus": [
+      "Kidney stones",
+      "Men's health"
+    ],
+    "experience": 22,
+    "rating": 4.3,
+    "reviews": 624,
+    "fee": 4000,
+    "city": "Karachi",
+    "clinic": "Zindagi Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "evening",
+    "hue": 200,
+    "bio": "Focuses on kidney stones and men's health. 22 years of practice in Karachi."
+  },
+  {
+    "id": "D086",
+    "name": "Dr. Samina Baig",
+    "gender": "F",
+    "specialty": "Endocrinologist",
+    "qualifications": "MBBS, FCPS (Endocrinology)",
+    "focus": [
+      "Hormonal imbalance",
+      "Thyroid disorders"
+    ],
+    "experience": 5,
+    "rating": 4.6,
+    "reviews": 191,
+    "fee": 3500,
+    "city": "Rawalpindi",
+    "clinic": "Sukoon Family Hospital",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "morning",
+    "hue": 255,
+    "bio": "Focuses on hormonal imbalance and thyroid disorders. 5 years of practice in Rawalpindi."
+  },
+  {
+    "id": "D087",
+    "name": "Dr. Saad Gill",
+    "gender": "M",
+    "specialty": "General Physician",
+    "qualifications": "MBBS, FCPS (Family Medicine)",
+    "focus": [
+      "Preventive check-ups",
+      "Blood pressure and diabetes care"
+    ],
+    "experience": 23,
+    "rating": 4.1,
+    "reviews": 344,
+    "fee": 2500,
+    "city": "Rawalpindi",
+    "clinic": "Aafiyat Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 2,
+    "shift": "evening",
+    "hue": 45,
+    "bio": "Focuses on preventive check-ups and blood pressure and diabetes care. 23 years of practice in Rawalpindi."
+  },
+  {
+    "id": "D088",
+    "name": "Dr. Waqar Awan",
+    "gender": "M",
+    "specialty": "General Physician",
+    "qualifications": "MBBS, MRCGP",
+    "focus": [
+      "Preventive check-ups",
+      "Fever and infections"
+    ],
+    "experience": 32,
+    "rating": 4.4,
+    "reviews": 69,
+    "fee": 3000,
+    "city": "Faisalabad",
+    "clinic": "Sukoon Care Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 0,
+    "shift": "evening",
+    "hue": 340,
+    "bio": "Focuses on preventive check-ups and fever and infections. 32 years of practice in Faisalabad."
+  },
+  {
+    "id": "D089",
+    "name": "Dr. Haroon Butt",
+    "gender": "M",
+    "specialty": "Psychiatrist",
+    "qualifications": "MBBS, FCPS (Psychiatry)",
+    "focus": [
+      "Depression",
+      "Sleep problems"
+    ],
+    "experience": 15,
+    "rating": 4.3,
+    "reviews": 898,
+    "fee": 4200,
+    "city": "Karachi",
+    "clinic": "Amaan Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 3,
+    "shift": "morning",
+    "hue": 165,
+    "bio": "Focuses on depression and sleep problems. 15 years of practice in Karachi."
+  },
+  {
+    "id": "D090",
+    "name": "Dr. Nimra Qureshi",
+    "gender": "F",
+    "specialty": "Urologist",
+    "qualifications": "MBBS, FCPS (Urology)",
+    "focus": [
+      "Prostate health",
+      "Urinary infections"
+    ],
+    "experience": 7,
+    "rating": 4.7,
+    "reviews": 48,
+    "fee": 3900,
+    "city": "Faisalabad",
+    "clinic": "Zindagi Wellness Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "evening",
+    "hue": 125,
+    "bio": "Focuses on prostate health and urinary infections. 7 years of practice in Faisalabad."
+  },
+  {
+    "id": "D091",
+    "name": "Dr. Adnan Siddiqui",
+    "gender": "M",
+    "specialty": "Nephrologist",
+    "qualifications": "MBBS, FCPS (Nephrology)",
+    "focus": [
+      "Kidney disease",
+      "Dialysis care"
+    ],
+    "experience": 30,
+    "rating": 4.4,
+    "reviews": 754,
+    "fee": 4700,
+    "city": "Karachi",
+    "clinic": "Meher Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 1,
+    "shift": "morning",
+    "hue": 45,
+    "bio": "Focuses on kidney disease and dialysis care. 30 years of practice in Karachi."
+  },
+  {
+    "id": "D092",
+    "name": "Dr. Dua Butt",
+    "gender": "F",
+    "specialty": "Gastroenterologist",
+    "qualifications": "MBBS, FCPS (Gastroenterology)",
+    "focus": [
+      "Acidity and reflux",
+      "Irritable bowel"
+    ],
+    "experience": 17,
+    "rating": 4.6,
+    "reviews": 310,
+    "fee": 3800,
+    "city": "Sialkot",
+    "clinic": "Noor Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": false,
+    "offDay": 6,
+    "shift": "morning",
+    "hue": 340,
+    "bio": "Focuses on acidity and reflux and irritable bowel. 17 years of practice in Sialkot."
+  },
+  {
+    "id": "D093",
+    "name": "Dr. Taimoor Lodhi",
+    "gender": "M",
+    "specialty": "Orthopedic Surgeon",
+    "qualifications": "MBBS, MD (Orthopedic Surgery)",
+    "focus": [
+      "Fracture care",
+      "Sports injuries"
+    ],
+    "experience": 20,
+    "rating": 4,
+    "reviews": 310,
+    "fee": 4000,
+    "city": "Lahore",
+    "clinic": "Zindagi Health Hub",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "morning",
+    "hue": 200,
+    "bio": "Focuses on fracture care and sports injuries. 20 years of practice in Lahore."
+  },
+  {
+    "id": "D094",
+    "name": "Dr. Hamza Siddiqui",
+    "gender": "M",
+    "specialty": "Dentist",
+    "qualifications": "BDS, RDS",
+    "focus": [
+      "Smile correction",
+      "Root canal"
+    ],
+    "experience": 27,
+    "rating": 4.3,
+    "reviews": 847,
+    "fee": 3200,
+    "city": "Lahore",
+    "clinic": "Meher Wellness Centre",
+    "languages": [
+      "Urdu"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "evening",
+    "hue": 340,
+    "bio": "Focuses on smile correction and root canal. 27 years of practice in Lahore."
+  },
+  {
+    "id": "D095",
+    "name": "Dr. Aliya Chaudhry",
+    "gender": "F",
+    "specialty": "Clinical Psychologist",
+    "qualifications": "MPhil Clinical Psychology",
+    "focus": [
+      "Work burnout",
+      "Grief and life changes"
+    ],
+    "experience": 8,
+    "rating": 4.3,
+    "reviews": 826,
+    "fee": 3500,
+    "city": "Multan",
+    "clinic": "Noor Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "evening",
+    "hue": 255,
+    "bio": "Focuses on work burnout and grief and life changes. 8 years of practice in Multan."
+  },
+  {
+    "id": "D096",
+    "name": "Dr. Rabia Butt",
+    "gender": "F",
+    "specialty": "Psychiatrist",
+    "qualifications": "MBBS, FCPS (Psychiatry)",
+    "focus": [
+      "Anxiety and panic",
+      "Depression"
+    ],
+    "experience": 13,
+    "rating": 4.9,
+    "reviews": 231,
+    "fee": 3700,
+    "city": "Multan",
+    "clinic": "Sukoon Health Hub",
+    "languages": [
+      "Urdu",
+      "English"
+    ],
+    "video": true,
+    "offDay": 4,
+    "shift": "morning",
+    "hue": 190,
+    "bio": "Focuses on anxiety and panic and depression. 13 years of practice in Multan."
+  },
+  {
+    "id": "D097",
+    "name": "Dr. Mehwish Farooq",
+    "gender": "F",
+    "specialty": "Urologist",
+    "qualifications": "MBBS, FCPS (Urology)",
+    "focus": [
+      "Kidney stones",
+      "Urinary infections"
+    ],
+    "experience": 18,
+    "rating": 4.6,
+    "reviews": 567,
+    "fee": 3700,
+    "city": "Islamabad",
+    "clinic": "Zindagi Medical Centre",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 1,
+    "shift": "morning",
+    "hue": 45,
+    "bio": "Focuses on kidney stones and urinary infections. 18 years of practice in Islamabad."
+  },
+  {
+    "id": "D098",
+    "name": "Dr. Taimoor Ahmed",
+    "gender": "M",
+    "specialty": "Pulmonologist",
+    "qualifications": "MBBS, MD (Pulmonology)",
+    "focus": [
+      "Allergy-related breathing issues",
+      "Sleep apnea"
+    ],
+    "experience": 10,
+    "rating": 4.9,
+    "reviews": 375,
+    "fee": 3800,
+    "city": "Faisalabad",
+    "clinic": "Rahat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Punjabi"
+    ],
+    "video": true,
+    "offDay": 6,
+    "shift": "morning",
+    "hue": 125,
+    "bio": "Focuses on allergy-related breathing issues and sleep apnea. 10 years of practice in Faisalabad."
+  },
+  {
+    "id": "D099",
+    "name": "Dr. Kiran Chaudhry",
+    "gender": "F",
+    "specialty": "Gastroenterologist",
+    "qualifications": "MBBS, FCPS (Gastroenterology)",
+    "focus": [
+      "Acidity and reflux",
+      "Liver health"
+    ],
+    "experience": 9,
+    "rating": 4,
+    "reviews": 825,
+    "fee": 3900,
+    "city": "Karachi",
+    "clinic": "Hayat Family Hospital",
+    "languages": [
+      "Urdu",
+      "English",
+      "Sindhi"
+    ],
+    "video": false,
+    "offDay": 1,
+    "shift": "morning",
+    "hue": 190,
+    "bio": "Focuses on acidity and reflux and liver health. 9 years of practice in Karachi."
+  },
+  {
+    "id": "D100",
+    "name": "Dr. Beenish Farooq",
+    "gender": "F",
+    "specialty": "Pulmonologist",
+    "qualifications": "MBBS, MD (Pulmonology)",
+    "focus": [
+      "Sleep apnea",
+      "Allergy-related breathing issues"
+    ],
+    "experience": 20,
+    "rating": 4.9,
+    "reviews": 864,
+    "fee": 4000,
+    "city": "Peshawar",
+    "clinic": "Zindagi Specialty Clinic",
+    "languages": [
+      "Urdu",
+      "English",
+      "Pashto"
+    ],
+    "video": true,
+    "offDay": 5,
+    "shift": "evening",
+    "hue": 255,
+    "bio": "Focuses on sleep apnea and allergy-related breathing issues. 20 years of practice in Peshawar."
+  }
+]
